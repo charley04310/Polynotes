@@ -1,0 +1,14 @@
+# development docker-compose.yml
+version: "3.7"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/app/src:ro
+    environment:
+      - REACT_APP_NAME=PolyNotes-dev
+      - CHOKIDAR_USEPOLLING=true

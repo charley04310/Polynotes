@@ -1,0 +1,17 @@
+FROM node 
+
+# create app directory
+WORKDIR /app
+
+# copy package.json first to leverage Docker cache
+COPY package.json .
+
+# install dependencies
+RUN npm install
+
+# copy app source
+COPY . .
+
+# start app
+CMD [ "npm", "start" ]
+
