@@ -8,15 +8,11 @@ services:
         - REACT_APP_NAME=Polynotes-prod
     ports:
       - 8080:80
-    volumes:
-      - ./frontend/src:/app/src
     environment:
       - REACT_APP_NAME=PolyNotes-prod
-
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
     ports:
       - 3000:3000
     depends_on:

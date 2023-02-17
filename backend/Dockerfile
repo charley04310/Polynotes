@@ -24,4 +24,4 @@ RUN npm install --only=production
 
 RUN rm package*.json
 
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "dist/main.js" ]
