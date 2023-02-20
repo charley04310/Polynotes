@@ -23,5 +23,5 @@ jobs:
         with:
           context: frontend
           push: true
-          tags: lamenace90/polynotes-frontend:${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: lamenace90/polynotes-frontend:test
+          labels: test
