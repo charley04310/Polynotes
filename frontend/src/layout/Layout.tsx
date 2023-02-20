@@ -44,8 +44,6 @@ const items: MenuItem[] = [
   getItem("About", "2", "/about", <DesktopOutlined />),
   getItem("User", "sub1", "/users", <UserOutlined />, [
     getItem("Tom", "3", "/users/tom"),
-    getItem("Bill", "4", "/users/bill"),
-    getItem("Alex", "5", "/users/alex"),
   ]),
   getItem("Team", "sub2", "/teams", <TeamOutlined />, [
     getItem("Team 1", "6", "/teams/team1"),
@@ -54,7 +52,7 @@ const items: MenuItem[] = [
   getItem("Files", "9", "/files", <FileOutlined />),
 ];
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children }: MainLayoutProps, nav: MenuItem[]) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -77,13 +75,24 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
-          items={items}
+          items={nav}
         />
       </Sider>
       <Layout className="site-layout">
         <Header style={{ padding: 0, background: colorBgContainer }} />
 
-        <Content style={{ margin: "0 16px" }}>{children}</Content>
+        <Content style={{ margin: "0 16px" }}>
+          <div
+            className="App"
+            style={{
+              padding: 24,
+              minHeight: 360,
+              background: colorBgContainer,
+            }}
+          >
+            {children}
+          </div>
+        </Content>
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©2023 Created by Ant UED
         </Footer>
