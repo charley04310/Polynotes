@@ -29,5 +29,5 @@ jobs:
         with:
           context: frontend
           push: true
-          tags: charley/${{ steps.meta.outputs.tags }}
+          tags: lamenace90/polynotes-frontend:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
