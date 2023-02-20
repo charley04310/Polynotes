@@ -23,5 +23,5 @@ jobs:
         with:
           context: frontend
           push: true
-          tags: polynotes-frontend:${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
