@@ -52,7 +52,7 @@ const items: MenuItem[] = [
   getItem("Files", "9", "/files", <FileOutlined />),
 ];
 
-const MainLayout = ({ children }: MainLayoutProps, nav: MenuItem[]) => {
+const MainLayout = ({ children }: MainLayoutProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -75,7 +75,7 @@ const MainLayout = ({ children }: MainLayoutProps, nav: MenuItem[]) => {
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
-          items={nav}
+          items={items}
         />
       </Sider>
       <Layout className="site-layout">
