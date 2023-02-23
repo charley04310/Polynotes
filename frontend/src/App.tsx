@@ -6,6 +6,8 @@ import AboutPage from "./pages/AboutPage";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import NotFoundPage from "./pages/NotFound";
 
+import ManifestPage from "./manifest/ManifestPage";
+
 const App: React.FC = () => {
   return (
     <MainLayout>
@@ -14,7 +16,8 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
         </Route>
-        <Route element={<h1>Login</h1>} path="/login" />
+        
+        <Route element={<ManifestPage />} path="/acceuil" />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </MainLayout>

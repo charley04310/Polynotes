@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
+import logo from "./logo.png";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -40,16 +35,8 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Home", "1", "/home", <PieChartOutlined />),
-  getItem("About", "2", "/about", <DesktopOutlined />),
-  getItem("User", "sub1", "/users", <UserOutlined />, [
-    getItem("Tom", "3", "/users/tom"),
-  ]),
-  getItem("Team", "sub2", "/teams", <TeamOutlined />, [
-    getItem("Team 1", "6", "/teams/team1"),
-    getItem("Team 2", "8", "/teams/team2"),
-  ]),
-  getItem("Files", "9", "/files", <FileOutlined />),
+  getItem("Acceuil", "acceuil", "/acceuil", <PieChartOutlined />),
+  //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
 ];
 
 const MainLayout = ({ children }: MainLayoutProps) => {
@@ -66,27 +53,25 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       >
         <div
           style={{
-            height: 32,
             margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
           }}
-        />
+        >
+          <img src={logo} alt="OKOk" style={{ width: "100%" }} />
+        </div>
         <Menu
           theme="dark"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["acceuil"]}
           mode="inline"
           items={items}
         />
       </Sider>
       <Layout className="site-layout">
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-
         <Content style={{ margin: "0 16px" }}>
           <div
             className="App"
             style={{
               padding: 24,
-              minHeight: 360,
+              minHeight: "100%",
               background: colorBgContainer,
             }}
           >

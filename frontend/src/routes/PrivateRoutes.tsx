@@ -2,8 +2,8 @@ import React from "react";
 import { Navigate, Outlet } from "react-router";
 
 const PrivateRoutes = () => {
-  let isAuthenticated = true;
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  let isAuthenticated = false;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/acceuil" />;
 };
 
 export default PrivateRoutes;
