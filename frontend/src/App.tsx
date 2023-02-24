@@ -22,7 +22,7 @@ const App: React.FC = () => {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
           <Route element={<PublicRoutes />}>
-            <Route element={<ManifestPage />} path="/acceuil" />
+            <Route element={<ManifestPage />} path="/authentification" />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

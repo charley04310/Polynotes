@@ -6,7 +6,7 @@ const PrivateRoutes = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  return isAuthenticated ? <Outlet /> : <Navigate to="/acceuil" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/authentification" />;
 };
 
 export default PrivateRoutes;

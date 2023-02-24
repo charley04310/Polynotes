@@ -42,13 +42,22 @@ const MenuAuthAccess = (): MenuItem[] => {
   );
   return !isAuthenticated
     ? [
-        getItem("Acceuil", "acceuil", "/acceuil", <PieChartOutlined />),
+        getItem(
+          "Acceuil",
+          "acceuil",
+          "/authentification",
+          <PieChartOutlined />
+        ),
         //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
       ]
     : [
         getItem("Acceuil", "acceuil", "/", <PieChartOutlined />),
-        getItem("À propos", "about", "/about", <PieChartOutlined />),
-        getItem("Récent", "recent", "/recent", <PieChartOutlined />),
+        getItem(
+          "My Workspace",
+          "workspace",
+          "/workspace",
+          <PieChartOutlined />
+        ),
         getItem("Deconnexion", "logout", "/logout", <PieChartOutlined />),
       ];
 };
