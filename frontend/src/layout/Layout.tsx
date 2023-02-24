@@ -4,8 +4,10 @@ import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../stores/store";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -34,10 +36,22 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem("Acceuil", "acceuil", "/acceuil", <PieChartOutlined />),
-  //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
-];
+const MenuAuthAccess = (): MenuItem[] => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  return !isAuthenticated
+    ? [
+        getItem("Acceuil", "acceuil", "/acceuil", <PieChartOutlined />),
+        //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
+      ]
+    : [
+        getItem("Acceuil", "acceuil", "/", <PieChartOutlined />),
+        getItem("À propos", "about", "/about", <PieChartOutlined />),
+        getItem("Récent", "recent", "/recent", <PieChartOutlined />),
+        getItem("Deconnexion", "logout", "/logout", <PieChartOutlined />),
+      ];
+};
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -62,7 +76,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           theme="dark"
           defaultSelectedKeys={["acceuil"]}
           mode="inline"
-          items={items}
+          items={MenuAuthAccess()}
         />
       </Sider>
       <Layout className="site-layout">

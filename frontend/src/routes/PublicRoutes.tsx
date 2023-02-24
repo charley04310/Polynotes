@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router";
 import { RootState } from "../stores/store";
 
-const PrivateRoutes = () => {
+const PublicRoutes = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  return isAuthenticated ? <Outlet /> : <Navigate to="/acceuil" />;
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
-export default PrivateRoutes;
+export default PublicRoutes;
