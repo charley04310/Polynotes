@@ -10,6 +10,7 @@ import ManifestPage from "./pages/manifest/ManifestPage";
 import { Provider } from "react-redux";
 import store from "./stores/store";
 import PublicRoutes from "./routes/PublicRoutes";
+import EditDocumentPage from "./pages/document/EditDocumentPage";
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,8 @@ const App: React.FC = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
+          
+          <Route path="/document" element={<EditDocumentPage  />} />
           <Route element={<PublicRoutes />}>
             <Route element={<ManifestPage />} path="/authentification" />
             <Route path="*" element={<NotFoundPage />} />

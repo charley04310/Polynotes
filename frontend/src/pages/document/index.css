@@ -1,0 +1,17 @@
+.editable {
+  outline: 0px solid transparent;
+}
+
+.moreOptions {
+  display: block;
+  color: white;
+}
+
+.moreOptions:hover {
+  display: block;
+  color: grey;
+}
+
+.editable:hover .moreOptions {
+  color: grey;
+}
