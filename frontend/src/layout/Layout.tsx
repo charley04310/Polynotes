@@ -9,13 +9,13 @@ import { RootState } from "../stores/store";
 
 const { Content, Footer, Sider } = Layout;
 
-type MenuItem = Required<MenuProps>["items"][number];
+export type MenuItem = Required<MenuProps>["items"][number];
 
-type MainLayoutProps = {
+export type MainLayoutProps = {
   children: React.ReactNode;
 };
 
-function getItem(
+export function getItem(
   label: React.ReactNode,
   key: React.Key,
   to: string, // new 'to' prop added for the link
