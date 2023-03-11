@@ -1,45 +1,76 @@
 import { Modal, Space, Button } from "antd";
-import { FontSizeOutlined } from "@ant-design/icons";
-import { setCustomContent } from "../utils/style";
+import {
+  FontSizeOutlined,
+  VerticalAlignMiddleOutlined,
+} from "@ant-design/icons";
 import { Dispatch, SetStateAction } from "react";
-import { ITextBlock } from "../interfaces/documents";
+import { v4 as uuidv4 } from "uuid";
+import { Editor } from "@tiptap/react";
 
 interface CustomModalProps {
   visible: boolean;
-  contents: ITextBlock[];
-  currentBlockID: string;
-  setContents: Dispatch<SetStateAction<ITextBlock[]>>;
+  currentBlockIndex: number;
+  refs: (Editor | null)[];
   setIsModalVisible: Dispatch<SetStateAction<boolean>>;
   onCancel: () => void;
 }
-
+enum Level {
+  H1 = 1,
+  H2 = 2,
+  H3 = 3,
+  PARAGRAPHE = 4,
+  SEPARATEUR = 5,
+}
 const buttonsTitleData = [
   {
     title: "Titre 1",
+    level: 1,
     size: "50px",
+    icon: <FontSizeOutlined />,
+    border: "0px",
   },
   {
     title: "Titre 2",
+    level: 2,
     size: "35px",
+    icon: <FontSizeOutlined />,
+    border: "0px",
   },
   {
     title: "Titre 3",
+    level: 3,
     size: "25px",
+    icon: <FontSizeOutlined />,
+    border: "0px",
   },
   {
-    title: "Paragraph",
-    size: "15px",
+    title: "Séparateur",
+    level: 5,
+    size: "0px",
+    icon: <VerticalAlignMiddleOutlined />,
+    border: "2px",
   },
 ];
 
 const ModalEditDocument: React.FC<CustomModalProps> = ({
   visible,
-  contents,
-  currentBlockID,
-  setContents,
+  currentBlockIndex,
+  refs,
   setIsModalVisible,
   onCancel,
 }) => {
+  const setHeaderPage = (number: Level) => {
+    if (number > Level.H3) {
+      if (number === Level.SEPARATEUR) {
+        refs[currentBlockIndex]?.commands.setHorizontalRule();
+      }
+    } else {
+      refs[currentBlockIndex]?.commands.toggleHeading({ level: number });
+    }
+
+    setIsModalVisible(false);
+  };
+
   return (
     <Modal
       open={visible}
@@ -47,34 +78,46 @@ const ModalEditDocument: React.FC<CustomModalProps> = ({
       title="Personnaliser le texte"
       okButtonProps={{ style: { display: "none" } }}
       cancelText="Annuler"
+      key={uuidv4()}
     >
       <Space direction="vertical" style={{ width: "100%" }}>
         {buttonsTitleData.map((button, index) => (
           <Button
             key={index}
             type="text"
-            icon={<FontSizeOutlined />}
+            icon={button.icon}
             size={"large"}
             block
             style={{ fontWeight: "bold", textAlign: "left" }}
-            onClick={() =>
-              setCustomContent(
-                currentBlockID,
-                {
-                  bold: "300",
-                  size: button.size,
-                  border: "0px",
-                  color: "black",
-                },
-                contents,
-                setContents,
-                setIsModalVisible
-              )
-            }
+            onClick={() => setHeaderPage(button.level)}
           >
             {button.title}
           </Button>
         ))}
+        {/*  <Button
+          type="text"
+          icon={<UnorderedListOutlined />}
+          size={"large"}
+          block
+          style={{ fontWeight: "bold", textAlign: "left" }}
+          onClick={() =>
+            setHeaderPage(
+              currentBlockID,
+              "checkbox",
+              {
+                bold: "bold",
+                size: "15px",
+                border: "0px",
+                color: "black",
+              },
+              contents,
+              setContents,
+              setIsModalVisible
+            )
+          }
+        >
+          Liste de tache
+        </Button> */}
       </Space>
     </Modal>
   );

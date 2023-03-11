@@ -5,7 +5,7 @@ import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import { useSelector } from "react-redux";
-import { RootState } from "../stores/store";
+import { RootState } from "../store/store";
 
 const { Content, Footer, Sider } = Layout;
 

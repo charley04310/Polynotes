@@ -1,17 +1,74 @@
 .editable {
-  outline: 0px solid transparent;
+  outline: none;
+  transition: background-color 0.5s ease;
+  border-radius: 5px;
+  padding-left: 15px;
 }
 
-.moreOptions {
+.moreOptionsButton {
   display: block;
   color: white;
 }
 
-.moreOptions:hover {
-  display: block;
+.block:hover .moreOptionsButton {
   color: grey;
 }
 
-.editable:hover .moreOptions {
-  color: grey;
+.block::after {
+  white-space: "pre";
+  word-break: "break-word";
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before,
+.ProseMirror h1.is-empty:first-child::before,
+.ProseMirror h2.is-empty:first-child::before,
+.ProseMirror h3.is-empty:first-child::before {
+  color: #004b95;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.editable:hover {
+  display: block;
+  background-color: rgba(128, 128, 128, 0.121) !important;
+}
+.has-focus {
+  border-radius: 3px;
+  padding: 0px 1px;
+}
+
+.button-marks-is-active {
+  background-color: #004b95;
+  padding: 5px;
+
+  color: white;
+}
+
+.button-marks {
+  padding: 5px;
+  margin: 2px;
+  background-color: #474747;
+  border: 1px;
+  color: white;
+}
+
+pre,
+pre.has-focus {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+code {
+  color: inherit;
+  padding: 0.75rem 1rem;
+  background: none;
+  font-size: 0.8rem;
 }

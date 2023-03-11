@@ -1,76 +1,67 @@
-import { useEffect, useState, useRef } from "react";
-import { Button} from "antd";
-import { MoreOutlined} from "@ant-design/icons";
-import { initBlockEditor} from "./utils/style";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
 import ModalEditDocument from "./components/ModalEditDocument";
-import { HandleKeyDown } from "./utils/handleKeyDown";
-
 import "./index.css";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
+import Tiptap from "./components/EditorContent";
+import { Editor } from "@tiptap/react";
+import { BlockState } from "./interfaces/documents";
 
 const EditDocumentPage = () => {
-
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [currentBlockID, setCurrentBlockID] = useState<string>("");
-  const [contents, setContents] = useState([initBlockEditor]);
-  const newDivRef = useRef<HTMLDivElement>(null);
+  const [currentBlockIndex, setCurrentBlockIndex] = useState<number>(0);
+  const refs = useRef<(Editor | null)[]>([]);
 
-  const handleModal = (id: string) => {
-    setCurrentBlockID(id);
+  const blocksPage: BlockState[] = useSelector(
+    (state: RootState) => state.blocks
+  );
+
+  const handleModal = (index: number) => {
+    setCurrentBlockIndex(index);
+    refs.current[index]?.chain().focus().run();
     setIsModalVisible(true);
   };
 
-  useEffect(() => {
-    if (newDivRef.current) {
-      newDivRef.current.scrollIntoView({ behavior: "smooth" });
-      newDivRef.current.focus();
-      const range = document.createRange();
-      const selection = window.getSelection();
-      range.selectNodeContents(newDivRef.current);
-      range.collapse(false);
-      selection?.removeAllRanges();
-      selection?.addRange(range);
-    }
-  }, [contents]);
+  const getNewFocus = (newIndex: number) => {
+    refs.current[newIndex]?.chain().focus().run();
+  };
 
   return (
     <>
-      {contents.map((item, index) => (
-        <>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Button
-              type="link"
-              shape="default"
-              className="moreOptions"
-              icon={<MoreOutlined />}
-              size={"large"}
-              onClick={() => handleModal(item.id)}
-            />
-            <div
-              ref={index === contents.length - 1 ? newDivRef : null}
-              className="editable"
-              key={item.id}
-              style={{ ...item.style, caretColor: "black", width: "90%" }}
-              contentEditable={true}
-              onKeyDown={(event) =>
-                HandleKeyDown(
-                  event,
-                  isModalVisible,
-                  contents,
-                  setContents,
-                  setIsModalVisible
-                )
-              }
-            >
-              {item.content}
-            </div>
-          </div>
-        </>
+      {blocksPage.map((item, index) => (
+        <div
+          key={item.id}
+          className="block"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <Button
+            type="link"
+            shape="default"
+            className="moreOptionsButton"
+            icon={<MoreOutlined style={{ fontSize: "20px" }} />}
+            size={"large"}
+            onClick={() => handleModal(index)}
+          />
+          <Tiptap
+            blockState={item}
+            ref={(ref) => {
+              refs.current[index] = ref;
+            }}
+            onArrowPressed={(event) => {
+              let newIndex = index;
+              if (event.key === "ArrowUp") newIndex--;
+              if (event.key === "ArrowDown") newIndex++;
+              getNewFocus(newIndex);
+            }}
+          />
+        </div>
       ))}
       <ModalEditDocument
         visible={isModalVisible}
-        currentBlockID={currentBlockID}
-        contents={contents}
-        setContents={setContents}
+        refs={refs.current}
+        currentBlockIndex={currentBlockIndex}
         setIsModalVisible={setIsModalVisible}
         onCancel={() => setIsModalVisible(false)}
       />

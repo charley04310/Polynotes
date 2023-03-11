@@ -1,5 +1,5 @@
 import { Avatar, Button, Card, Empty } from "antd";
-import FileExplorer from "../components/FileExplorer";
+import FileExplorer from "../../components/explorer/FileExplorer";
 import { Typography } from "antd";
 
 const { Title } = Typography;
