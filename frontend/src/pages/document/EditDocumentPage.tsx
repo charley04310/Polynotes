@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import ModalEditDocument from "./components/ModalEditDocument";
@@ -7,7 +7,8 @@ import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import Tiptap from "./components/EditorContent";
 import { Editor } from "@tiptap/react";
-import { BlockState } from "./interfaces/documents";
+import { BlockState, BlockType } from "./interfaces/documents";
+import ImageBlockComponent from "./components/ImageBlock";
 
 const EditDocumentPage = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const EditDocumentPage = () => {
   );
 
   const handleModal = (index: number) => {
+    console.log("open");
     setCurrentBlockIndex(index);
     refs.current[index]?.chain().focus().run();
     setIsModalVisible(true);
@@ -44,26 +46,30 @@ const EditDocumentPage = () => {
             size={"large"}
             onClick={() => handleModal(index)}
           />
-          <Tiptap
-            blockState={item}
-            ref={(ref) => {
-              refs.current[index] = ref;
-            }}
-            onArrowPressed={(event) => {
-              let newIndex = index;
-              if (event.key === "ArrowUp") newIndex--;
-              if (event.key === "ArrowDown") newIndex++;
-              getNewFocus(newIndex);
-            }}
-          />
+          {item.type === BlockType.TIPTAP ? (
+            <Tiptap
+              blockState={item}
+              ref={(ref) => {
+                refs.current[index] = ref;
+              }}
+              onArrowPressed={(event) => {
+                console.log("event", event);
+                let newIndex = index;
+                if (event.key === "ArrowUp") newIndex--;
+                if (event.key === "ArrowDown") newIndex++;
+                getNewFocus(newIndex);
+              }}
+            />
+          ) : null}
+
+          {item.type === BlockType.IMAGE ? (
+            <ImageBlockComponent blockState={item} imageUrl={item.content} />
+          ) : null}
         </div>
       ))}
       <ModalEditDocument
-        visible={isModalVisible}
         refs={refs.current}
         currentBlockIndex={currentBlockIndex}
-        setIsModalVisible={setIsModalVisible}
-        onCancel={() => setIsModalVisible(false)}
       />
     </>
   );

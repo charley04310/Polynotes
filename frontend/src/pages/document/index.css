@@ -9,6 +9,11 @@
   display: block;
   color: white;
 }
+.deleteImageButton {
+  position: relative;
+  color: white;
+  top: -45px;
+}
 
 .block:hover .moreOptionsButton {
   color: grey;

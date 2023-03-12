@@ -5,7 +5,7 @@ import Typography from "@tiptap/extension-typography";
 import Focus from "@tiptap/extension-focus";
 import { setBlockContent } from "../../../store/slices/blockSlice";
 import "../index.css";
-import { forwardRef, Ref, useEffect, useImperativeHandle } from "react";
+import { forwardRef, Ref, useImperativeHandle } from "react";
 import { HandleKeyDown } from "../composables/handleKeyDown";
 import { useDispatch } from "react-redux";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -16,26 +16,19 @@ import HorizontalRule from "@tiptap/extension-horizontal-rule";
 export interface TiptapProps {
   blockState: BlockState;
   onArrowPressed?: (event: any) => void;
-  onEditorChange?: (editor: Editor) => void;
 }
 
 const Tiptap = forwardRef(
-  (
-    { blockState, onArrowPressed, onEditorChange }: TiptapProps,
-    ref: Ref<Editor | null>
-  ) => {
+  ({ blockState, onArrowPressed }: TiptapProps, ref: Ref<Editor | null>) => {
     const disptach = useDispatch();
 
     const editor = useEditor({
       extensions: [
         StarterKit,
         Highlight,
+        HorizontalRule,
         Typography,
-        HorizontalRule.configure({
-          HTMLAttributes: {
-            class: "my-custom-class",
-          },
-        }),
+
         Placeholder.configure({
           // Use different placeholders depending on the node type:
           placeholder: ({ node }) => {
@@ -54,10 +47,6 @@ const Tiptap = forwardRef(
       autofocus: "end",
     });
 
-    /*     useEffect(() => {
-      if (editor != null) onEditorChange(editor);
-    }, [editor, onEditorChange]);
- */
     const html = editor != null ? editor.getHTML() : "";
     useImperativeHandle(ref, () => editor, [editor]);
 

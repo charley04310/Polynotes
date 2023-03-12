@@ -3,16 +3,12 @@ import {
   FontSizeOutlined,
   VerticalAlignMiddleOutlined,
 } from "@ant-design/icons";
-import { Dispatch, SetStateAction } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Editor } from "@tiptap/react";
 
 interface CustomModalProps {
-  visible: boolean;
   currentBlockIndex: number;
   refs: (Editor | null)[];
-  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
-  onCancel: () => void;
 }
 enum Level {
   H1 = 1,
@@ -53,29 +49,20 @@ const buttonsTitleData = [
 ];
 
 const ModalEditDocument: React.FC<CustomModalProps> = ({
-  visible,
   currentBlockIndex,
   refs,
-  setIsModalVisible,
-  onCancel,
 }) => {
-  const setHeaderPage = (number: Level) => {
-    if (number > Level.H3) {
-      if (number === Level.SEPARATEUR) {
-        refs[currentBlockIndex]?.commands.setHorizontalRule();
-      }
+  const setHeaderPage = (level: Level) => {
+    if (level <= Level.H3) {
+      refs[currentBlockIndex]?.commands.toggleHeading({ level: level });
     } else {
-      refs[currentBlockIndex]?.commands.toggleHeading({ level: number });
+      refs[currentBlockIndex]?.commands.toggleHeading({ level: level });
     }
-
-    setIsModalVisible(false);
   };
 
   return (
     <Modal
-      open={visible}
-      onCancel={onCancel}
-      title="Personnaliser le texte"
+      title="Personnaliser le BLOCK"
       okButtonProps={{ style: { display: "none" } }}
       cancelText="Annuler"
       key={uuidv4()}

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import { BlockType } from "../../pages/document/interfaces/documents";
+import { BlockType, Column } from "../../pages/document/interfaces/documents";
 import { initialState } from "../../pages/document/utils/dataPayload";
 
 const blockSlice = createSlice({
@@ -18,6 +18,7 @@ const blockSlice = createSlice({
       const newBlock = {
         id: uuidv4(),
         type: BlockType.TIPTAP,
+        column: Column.ONE,
         ref: null,
         content: "",
       };

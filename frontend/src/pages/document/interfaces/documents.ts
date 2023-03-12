@@ -28,10 +28,18 @@ export enum PlaceHolder {
 export interface BlockState {
   id: string;
   type: BlockType;
+  column: Column;
   ref: RefObject<HTMLDivElement> | null;
   content: string;
 }
 
 export enum BlockType {
   TIPTAP = "tiptap",
+  IMAGE = "image",
+}
+
+export enum Column {
+  ONE = 1,
+  TWO = 2,
+  THREE = 3,
 }
