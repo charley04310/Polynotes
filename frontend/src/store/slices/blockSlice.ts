@@ -15,16 +15,16 @@ const blockSlice = createSlice({
     },
 
     setNewBlock: (state, action) => {
+      const { type, content, id } = action.payload;
       const newBlock = {
         id: uuidv4(),
-        type: BlockType.TIPTAP,
+        type: type,
         column: Column.ONE,
         ref: null,
-        content: "",
+        content: content,
       };
-      const blockIndex = state.findIndex(
-        (block) => block.id === action.payload.id
-      );
+      const blockIndex = state.findIndex((block) => block.id === id);
+
       state.splice(blockIndex + 1, 0, newBlock);
     },
 

@@ -46,7 +46,7 @@ const ImageBlockComponent: React.FC<ImagePropsBlock> = ({
         />
       ) : (
         <>
-          <Image width={600} src={imageUrl} />
+          <Image width={500} src={imageUrl} />
           <Button
             type="link"
             shape="default"

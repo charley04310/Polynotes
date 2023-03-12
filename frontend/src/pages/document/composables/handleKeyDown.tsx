@@ -5,7 +5,7 @@ import {
   setNewBlock,
   setBlockContent,
 } from "../../../store/slices/blockSlice";
-import { BlockState } from "../interfaces/documents";
+import { BlockState, BlockType } from "../interfaces/documents";
 
 export const HandleKeyDown = (
   event: React.KeyboardEvent<HTMLDivElement>,
@@ -32,7 +32,13 @@ export const HandleKeyDown = (
           })
         );
         editor?.commands.setContent(removeLastBr(editor));
-        dispatch(setNewBlock(blockState));
+        dispatch(
+          setNewBlock({
+            type: BlockType.TIPTAP,
+            content: "",
+            id: blockState.id,
+          })
+        );
       }
       break;
     case "Backspace":

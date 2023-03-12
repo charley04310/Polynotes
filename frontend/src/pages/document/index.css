@@ -77,3 +77,14 @@ code {
   background: none;
   font-size: 0.8rem;
 }
+
+.DropDownMenu {
+  position: absolute !important;
+  left: 275px !important;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+.ant-dropdown-menu {
+  border-radius: 2px !important;
+}
