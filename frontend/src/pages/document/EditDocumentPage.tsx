@@ -1,6 +1,4 @@
-import { useRef, useState } from "react";
-import { Button } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+import { useRef } from "react";
 import "./index.css";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
@@ -9,6 +7,7 @@ import { Editor } from "@tiptap/react";
 import { BlockState, BlockType } from "./interfaces/documents";
 import ImageBlockComponent from "./components/ImageBlock";
 import DropDownMenu from "./components/DropDownMenu";
+import TableDataBase from "./components/DataBaseTable";
 
 const EditDocumentPage = () => {
   const refs = useRef<(Editor | null)[]>([]);
@@ -51,6 +50,7 @@ const EditDocumentPage = () => {
           ) : null}
         </div>
       ))}
+      <TableDataBase />
     </>
   );
 };

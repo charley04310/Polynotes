@@ -1,6 +1,10 @@
 import { FontSizeOutlined, FileImageOutlined } from "@ant-design/icons";
 import React from "react";
-import { MoreOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  MoreOutlined,
+  DeleteOutlined,
+  CheckSquareOutlined,
+} from "@ant-design/icons";
 import { Button, MenuProps } from "antd";
 import { Dropdown } from "antd";
 import { Editor } from "@tiptap/react";
@@ -48,12 +52,21 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
         ),
     },
     {
+      label: "Check Box",
+      icon: <CheckSquareOutlined />,
+      key: "4",
+      onClick: () =>
+        dispatch(
+          setNewBlock({ type: BlockType.IMAGE, content: "", id: item.id })
+        ),
+    },
+    {
       type: "divider",
     },
     {
       label: "Supprimer le block",
       icon: <DeleteOutlined />,
-      key: "4",
+      key: "5",
       danger: true,
       onClick: () => dispatch(deleteBlock({ id: item.id })),
     },
