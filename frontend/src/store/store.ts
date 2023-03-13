@@ -3,14 +3,12 @@ import { useDispatch } from "react-redux";
 import authReducer from "./slices/authSlice";
 import blockReducer from "./slices/blockSlice";
 import dataBaseReducer from "./slices/dataBaseSlice";
-import dataBaseColumnReducer from "./slices/dataBaseColumnSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     blocks: blockReducer,
     dataBase: dataBaseReducer,
-    dataBaseColumns: dataBaseColumnReducer,
   },
 });
 

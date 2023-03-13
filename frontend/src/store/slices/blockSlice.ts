@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import { BlockType, Column } from "../../pages/document/interfaces/documents";
+import { Column } from "../../pages/document/interfaces/documents";
 import { initialState } from "../../pages/document/utils/dataPayload";
 
 const blockSlice = createSlice({
@@ -11,7 +11,7 @@ const blockSlice = createSlice({
       const { item, content } = action.payload;
       const blockIndex = state.findIndex((block) => block.id === item.id);
       state[blockIndex].content = content;
-      console.log(content);
+      //console.log(content);
     },
 
     setNewBlock: (state, action) => {

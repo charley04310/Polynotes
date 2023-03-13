@@ -3,7 +3,7 @@ import React from "react";
 import {
   MoreOutlined,
   DeleteOutlined,
-  CheckSquareOutlined,
+  DatabaseOutlined,
 } from "@ant-design/icons";
 import { Button, MenuProps } from "antd";
 import { Dropdown } from "antd";
@@ -52,12 +52,12 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
         ),
     },
     {
-      label: "Check Box",
-      icon: <CheckSquareOutlined />,
+      label: "Database",
+      icon: <DatabaseOutlined />,
       key: "4",
       onClick: () =>
         dispatch(
-          setNewBlock({ type: BlockType.IMAGE, content: "", id: item.id })
+          setNewBlock({ type: BlockType.DATABASE, content: "", id: item.id })
         ),
     },
     {

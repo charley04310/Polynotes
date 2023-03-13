@@ -48,9 +48,9 @@ const EditDocumentPage = () => {
           {item.type === BlockType.IMAGE ? (
             <ImageBlockComponent blockState={item} imageUrl={item.content} />
           ) : null}
+          {item.type === BlockType.DATABASE ? <TableDataBase /> : null}
         </div>
       ))}
-      <TableDataBase />
     </>
   );
 };

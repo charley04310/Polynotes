@@ -36,6 +36,7 @@ export interface BlockState {
 export enum BlockType {
   TIPTAP = "tiptap",
   IMAGE = "image",
+  DATABASE = "database",
 }
 
 export enum Column {

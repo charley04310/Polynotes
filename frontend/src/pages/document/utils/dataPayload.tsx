@@ -23,26 +23,19 @@ export const initialState: BlockState[] = [
     ref: null,
     content: "",
   },
-  {
-    id: uuidv4(),
-    type: BlockType.TIPTAP,
-    column: 1,
-    ref: null,
-    content: "",
-  },
-  {
-    id: uuidv4(),
-    type: BlockType.TIPTAP,
-    column: Column.ONE,
-    ref: null,
-    content: "",
-  },
-  {
+  /*   {
     id: uuidv4(),
     type: BlockType.IMAGE,
     column: Column.ONE,
     ref: null,
     content:
       "https://www.portices.fr/wp-content/uploads/2021/05/developper-activite-internet.jpg",
-  },
+  }, */
+  /*   {
+    id: uuidv4(),
+    type: BlockType.DATABASE,
+    column: Column.ONE,
+    ref: null,
+    content: "",
+  }, */
 ];
