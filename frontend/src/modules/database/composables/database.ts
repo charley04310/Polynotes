@@ -1,16 +1,20 @@
+import { typeIndex } from "../../interfaces/database";
+
 const date = new Date();
 const formattedDate = date.toISOString().slice(0, 10);
 
-export const defaultContent = (typeIndex: string) => {
-  switch (typeIndex) {
-    case "text":
+export const defaultContent = (index: string) => {
+  switch (index) {
+    case typeIndex.TEXT:
       return "Votre texte ici";
-    case "number":
+    case typeIndex.NUMBER:
       return 0;
-    case "date":
+    case typeIndex.DATE:
       return formattedDate;
-    case "checkbox":
+    case typeIndex.CHECKBOX:
       return "Votre texte box ici";
+    case typeIndex.SELECT:
+      return "Votre selction ici";
     default:
       return "Votre texte ici";
   }

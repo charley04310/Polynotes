@@ -1,21 +1,33 @@
-export interface Item {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  date: string;
-  checkbox: string;
-}
 export interface EditableRowProps {
   index: number;
 }
-
 export interface EditableCellProps {
   title: React.ReactNode;
   editable: boolean;
-  typeIndex: "text" | "number" | "select" | "date" | "checkbox";
+  typeIndex: typeIndex;
   children: React.ReactNode;
-  dataIndex: keyof Item;
-  record: Item;
-  setdataContent: (record: Item) => void;
+  dataIndex: string;
+  blockIndex: number;
+  record: any;
+}
+export enum typeIndex {
+  TEXT = "text",
+  NUMBER = "number",
+  SELECT = "select",
+  DATE = "date",
+  CHECKBOX = "checkbox",
+}
+export interface TableState {
+  columns: Column[];
+  rows: Row[];
+}
+export interface Column {
+  title: string;
+  typeIndex: typeIndex;
+  dataIndex: string;
+  editable: boolean;
+}
+export interface Row {
+  key: string;
+  [key: string]: any;
 }

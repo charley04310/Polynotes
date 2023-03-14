@@ -5,14 +5,27 @@ import {
   CalendarOutlined,
   FieldNumberOutlined,
   FontSizeOutlined,
-  ColumnWidthOutlined,
 } from "@ant-design/icons";
+
 import { Button, Form, Input, Select } from "antd";
 import { useDispatch } from "react-redux";
-import { setNewColumn } from "../../store/slices/dataBaseSlice";
+import { setNewColumn } from "../../store/slices/blockSlice";
+import { typeIndex } from "../interfaces/database";
 
 const { Option } = Select;
-const AddColumnDataBase: React.FC = () => {
+interface AddColumnDataBaseProps {
+  blockIndex: number;
+}
+
+export interface NewColumnType {
+  index: number;
+  title: string;
+  typeIndex: typeIndex;
+}
+
+const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
+  blockIndex,
+}) => {
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
   const dispatch = useDispatch();
@@ -21,8 +34,13 @@ const AddColumnDataBase: React.FC = () => {
     forceUpdate({});
   }, []);
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const onFinish = (element: NewColumnType) => {
+    //  console.log("Received values of form: ", values);
+    const values : NewColumnType = {
+      index: blockIndex,
+      title: element.title,
+      typeIndex: element.typeIndex,
+    };
     dispatch(setNewColumn(values));
     form.resetFields();
   };

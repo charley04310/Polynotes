@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table } from "antd";
 import {
   EditableCell,
   EditableRow,
 } from "../../../modules/database/EditTableContent";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import { setNewRow, deleteRows } from "../../../store/slices/dataBaseSlice";
-import { TableState } from "../../../modules/database/interfaces/interfaces";
+import { useDispatch } from "react-redux";
+import { deleteRows, setNewRow } from "../../../store/slices/blockSlice";
 
 import AddColumnDataBase from "../../../modules/database/AddColumnTable";
+import { BlockState } from "../../../store/interfaces/block";
 
 type EditableTableProps = Parameters<typeof Table>[0];
 
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
-const TableDataBase: React.FC = () => {
-  const dataSource: TableState = useSelector(
-    (state: RootState) => state.dataBase
-  );
+interface EditableTableState {
+  dataSource: BlockState;
+  index: number;
+}
+const TableDataBase: React.FC<EditableTableState> = ({ dataSource, index }) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
   const dispatch = useDispatch();
+
+  if (typeof dataSource.content === "string") return null;
 
   const components = {
     body: {
@@ -28,8 +36,7 @@ const TableDataBase: React.FC = () => {
       cell: EditableCell,
     },
   };
-
-  const columns = dataSource.columns.map((col) => {
+  const columns = dataSource.content.columns.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -38,59 +45,74 @@ const TableDataBase: React.FC = () => {
       onCell: (record: any) => ({
         title: col.title,
         record,
+        blockIndex: index,
         editable: col.editable,
         typeIndex: col.typeIndex,
         dataIndex: col.dataIndex,
       }),
     };
   });
-
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+  const rowToDelete = {
+    index: index,
+    keys: selectedRowKeys,
+  };
 
   const hasSelected = selectedRowKeys.length > 0;
-  const isColumn = dataSource.columns.length > 0;
+  const isColumn = dataSource.content.columns.length > 0;
+
+  const deleteAllSelectedRowKeys = () => {
+    dispatch(deleteRows(rowToDelete));
+    setSelectedRowKeys([]);
+  };
+
   return (
     <div
-      style={{ marginTop: 16, marginBottom: 16, paddingLeft: 12, width: "90%" }}
+      style={{
+        marginTop: 5,
+        marginBottom: 16,
+        width: "90%",
+        position: "relative",
+      }}
     >
-      <div style={{ marginBottom: 16 }}>
-        {isColumn && (
-          <Button
-            onClick={() => dispatch(setNewRow())}
-            type="primary"
-            icon={<PlusOutlined />}
-          />
-        )}
-
-        {hasSelected && (
-          <Button
-            type="primary"
-            onClick={() => dispatch(deleteRows(selectedRowKeys))}
-            style={{ color: "white", backgroundColor: "red", marginLeft: 10 }}
-            disabled={!hasSelected}
-            icon={<DeleteOutlined />}
-          />
-        )}
-      </div>
-
       <Table
         components={components}
         rowClassName={() => "editable-row"}
         rowSelection={rowSelection}
         bordered
-        dataSource={dataSource.rows}
+        dataSource={dataSource.content.rows}
         columns={columns as ColumnTypes}
+        pagination={false}
       />
-      <AddColumnDataBase />
+      <div>
+        {isColumn && (
+          <Button
+            onClick={() => dispatch(setNewRow({ index: index }))}
+            style={{
+              marginBottom: 10,
+              marginTop: 10,
+              color: "black",
+            }}
+            type="text"
+            icon={<PlusOutlined />}
+          >
+            Ajouter une ligne
+          </Button>
+        )}
+        {hasSelected && (
+          <Button
+            type="text"
+            onClick={() => deleteAllSelectedRowKeys()}
+            style={{ color: "red", marginLeft: 10 }}
+            disabled={!hasSelected}
+            icon={<DeleteOutlined />}
+          />
+        )}
+        <AddColumnDataBase blockIndex={index} />
+      </div>
     </div>
   );
 };

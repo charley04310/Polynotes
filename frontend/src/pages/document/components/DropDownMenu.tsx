@@ -4,13 +4,17 @@ import {
   MoreOutlined,
   DeleteOutlined,
   DatabaseOutlined,
+  BlockOutlined,
 } from "@ant-design/icons";
 import { Button, MenuProps } from "antd";
 import { Dropdown } from "antd";
 import { Editor } from "@tiptap/react";
 import { useDispatch } from "react-redux";
 import { deleteBlock, setNewBlock } from "../../../store/slices/blockSlice";
-import { BlockState, BlockType } from "../interfaces/documents";
+import {
+  BlockState,
+  BlockType,
+} from "../../../store/interfaces/block";
 
 interface DropDownProps {
   editor: Editor | null;
@@ -57,16 +61,33 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
       key: "4",
       onClick: () =>
         dispatch(
-          setNewBlock({ type: BlockType.DATABASE, content: "", id: item.id })
+          setNewBlock({
+            type: BlockType.DATABASE,
+            content: {
+              columns: [],
+              rows: [],
+            },
+            id: item.id,
+          })
+        ),
+    },
+    {
+      label: "Block Paragraphe",
+      icon: <BlockOutlined />,
+      key: "5",
+      onClick: () =>
+        dispatch(
+          setNewBlock({ type: BlockType.TIPTAP, content: "", id: item.id })
         ),
     },
     {
       type: "divider",
     },
+
     {
       label: "Supprimer le block",
       icon: <DeleteOutlined />,
-      key: "5",
+      key: "6",
       danger: true,
       onClick: () => dispatch(deleteBlock({ id: item.id })),
     },

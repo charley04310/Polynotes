@@ -9,7 +9,7 @@ import { forwardRef, Ref, useImperativeHandle } from "react";
 import { HandleKeyDown } from "../composables/handleKeyDown";
 import { useDispatch } from "react-redux";
 import Placeholder from "@tiptap/extension-placeholder";
-import { BlockState } from "../interfaces/documents";
+import { BlockState } from "../../../store/interfaces/block";
 import BubbleMenuComponent from "./BubbleMenu";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 

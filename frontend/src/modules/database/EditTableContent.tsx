@@ -15,7 +15,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { EditableCellProps, EditableRowProps } from "../interfaces/database";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useDispatch } from "react-redux";
-import { setdataContent } from "../../store/slices/dataBaseSlice";
+import { setRowData } from "../../store/slices/blockSlice";
 import { PlusOutlined } from "@ant-design/icons";
 
 dayjs.extend(customParseFormat);
@@ -28,8 +28,8 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   children,
   dataIndex,
   typeIndex,
+  blockIndex,
   record,
-  //setdataContent,
   ...restProps
 }) => {
   const [editing, setEditing] = useState(false);
@@ -51,8 +51,14 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const save = async () => {
     try {
       const values = await form.validateFields();
+
+      const newValues = {
+        index: blockIndex,
+        key: record.key,
+        [dataIndex]: values[dataIndex],
+      };
       toggleEdit();
-      dispatch(setdataContent({ ...record, ...values }));
+      dispatch(setRowData({ ...record, ...newValues }));
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
     }
@@ -65,11 +71,13 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     if (!dateString) return;
 
     const newDate = {
+      index: blockIndex,
+      key: record.key,
       [dataIndex]: dateString,
     };
     try {
       toggleEdit();
-      dispatch(setdataContent({ ...record, ...newDate }));
+      dispatch(setRowData({ ...record, ...newDate }));
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
     }
@@ -107,7 +115,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
             ref={inputRef as any}
             min={1}
             max={10000}
-            defaultValue={record[dataIndex]}
             onBlur={save}
             onChange={() => console.log("changed")}
           />

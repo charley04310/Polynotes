@@ -4,7 +4,7 @@ import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import Tiptap from "./components/EditorContent";
 import { Editor } from "@tiptap/react";
-import { BlockState, BlockType } from "./interfaces/documents";
+import { BlockState, BlockType } from "../../store/interfaces/block";
 import ImageBlockComponent from "./components/ImageBlock";
 import DropDownMenu from "./components/DropDownMenu";
 import TableDataBase from "./components/DataBaseTable";
@@ -45,10 +45,12 @@ const EditDocumentPage = () => {
             />
           ) : null}
 
-          {item.type === BlockType.IMAGE ? (
+          {item.type === BlockType.IMAGE && typeof item.content === "string" ? (
             <ImageBlockComponent blockState={item} imageUrl={item.content} />
           ) : null}
-          {item.type === BlockType.DATABASE ? <TableDataBase /> : null}
+          {item.type === BlockType.DATABASE ? (
+            <TableDataBase dataSource={item} index={index} />
+          ) : null}
         </div>
       ))}
     </>

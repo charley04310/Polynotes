@@ -10,9 +10,13 @@
   color: white;
 }
 .deleteImageButton {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+
+.imageBlock {
   position: relative;
-  color: white;
-  top: -45px;
 }
 
 .block:hover .moreOptionsButton {
