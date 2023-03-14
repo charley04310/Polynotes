@@ -2,12 +2,12 @@ import { RightCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Input, Space, Image, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { setBlockContent } from "../../../store/slices/blockSlice";
-import { BlockState } from "../../../store/interfaces/block";
+import { IBlockState } from "../../../store/interfaces/block";
 
 const { Search } = Input;
 
 interface ImagePropsBlock {
-  blockState: BlockState;
+  blockState: IBlockState;
   imageUrl: string;
 }
 
@@ -47,7 +47,7 @@ const ImageBlockComponent: React.FC<ImagePropsBlock> = ({
       ) : (
         <>
           <div className="imageBlock">
-            <Image width={"100%"} src={imageUrl} />
+            <Image width={"50%"} src={imageUrl} />
             <div className="deleteImageButton">
               <Button
                 type="link"

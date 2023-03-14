@@ -9,14 +9,15 @@ import { useDispatch } from "react-redux";
 import { deleteRows, setNewRow } from "../../../store/slices/blockSlice";
 
 import AddColumnDataBase from "../../../modules/database/AddColumnTable";
-import { BlockState } from "../../../store/interfaces/block";
+import { IBlockState } from "../../../store/interfaces/block";
+import { IColumnTableDataBase } from "../../../modules/interfaces/database";
 
 type EditableTableProps = Parameters<typeof Table>[0];
 
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
 interface EditableTableState {
-  dataSource: BlockState;
+  dataSource: IBlockState;
   index: number;
 }
 const TableDataBase: React.FC<EditableTableState> = ({ dataSource, index }) => {
@@ -37,12 +38,13 @@ const TableDataBase: React.FC<EditableTableState> = ({ dataSource, index }) => {
     },
   };
   const columns = dataSource.content.columns.map((col) => {
-    if (!col.editable) {
+    if (typeof col === "string" || !("title" in col)) {
       return col;
     }
+
     return {
       ...col,
-      onCell: (record: any) => ({
+      onCell: (record: IColumnTableDataBase) => ({
         title: col.title,
         record,
         blockIndex: index,

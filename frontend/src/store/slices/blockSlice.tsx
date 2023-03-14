@@ -1,11 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import { Row, TableState } from "../../modules/interfaces/database";
+import {
+  IRowTableDataBase,
+  IRowTrello,
+  ITableState,
+} from "../../modules/interfaces/database";
 import { initialState } from "../../pages/document/utils/dataPayload";
 import { NewColumnType } from "../../modules/database/AddColumnTable";
-import { defaultContent } from "../../modules/database/composables/database";
+import { defaultContent } from "../../modules/database/composables/FirstValueRowFields";
 
-//let rowCount = 0;
+export function formatRow(row: any): IRowTrello {
+  const content = (
+    <div>
+      {Object.entries(row).map(([propName, propValue]) => {
+        if (propName !== "key" && propName !== "index") {
+          return <p key={propName}>{`${propName}: ${propValue}`}</p>;
+        }
+      })}
+    </div>
+  );
+
+  return {
+    id: row.key,
+    content: content,
+    column: "En cours",
+  };
+}
 
 const blockSlice = createSlice({
   name: "block",
@@ -37,6 +57,13 @@ const blockSlice = createSlice({
         state.splice(blockIndex, 1);
       }
     },
+
+    setNewTypeBlock: (state, action) => {
+      const { index, type } = action.payload;
+      //console.log("index", JSON.stringify(state[index]));
+      state[index].type = type;
+    },
+
     /*************************************** PARTIE DATABASE ***************************************/
     setNewColumn: (
       state,
@@ -45,11 +72,10 @@ const blockSlice = createSlice({
       }
     ) => {
       const { index, title, typeIndex } = action.payload;
-      console.log("index", index);
-      let data = title.toLowerCase();
-      data = data.replace(/ /g, "");
+      let data = title;
+      data = data.replace(/ /g, "_");
 
-      (state[index].content as TableState).columns.push({
+      (state[index].content as ITableState).columns.push({
         title: title,
         typeIndex: typeIndex,
         dataIndex: data,
@@ -58,41 +84,57 @@ const blockSlice = createSlice({
     },
     setNewRow: (state, action) => {
       const { index } = action.payload;
-      const content = state[index].content as TableState;
+      const content = state[index].content as ITableState;
 
-      let rowCount = content.rows.length;
-
-      console.log("rowCount", rowCount);
       if (!content.rows) return;
-      console.log("state", JSON.stringify(state[index]));
 
-      const row: Row = {
-        key: (rowCount++).toString(),
+      const row: IRowTableDataBase = {
+        key: uuidv4(),
       };
 
       content.columns.forEach((item) => {
         row[item.dataIndex] = defaultContent(item.typeIndex);
       });
+
       content.rows.push(row);
+
+      const newObject = formatRow(row);
+      content.trello.rowsTrello.push(newObject);
     },
     setRowData: (state, action) => {
       const { index, key } = action.payload;
-      const content = state[index].content as TableState;
+      const content = state[index].content as ITableState;
 
       if (!content.rows) return;
 
       const indexRow = content.rows.findIndex((item) => key === item.key);
       const item = content.rows[index];
-
-      content.rows.splice(indexRow, 1, {
+      const value = {
         ...item,
         ...action.payload,
-      });
+      };
+      content.rows.splice(indexRow, 1, value);
+
+      const newObject = formatRow(value);
+      const indexRowTrello = content.trello.rowsTrello.findIndex(
+        (item) => key === item.id
+      );
+      content.trello.rowsTrello.splice(indexRowTrello, 1, newObject);
     },
     deleteRows: (state, action) => {
       const { index, keys } = action.payload;
-      const content = state[index].content as TableState;
+      const content = state[index].content as ITableState;
       content.rows = content.rows.filter((item) => !keys.includes(item.key));
+      content.trello.rowsTrello = content.trello.rowsTrello.filter(
+        (item) => !keys.includes(item.id)
+      );
+    },
+
+    /*************************************** PARTIE TRELLO ***************************************/
+    setNewTrelloColumn: (state, action) => {
+      const { index, title } = action.payload;
+      const content = state[index].content as ITableState;
+      content.trello.columnsTrello.push(title);
     },
   },
 });
@@ -105,6 +147,8 @@ export const {
   setNewRow,
   setRowData,
   deleteRows,
+  setNewTypeBlock,
+  setNewTrelloColumn,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;

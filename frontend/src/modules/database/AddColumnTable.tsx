@@ -9,8 +9,9 @@ import {
 
 import { Button, Form, Input, Select } from "antd";
 import { useDispatch } from "react-redux";
-import { setNewColumn } from "../../store/slices/blockSlice";
+import { setNewColumn, setNewTypeBlock } from "../../store/slices/blockSlice";
 import { typeIndex } from "../interfaces/database";
+import { BlockType } from "../../store/interfaces/block";
 
 const { Option } = Select;
 interface AddColumnDataBaseProps {
@@ -21,6 +22,11 @@ export interface NewColumnType {
   index: number;
   title: string;
   typeIndex: typeIndex;
+}
+
+export interface INewTypeBlock {
+  index: number;
+  type: string;
 }
 
 const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
@@ -36,7 +42,7 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
 
   const onFinish = (element: NewColumnType) => {
     //  console.log("Received values of form: ", values);
-    const values : NewColumnType = {
+    const values: NewColumnType = {
       index: blockIndex,
       title: element.title,
       typeIndex: element.typeIndex,
@@ -45,60 +51,73 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
     form.resetFields();
   };
 
-  return (
-    <Form
-      form={form}
-      name="horizontal_login"
-      layout="inline"
-      onFinish={onFinish}
-      style={{ position: "relative", top: 5 }}
-    >
-      <Form.Item
-        name="title"
-        rules={[{ required: true, message: "Nom de colonne obligatoire!" }]}
-      >
-        <Input placeholder="nom de la colonne" />
-      </Form.Item>
-      <Form.Item
-        name="typeIndex"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Select placeholder="Type de la colonne" style={{ width: 220 }}>
-          <Option value="text" label="Text">
-            <FontSizeOutlined style={{ paddingRight: 10 }} /> Text
-          </Option>
-          <Option value="number">
-            <FieldNumberOutlined style={{ paddingRight: 10 }} /> Number
-          </Option>
-          <Option value="date">
-            <CalendarOutlined style={{ paddingRight: 10 }} />
-            Date Time
-          </Option>
-          <Option value="checkbox">
-            <CheckSquareOutlined style={{ paddingRight: 10 }} /> Checkbox
-          </Option>
-          <Option value="select">
-            <UnorderedListOutlined style={{ paddingRight: 10 }} /> Single select
-          </Option>
-        </Select>
-      </Form.Item>
+  const setToTrelloView = () => {
+    const values: INewTypeBlock = {
+      index: blockIndex,
+      type: BlockType.TRELLO,
+    };
 
-      <Form.Item shouldUpdate>
-        {() => (
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={
-              !form.isFieldsTouched(true) ||
-              !!form.getFieldsError().filter(({ errors }) => errors.length)
-                .length
-            }
-          >
-            Ajouter une nouvelle colonne
-          </Button>
-        )}
-      </Form.Item>
-    </Form>
+    dispatch(setNewTypeBlock(values));
+  };
+
+  return (
+    <>
+      <Form
+        form={form}
+        name="horizontal_login"
+        layout="inline"
+        onFinish={onFinish}
+        style={{ position: "relative", top: 5 }}
+      >
+        <Form.Item
+          name="title"
+          rules={[{ required: true, message: "Nom de colonne obligatoire!" }]}
+        >
+          <Input placeholder="nom de la colonne" />
+        </Form.Item>
+        <Form.Item
+          name="typeIndex"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Select placeholder="Type de la colonne" style={{ width: 220 }}>
+            <Option value="text" label="Text">
+              <FontSizeOutlined style={{ paddingRight: 10 }} /> Text
+            </Option>
+            <Option value="number">
+              <FieldNumberOutlined style={{ paddingRight: 10 }} /> Number
+            </Option>
+            <Option value="date">
+              <CalendarOutlined style={{ paddingRight: 10 }} />
+              Date Time
+            </Option>
+            <Option value="checkbox">
+              <CheckSquareOutlined style={{ paddingRight: 10 }} /> Checkbox
+            </Option>
+            <Option value="select">
+              <UnorderedListOutlined style={{ paddingRight: 10 }} /> Single
+              select
+            </Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item shouldUpdate>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                !!form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
+            >
+              Ajouter une nouvelle colonne
+            </Button>
+          )}
+        </Form.Item>
+        <Button onClick={() => setToTrelloView()}> Trello view</Button>
+      </Form>
+    </>
   );
 };
 

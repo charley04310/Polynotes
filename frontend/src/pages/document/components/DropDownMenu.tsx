@@ -11,14 +11,11 @@ import { Dropdown } from "antd";
 import { Editor } from "@tiptap/react";
 import { useDispatch } from "react-redux";
 import { deleteBlock, setNewBlock } from "../../../store/slices/blockSlice";
-import {
-  BlockState,
-  BlockType,
-} from "../../../store/interfaces/block";
+import { IBlockState, BlockType } from "../../../store/interfaces/block";
 
 interface DropDownProps {
   editor: Editor | null;
-  item: BlockState;
+  item: IBlockState;
 }
 
 const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
@@ -66,6 +63,7 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
             content: {
               columns: [],
               rows: [],
+              trello: { columnsTrello: ["En cours"], rowsTrello: [] },
             },
             id: item.id,
           })

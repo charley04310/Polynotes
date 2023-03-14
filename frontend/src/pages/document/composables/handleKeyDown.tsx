@@ -5,11 +5,11 @@ import {
   setNewBlock,
   setBlockContent,
 } from "../../../store/slices/blockSlice";
-import { BlockState, BlockType } from "../../../store/interfaces/block";
+import { IBlockState, BlockType } from "../../../store/interfaces/block";
 
 export const HandleKeyDown = (
   event: React.KeyboardEvent<HTMLDivElement>,
-  blockState: BlockState,
+  blockState: IBlockState,
   html: string,
   editor: Editor | null,
   dispatch: Dispatch<any>

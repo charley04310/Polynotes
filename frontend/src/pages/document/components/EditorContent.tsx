@@ -9,12 +9,12 @@ import { forwardRef, Ref, useImperativeHandle } from "react";
 import { HandleKeyDown } from "../composables/handleKeyDown";
 import { useDispatch } from "react-redux";
 import Placeholder from "@tiptap/extension-placeholder";
-import { BlockState } from "../../../store/interfaces/block";
+import { IBlockState } from "../../../store/interfaces/block";
 import BubbleMenuComponent from "./BubbleMenu";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 
 export interface TiptapProps {
-  blockState: BlockState;
+  blockState: IBlockState;
   onArrowPressed?: (event: any) => void;
 }
 

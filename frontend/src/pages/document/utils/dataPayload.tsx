@@ -1,11 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
+import { typeIndex } from "../../../modules/interfaces/database";
 
-import {
-  BlockState,
-  BlockType,
-} from "../../../store/interfaces/block";
+import { IBlockState, BlockType } from "../../../store/interfaces/block";
 
-export const initialState: BlockState[] = [
+export const initialState: IBlockState[] = [
   {
     id: uuidv4(),
     type: BlockType.TIPTAP,
@@ -18,6 +16,12 @@ export const initialState: BlockState[] = [
     ref: null,
     content: "",
   },
+  {
+    id: uuidv4(),
+    type: BlockType.TRELLO,
+    ref: null,
+    content: "",
+  },
   /*   {
     id: uuidv4(),
     type: BlockType.IMAGE,
@@ -26,58 +30,84 @@ export const initialState: BlockState[] = [
     content:
       "https://www.portices.fr/wp-content/uploads/2021/05/developper-activite-internet.jpg",
   }, */
-  /* {
+  /*  {
     id: uuidv4(),
-    type: BlockType.DATABASE,
+    type: BlockType.TRELLO,
     ref: null,
     content: {
       columns: [
         {
-          title: "Nom",
-          dataIndex: "name",
+          title: "Tâche",
+          dataIndex: "tache",
           typeIndex: typeIndex.TEXT,
           editable: true,
         },
         {
-          title: "Age",
-          dataIndex: "age",
-          typeIndex: typeIndex.NUMBER,
-          editable: true,
-        },
-        {
-          title: "Date de naissance",
-          dataIndex: "date",
-          typeIndex: typeIndex.DATE,
-          editable: true,
-        },
-        {
-          title: "Sexe",
-          dataIndex: "sexe",
+          title: "Statut",
+          dataIndex: "statut",
           typeIndex: typeIndex.SELECT,
           editable: true,
-        }, 
+        },
+        {
+          title: "Date de creation",
+          dataIndex: "dateCreation",
+          typeIndex: typeIndex.DATE,
+          editable: false,
+        },
+        {
+          title: "Date de fin",
+          dataIndex: "dateFin",
+          typeIndex: typeIndex.SELECT,
+          editable: true,
+        },
       ],
       rows: [
         {
           key: "1",
-          name: "Mike",
-          age: 32,
-          date: "1990-01-01",
-          sexe: "Homme",
+          tache: "Frontend",
+          statut: "started",
+          dateCreation: "2023-08-09",
+          dateFin: "2023-08-09",
         },
+      ],
+      trello: {
+        columnsTrello: ["En cours", "test"],
+        rowsTrello: [
+          {
+            id: "1",
+            content: (
+              <div>
+                <h1>Hello world</h1>
+              </div>
+            ),
+            column: "En cours",
+          },
+          {
+            id: "2",
+            content: (
+              <div>
+                <h1>Hello TOi</h1>
+              </div>
+            ),
+            column: "En cours",
+          },
+        ],
+      },
+    },
+  }, */
+  /* {
+    id: uuidv4(),
+    type: BlockType.TRELLO,
+    ref: null,
+    content: {
+      columnsTrello: ["En cours"],
+      rowsTrello: [
         {
-          key: "2",
-          name: "John",
-          age: 42,
-          date: "1990-01-01",
-          sexe: "Homme",
-        },
-        {
-          key: "3",
-          name: "Jane",
-          age: 32,
-          date: "1990-01-01",
-          sexe: "Femme",
+          key: "1",
+          tache: "Frontend",
+          statut: "started",
+          dateCreation: "2023-08-09",
+          dateFin: "2023-08-09",
         },
       ],
     },

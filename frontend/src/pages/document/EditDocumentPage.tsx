@@ -1,18 +1,19 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./index.css";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import Tiptap from "./components/EditorContent";
 import { Editor } from "@tiptap/react";
-import { BlockState, BlockType } from "../../store/interfaces/block";
+import { IBlockState, BlockType } from "../../store/interfaces/block";
 import ImageBlockComponent from "./components/ImageBlock";
 import DropDownMenu from "./components/DropDownMenu";
 import TableDataBase from "./components/DataBaseTable";
+import { TrelloDataBase } from "./components/TrelloDataBase";
 
 const EditDocumentPage = () => {
   const refs = useRef<(Editor | null)[]>([]);
 
-  const blocksPage: BlockState[] = useSelector(
+  const blocksPage: IBlockState[] = useSelector(
     (state: RootState) => state.blocks
   );
 
@@ -50,6 +51,10 @@ const EditDocumentPage = () => {
           ) : null}
           {item.type === BlockType.DATABASE ? (
             <TableDataBase dataSource={item} index={index} />
+          ) : null}
+
+          {item.type === BlockType.TRELLO && typeof item.content != "string" ? (
+            <TrelloDataBase dataSource={item} index={index} />
           ) : null}
         </div>
       ))}

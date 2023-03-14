@@ -17,17 +17,33 @@ export enum typeIndex {
   DATE = "date",
   CHECKBOX = "checkbox",
 }
-export interface TableState {
-  columns: Column[];
-  rows: Row[];
+export interface ITableState {
+  columns: IColumnTableDataBase[];
+  rows: IRowTableDataBase[];
+  trello: ITrelloState;
 }
-export interface Column {
+export interface ITrelloState {
+  columnsTrello: string[];
+  rowsTrello: IRowTrello[];
+}
+export interface IColumnTableDataBase {
   title: string;
   typeIndex: typeIndex;
   dataIndex: string;
   editable: boolean;
 }
-export interface Row {
+export interface IRowTableDataBase {
   key: string;
   [key: string]: any;
+}
+
+export interface IRowTrello {
+  id: string;
+  content: string | JSX.Element;
+  column: string;
+}
+
+export interface IColumn {
+  heading: string;
+  elements: IRowTrello[];
 }
