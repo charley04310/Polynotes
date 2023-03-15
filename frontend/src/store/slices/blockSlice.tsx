@@ -8,24 +8,7 @@ import {
 import { initialState } from "../../pages/document/utils/dataPayload";
 import { NewColumnType } from "../../modules/database/AddColumnTable";
 import { defaultContent } from "../../modules/database/composables/FirstValueRowFields";
-
-export function formatRow(row: any): IRowTrello {
-  const content = (
-    <div>
-      {Object.entries(row).map(([propName, propValue]) => {
-        if (propName !== "key" && propName !== "index") {
-          return <p key={propName}>{`${propName}: ${propValue}`}</p>;
-        }
-      })}
-    </div>
-  );
-
-  return {
-    id: row.key,
-    content: content,
-    column: "En cours",
-  };
-}
+import { formatRow } from "../composables/FormatRow";
 
 const blockSlice = createSlice({
   name: "block",
@@ -133,6 +116,7 @@ const blockSlice = createSlice({
     /*************************************** PARTIE TRELLO ***************************************/
     setNewTrelloColumn: (state, action) => {
       const { index, title } = action.payload;
+      if (title === "") return;
       const content = state[index].content as ITableState;
       content.trello.columnsTrello.push(title);
     },

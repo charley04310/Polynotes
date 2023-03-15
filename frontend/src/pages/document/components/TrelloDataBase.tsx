@@ -105,12 +105,12 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
             })}
           </MainWrapper>
         </DndContext>
-        <div style={{ marginTop: 10 }}>
+        <div style={{ marginTop: 0 }}>
           <Button onClick={() => setToTableView()}> Table view</Button>
           <Search
             placeholder="Ajouter une colonne"
             value={searchValue}
-            style={{ width: 400, marginLeft: 10 }}
+            style={{ width: 215, marginLeft: 10 }}
             enterButton={<RightCircleOutlined />}
             onSearch={(value) => setTrelloColumn(value)}
             onChange={(e) => setSearchValue(e.target.value)}
@@ -123,10 +123,8 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
 
 const MainWrapper = styled("div", {
   display: "flex",
-  justifyContent: "space-evenly",
-  backgroundColor: "blue",
-  paddingTop: 40,
-  paddingBottom: 40,
-  fontFamily: "Anek Telugu",
-  height: "50vh",
+  justifyContent: "space-between",
+  paddingTop: 10,
+  paddingBottom: 20,
+  height: "auto",
 });

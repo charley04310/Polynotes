@@ -3,7 +3,7 @@ import { styled } from "@stitches/react";
 import { Droppable } from "../Droppable";
 import { DraggableElement } from "./DraggableElement";
 import { IColumn } from "../../interfaces/database";
-
+import { Card } from "antd";
 
 export const Column: FC<IColumn> = ({ heading, elements }) => {
   const columnIdentifier = useMemo(() => heading, [heading]);
@@ -14,8 +14,14 @@ export const Column: FC<IColumn> = ({ heading, elements }) => {
   );
 
   return (
-    <ColumnWrapper>
-      <ColumnHeaderWrapper variant={columnIdentifier as any}>
+    <Card
+      style={{
+        width: 320,
+        padding: 0,
+        paddingTop: 10,
+      }}
+    >
+      <ColumnHeaderWrapper>
         <Heading>{heading}</Heading>
         <ColumnTasksAmout>{amounts}</ColumnTasksAmout>
       </ColumnHeaderWrapper>
@@ -29,26 +35,18 @@ export const Column: FC<IColumn> = ({ heading, elements }) => {
         ))}
         <DropPlaceholder />
       </Droppable>
-    </ColumnWrapper>
+    </Card>
   );
 };
 
 const Heading = styled("h3", {
-  color: "#FFF",
-});
-
-const ColumnWrapper = styled("div", {
-  width: 320,
-  padding: 10,
-  border: "dashed",
-  borderWidth: 2,
-  borderRadius: 10,
+  color: "white",
 });
 
 const DropPlaceholder = styled("div", {
-  height: 35,
+  height: 20,
   backgroundColor: "transparent",
-  marginTop: 15,
+  marginTop: 5,
 });
 
 const ColumnHeaderWrapper = styled("div", {
@@ -56,24 +54,10 @@ const ColumnHeaderWrapper = styled("div", {
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  variants: {
-    variant: {
-      backlog: {
-        background: "#F94892",
-      },
-      inProgress: {
-        background: "#5800FF",
-      },
-      inReview: {
-        background: "#ffb300",
-      },
-      done: {
-        background: "#24A19C",
-      },
-    },
-  },
-  padding: "0px 10px 0px 10px",
-  borderRadius: 10,
+  background: "#001529",
+  color: "white",
+  padding: "0px 10px ",
+  borderRadius: 5,
 });
 
 const ColumnTasksAmout = styled("span", {
