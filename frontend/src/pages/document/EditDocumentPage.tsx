@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import "./index.css";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";

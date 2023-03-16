@@ -91,3 +91,8 @@ code {
 .ant-dropdown-menu {
   border-radius: 2px !important;
 }
+
+.wrapper-Column:hover .dropdown-color {
+  opacity: 1 !important;
+  transition: opacity 1s ease-in-out;
+}

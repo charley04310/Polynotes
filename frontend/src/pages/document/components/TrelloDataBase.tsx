@@ -6,12 +6,17 @@ import { RightCircleOutlined } from "@ant-design/icons";
 
 import { Column } from "../../../modules/DND/elements/Column";
 import { BlockType, IBlockState } from "../../../store/interfaces/block";
-import { IRowTrello } from "../../../modules/interfaces/database";
+import {
+  IRowTrello,
+  IStyleHeaderTrello,
+  ITrelloState,
+} from "../../../modules/interfaces/database";
 import { Button, Input } from "antd";
 import { useDispatch } from "react-redux";
 import {
   setNewTypeBlock,
   setNewTrelloColumn,
+  setRowTrelloToColumn,
 } from "../../../store/slices/blockSlice";
 import { INewTypeBlock } from "../../../modules/database/AddColumnTable";
 
@@ -29,22 +34,37 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
   const [rowsTrello, setrowsTrello] = useState<IRowTrello[]>();
   const [Columns, setColumns] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [styleHeadersColumns, setStyleHeadersColumns] = useState<
+    IStyleHeaderTrello[]
+  >([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof dataSource.content === "string") return;
     const initRowsValue = dataSource.content.trello.rowsTrello;
     const initColValue = dataSource.content.trello.columnsTrello;
+    const initStyleColumnsHeader = dataSource.content.trello.columnsTrelloStyle;
 
+    setStyleHeadersColumns(initStyleColumnsHeader);
     setColumns(initColValue);
     setrowsTrello(initRowsValue);
-  }, [dataSource.content]);
+  }, [dataSource.content, index]);
 
   const handleOnDragEnd = useCallback(
     ({ active, over }: DragEndEvent) => {
       if (!rowsTrello) return;
       const elementId = active.id;
       const deepCopy = [...rowsTrello];
+
+      const setRowToColumn = () => {
+        const newStoreValues = {
+          index: index,
+          value: updatedState,
+        };
+
+        // console.log(newStoreValues);
+        dispatch(setRowTrelloToColumn(newStoreValues));
+      };
 
       const updatedState = deepCopy.map((elm): IRowTrello => {
         if (elm.id === elementId) {
@@ -55,17 +75,12 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
       });
 
       setrowsTrello(updatedState);
+
+      setRowToColumn();
     },
-    [rowsTrello, setrowsTrello]
+    [rowsTrello, setrowsTrello, index, dispatch]
   );
-  const handleSearch = (value: string) => {
-    /*     dispatch(
-      setBlockContent({
-        item: blockState,
-        content: value,
-      })
-    ); */
-  };
+
   const setToTableView = () => {
     const values: INewTypeBlock = {
       index: index,
@@ -99,7 +114,10 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
                 <Column
                   key={`column-${columnIndex}`}
                   heading={column}
+                  styleColumnHeader={styleHeadersColumns[columnIndex]}
                   elements={filteredElements}
+                  blockIndex={index}
+                  columnTrelloIndex={columnIndex}
                 />
               );
             })}

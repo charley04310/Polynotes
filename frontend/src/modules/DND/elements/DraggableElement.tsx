@@ -1,5 +1,5 @@
-import { FC, useMemo } from "react";
 import { styled } from "@stitches/react";
+import { FC, useMemo } from "react";
 import { Draggable } from "../Draggable";
 
 interface IDraggableElement {
@@ -15,12 +15,14 @@ export const DraggableElement: FC<IDraggableElement> = ({
 
   return (
     <Draggable id={itemIdentifier}>
-      <ElementText>{content}</ElementText>
+      <CardTrello>{content}</CardTrello>
     </Draggable>
   );
 };
 
-const ElementText = styled("h3", {
-  fontSize: 18,
-  fontWeight: 600,
+const CardTrello = styled("div", {
+  background: "white",
+  padding: "20px 15px",
+  marginTop: 10,
+  borderRadius: "5px",
 });

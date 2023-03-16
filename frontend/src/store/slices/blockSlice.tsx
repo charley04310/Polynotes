@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import {
   IRowTableDataBase,
-  IRowTrello,
   ITableState,
 } from "../../modules/interfaces/database";
 import { initialState } from "../../pages/document/utils/dataPayload";
@@ -40,7 +39,6 @@ const blockSlice = createSlice({
         state.splice(blockIndex, 1);
       }
     },
-
     setNewTypeBlock: (state, action) => {
       const { index, type } = action.payload;
       //console.log("index", JSON.stringify(state[index]));
@@ -119,6 +117,60 @@ const blockSlice = createSlice({
       if (title === "") return;
       const content = state[index].content as ITableState;
       content.trello.columnsTrello.push(title);
+      content.trello.columnsTrelloStyle.push({
+        background: "#001529",
+      });
+    },
+    setRowTrelloToColumn: (state, action) => {
+      const { index, value } = action.payload;
+      const content = state[index].content as ITableState;
+      content.trello.rowsTrello = value;
+    },
+    setColumnNewTitle: (state, action) => {
+      const { index, valueToReplace, newValue } = action.payload;
+      const content = state[index].content as ITableState;
+
+      const indexOfColumn =
+        content.trello.columnsTrello.indexOf(valueToReplace);
+
+      content.trello.columnsTrello.splice(indexOfColumn, 1, newValue);
+      content.trello.rowsTrello.forEach((item) => {
+        if (item.column === valueToReplace) {
+          item.column = newValue;
+        }
+      });
+      /* const test = content.trello.columnsTrello.filter((item) => {
+        if (item === valueToReplace) {
+          item = newValue;
+        }
+        return true;
+      });
+
+      console.log("test", valueToReplace); */
+    },
+    deleteTrelloColumn: (state, action) => {
+      const { index, value } = action.payload;
+      const content = state[index].content as ITableState;
+      const indexOfColumn = content.trello.columnsTrello.indexOf(value);
+      content.trello.columnsTrello.splice(indexOfColumn, 1);
+      const firstIndex = content.trello.columnsTrello[0];
+      /* 
+      content.trello.rowsTrello = content.trello.rowsTrello.filter(
+        (item) => item.column !== value
+      ); */
+      content.trello.rowsTrello.forEach((item) => {
+        if (item.column === value) {
+          item.column = firstIndex;
+        }
+      });
+    },
+    setStyleColumn: (state, action) => {
+      const { background, indexBlock, indexColumn } = action.payload;
+      const content = state[indexBlock].content as ITableState;
+      console.log("background", background);
+      content.trello.columnsTrelloStyle[indexColumn] = {
+        background: background,
+      };
     },
   },
 });
@@ -133,6 +185,10 @@ export const {
   deleteRows,
   setNewTypeBlock,
   setNewTrelloColumn,
+  setRowTrelloToColumn,
+  setColumnNewTitle,
+  deleteTrelloColumn,
+  setStyleColumn,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;

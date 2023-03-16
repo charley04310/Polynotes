@@ -24,6 +24,7 @@ export interface ITableState {
 }
 export interface ITrelloState {
   columnsTrello: string[];
+  columnsTrelloStyle: IStyleHeaderTrello[];
   rowsTrello: IRowTrello[];
 }
 export interface IColumnTableDataBase {
@@ -46,4 +47,11 @@ export interface IRowTrello {
 export interface IColumn {
   heading: string;
   elements: IRowTrello[];
+  blockIndex: number;
+  columnTrelloIndex: number;
+  styleColumnHeader: IStyleHeaderTrello;
+}
+
+export interface IStyleHeaderTrello {
+  background: string;
 }

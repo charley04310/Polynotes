@@ -63,7 +63,15 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
             content: {
               columns: [],
               rows: [],
-              trello: { columnsTrello: ["En cours"], rowsTrello: [] },
+              trello: {
+                columnsTrello: ["Default"],
+                columnsTrelloStyle: [
+                  {
+                    background: "#001529",
+                  },
+                ],
+                rowsTrello: [],
+              },
             },
             id: item.id,
           })

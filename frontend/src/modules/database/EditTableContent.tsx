@@ -90,7 +90,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
-
   const addItem = (
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
@@ -101,7 +100,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       inputRef.current?.focus();
     }, 0);
   };
-
   const checkBoxChange = (e: CheckboxChangeEvent) => {
     console.log(`checked = ${e.target.checked}`);
   };
