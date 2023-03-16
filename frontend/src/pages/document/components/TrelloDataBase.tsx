@@ -91,10 +91,12 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
   };
 
   const setTrelloColumn = (title: string) => {
+    
     const value = {
       index: index,
       title: title,
     };
+
     dispatch(setNewTrelloColumn(value));
     setSearchValue("");
   };

@@ -59,7 +59,8 @@ export const Column: FC<IColumn> = ({
       inputRef.current!.focus();
     }
     setHeaderBackground(styleColumnHeader.background);
-  }, [editing, styleColumnHeader, blockIndex]);
+    setInputValue(heading);
+  }, [editing, styleColumnHeader, blockIndex, columnTrelloIndex, heading]);
 
   const handleHeaderColor = (color: string) => {
     const newHeaderColor = {
@@ -182,7 +183,11 @@ export const Column: FC<IColumn> = ({
               type="text"
               onClick={() =>
                 dispatch(
-                  deleteTrelloColumn({ index: blockIndex, value: inputValue })
+                  deleteTrelloColumn({
+                    blockIndex: blockIndex,
+                    columnTrelloIndex: columnTrelloIndex,
+                    value: inputValue,
+                  })
                 )
               }
               style={{ color: "red", marginLeft: 0 }}
