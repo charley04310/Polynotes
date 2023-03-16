@@ -40,7 +40,11 @@ export interface IRowTableDataBase {
 
 export interface IRowTrello {
   id: string;
-  content: string | JSX.Element;
+  content:
+    | string
+    | {
+        [key: string]: any;
+      };
   column: string;
 }
 

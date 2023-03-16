@@ -18,7 +18,6 @@ const blockSlice = createSlice({
       const { item, content } = action.payload;
       const blockIndex = state.findIndex((block) => block.id === item.id);
       state[blockIndex].content = content;
-      //console.log(content);
     },
     setNewBlock: (state, action) => {
       const { type, content, id } = action.payload;
@@ -28,6 +27,7 @@ const blockSlice = createSlice({
         ref: null,
         content: content,
       };
+
       const blockIndex = state.findIndex((block) => block.id === id);
 
       state.splice(blockIndex + 1, 0, newBlock);
@@ -44,7 +44,6 @@ const blockSlice = createSlice({
       //console.log("index", JSON.stringify(state[index]));
       state[index].type = type;
     },
-
     /*************************************** PARTIE DATABASE ***************************************/
     setNewColumn: (
       state,
@@ -53,10 +52,14 @@ const blockSlice = createSlice({
       }
     ) => {
       const { index, title, typeIndex } = action.payload;
-      let data = title;
-      data = data.replace(/ /g, "_");
+      const content = state[index].content as ITableState;
+      if (title === "") return;
+      if (content.columns.some((item) => item.title === title)) return;
 
-      (state[index].content as ITableState).columns.push({
+      const data = title;
+      data.replace(/ /g, "_");
+
+      content.columns.push({
         title: title,
         typeIndex: typeIndex,
         dataIndex: data,
@@ -80,12 +83,13 @@ const blockSlice = createSlice({
       content.rows.push(row);
       const defaultColumn = content.trello.columnsTrello[0];
       const newObject = formatRow(row, defaultColumn);
+      console.log("row", newObject);
+
       content.trello.rowsTrello.push(newObject);
     },
     setRowData: (state, action) => {
       const { index, key } = action.payload;
       const content = state[index].content as ITableState;
-
       if (!content.rows) return;
 
       const indexRow = content.rows.findIndex((item) => key === item.key);
