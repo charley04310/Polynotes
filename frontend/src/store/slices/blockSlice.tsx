@@ -78,8 +78,8 @@ const blockSlice = createSlice({
       });
 
       content.rows.push(row);
-
-      const newObject = formatRow(row);
+      const defaultColumn = content.trello.columnsTrello[0];
+      const newObject = formatRow(row, defaultColumn);
       content.trello.rowsTrello.push(newObject);
     },
     setRowData: (state, action) => {
@@ -95,8 +95,8 @@ const blockSlice = createSlice({
         ...action.payload,
       };
       content.rows.splice(indexRow, 1, value);
-
-      const newObject = formatRow(value);
+      const defaultColumn = content.trello.columnsTrello[0];
+      const newObject = formatRow(value, defaultColumn);
       const indexRowTrello = content.trello.rowsTrello.findIndex(
         (item) => key === item.id
       );

@@ -4,7 +4,7 @@ import { IRowTrello } from "../../modules/interfaces/database";
 
 let count = 0;
 
-export const formatRow = (row: any): IRowTrello => {
+export const formatRow = (row: any, defaultColumn: string): IRowTrello => {
   const content = (
     <>
       {Object.entries(row).map(([propName, propValue]) => {
@@ -39,6 +39,6 @@ export const formatRow = (row: any): IRowTrello => {
   return {
     id: row.key,
     content: content,
-    column: "Default",
+    column: defaultColumn,
   };
 };
