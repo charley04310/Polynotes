@@ -81,9 +81,9 @@ const blockSlice = createSlice({
       });
 
       content.rows.push(row);
+
       const defaultColumn = content.trello.columnsTrello[0];
       const newObject = formatRow(row, defaultColumn);
-      console.log("row", newObject);
 
       content.trello.rowsTrello.push(newObject);
     },
@@ -138,6 +138,9 @@ const blockSlice = createSlice({
       const { index, valueToReplace, newValue } = action.payload;
       const content = state[index].content as ITableState;
 
+      if (newValue === "") return;
+      if (content.trello.columnsTrello.includes(newValue)) return;
+
       const indexOfColumn =
         content.trello.columnsTrello.indexOf(valueToReplace);
 
@@ -147,19 +150,13 @@ const blockSlice = createSlice({
           item.column = newValue;
         }
       });
-      /* const test = content.trello.columnsTrello.filter((item) => {
-        if (item === valueToReplace) {
-          item = newValue;
-        }
-        return true;
-      });
-
-      console.log("test", valueToReplace); */
     },
     deleteTrelloColumn: (state, action) => {
       const { blockIndex, columnTrelloIndex, value } = action.payload;
-
       const content = state[blockIndex].content as ITableState;
+
+      if (content.trello.columnsTrello.length === 1) return;
+
       const firstIndex = content.trello.columnsTrello[0];
       const newColumns = content.trello.columnsTrello.filter(
         (item) => item !== value
@@ -176,7 +173,7 @@ const blockSlice = createSlice({
     setStyleColumn: (state, action) => {
       const { background, indexBlock, indexColumn } = action.payload;
       const content = state[indexBlock].content as ITableState;
-      console.log("background", background);
+
       content.trello.columnsTrelloStyle[indexColumn] = {
         background: background,
       };

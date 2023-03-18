@@ -54,7 +54,6 @@ export const Column: FC<IColumn> = ({
   };
 
   useEffect(() => {
-    console.log("style: ", styleColumnHeader);
     if (editing) {
       inputRef.current!.focus();
     }

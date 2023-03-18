@@ -1,10 +1,48 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailService } from './mail.service';
+
+import { AuthService } from './auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [],
+  imports: [
+    UsersModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync({
+      useFactory: async (
+        configService: ConfigService,
+      ): Promise<MongooseModuleOptions> => ({
+        uri: configService.get<string>('MONGODB_URL'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }),
+      inject: [ConfigService], // Inject the ConfigService.
+    }),
+    MailerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        transport: {
+          host: configService.get<string>('MAILER_HOST'),
+          port: configService.get<number>('MAILER_PORT'),
+          secure: false,
+          auth: {
+            user: configService.get<string>('MAILER_USER'),
+            pass: configService.get<string>('MAILER_PASSWORD'),
+          },
+        },
+        defaults: {
+          from: '"Polynote inscription" <noreply@polynote.net>',
+        },
+      }),
+      inject: [ConfigService], // Inject the ConfigService.
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MailService, AuthService, JwtService],
 })
 export class AppModule {}
