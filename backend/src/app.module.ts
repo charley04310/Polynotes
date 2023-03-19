@@ -6,13 +6,12 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
-
-import { AuthService } from './auth.service';
-import { JwtService } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UsersModule,
+    AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       useFactory: async (
@@ -43,6 +42,6 @@ import { JwtService } from '@nestjs/jwt';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, MailService, AuthService, JwtService],
+  providers: [AppService, MailService],
 })
 export class AppModule {}
