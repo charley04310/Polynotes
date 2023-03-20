@@ -10,12 +10,10 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    console.log(
-      `[AuthService] validateUser: email=${email}, password=${password}`,
-    );
     const user = await this.usersService.findOneByEmail(email);
     return user;
   }
+
   async decodeJwtToken(token: string) {
     const decodedToken = this.jwtService.decode(token);
     return decodedToken;

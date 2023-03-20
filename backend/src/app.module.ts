@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { AuthModule } from './auth/auth.module';
+import { PageModule } from './page/page.module';
 
 @Module({
   imports: [
@@ -41,6 +42,8 @@ import { AuthModule } from './auth/auth.module';
       }),
       inject: [ConfigService], // Inject the ConfigService.
     }),
+
+    PageModule,
   ],
   controllers: [AppController],
   providers: [AppService, MailService],
