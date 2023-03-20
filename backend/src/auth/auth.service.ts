@@ -16,7 +16,15 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(email);
     return user;
   }
-
+  async decodeJwtToken(token: string) {
+    const decodedToken = this.jwtService.decode(token);
+    return decodedToken;
+  }
+  async singnJwtToken(user: any) {
+    const payload = { email: user.email, name: user.username };
+    const token = this.jwtService.sign(payload);
+    return token;
+  }
   async login(user: any) {
     const payload = { email: user.email, name: user.username };
     return {

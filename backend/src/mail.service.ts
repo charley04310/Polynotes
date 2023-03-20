@@ -12,7 +12,7 @@ export class MailService {
   async mailSenderVerification(to: string, token: string, name: string) {
     const baseUrl = this.configService.get('BASE_URL');
 
-    const verificationLink = `${baseUrl}/users/mail-verification/${token}`;
+    const verificationLink = `${baseUrl}/auth/email-verification/${token}`;
 
     const mailOptions = {
       to,

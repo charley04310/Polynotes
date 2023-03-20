@@ -4,6 +4,9 @@ import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/user.schema';
 import { MailService } from 'src/mail.service';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
+
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -14,7 +17,7 @@ import { MailService } from 'src/mail.service';
     ]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, MailService],
+  providers: [UsersService, MailService, JwtService],
   exports: [UsersService],
 })
 export class UsersModule {}

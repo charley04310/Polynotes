@@ -23,6 +23,7 @@ import { AuthModule } from './auth/auth.module';
       }),
       inject: [ConfigService], // Inject the ConfigService.
     }),
+
     MailerModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         transport: {
