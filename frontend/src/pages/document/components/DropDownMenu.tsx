@@ -16,29 +16,79 @@ import { IBlockState, BlockType } from "../../../store/interfaces/block";
 interface DropDownProps {
   editor: Editor | null;
   item: IBlockState;
+  setUpdateData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
+export enum Level {
+  H1 = 1,
+  H2 = 2,
+  H3 = 3,
+}
+
+const DropDownMenu: React.FC<DropDownProps> = ({
+  editor,
+  item,
+  setUpdateData,
+}) => {
   const dispatch = useDispatch();
+
+  const setNewDataBase = () => {
+    dispatch(
+      setNewBlock({
+        type: BlockType.DATABASE,
+        content: {
+          columns: [],
+          rows: [],
+          trello: {
+            columnsTrello: ["Default"],
+            columnsTrelloStyle: [
+              {
+                background: "#001529",
+              },
+            ],
+            rowsTrello: [],
+          },
+        },
+        id: item.id,
+      })
+    );
+
+    setUpdateData(true);
+  };
+  const toggleHeading = (level: Level) => {
+    editor?.commands.toggleHeading({ level: level });
+    setUpdateData(true);
+  };
+  const removeBlock = async () => {
+    dispatch(deleteBlock({ id: item.id }));
+    setUpdateData(true);
+  };
+  const setImageBlock = () => {
+    dispatch(setNewBlock({ type: BlockType.IMAGE, content: "", id: item.id }));
+    setUpdateData(true);
+  };
+  const setParagraphBlock = () => {
+    dispatch(setNewBlock({ type: BlockType.TIPTAP, content: "", id: item.id }));
+  };
 
   const items: MenuProps["items"] = [
     {
       label: "Titre 1",
       icon: <FontSizeOutlined />,
       key: "0",
-      onClick: () => editor?.commands.toggleHeading({ level: 1 }),
+      onClick: () => toggleHeading(Level.H1),
     },
     {
       label: "Titre 2",
       icon: <FontSizeOutlined />,
       key: "1",
-      onClick: () => editor?.commands.toggleHeading({ level: 2 }),
+      onClick: () => toggleHeading(Level.H2),
     },
     {
       label: "Titre 3",
       icon: <FontSizeOutlined />,
       key: "2",
-      onClick: () => editor?.commands.toggleHeading({ level: 3 }),
+      onClick: () => toggleHeading(Level.H3),
     },
     {
       type: "divider",
@@ -47,44 +97,19 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
       label: "Image",
       icon: <FileImageOutlined />,
       key: "3",
-      onClick: () =>
-        dispatch(
-          setNewBlock({ type: BlockType.IMAGE, content: "", id: item.id })
-        ),
+      onClick: () => setImageBlock(),
     },
     {
       label: "Database",
       icon: <DatabaseOutlined />,
       key: "4",
-      onClick: () =>
-        dispatch(
-          setNewBlock({
-            type: BlockType.DATABASE,
-            content: {
-              columns: [],
-              rows: [],
-              trello: {
-                columnsTrello: ["Default"],
-                columnsTrelloStyle: [
-                  {
-                    background: "#001529",
-                  },
-                ],
-                rowsTrello: [],
-              },
-            },
-            id: item.id,
-          })
-        ),
+      onClick: () => setNewDataBase(),
     },
     {
       label: "Block Paragraphe",
       icon: <BlockOutlined />,
       key: "5",
-      onClick: () =>
-        dispatch(
-          setNewBlock({ type: BlockType.TIPTAP, content: "", id: item.id })
-        ),
+      onClick: () => setParagraphBlock(),
     },
     {
       type: "divider",
@@ -95,7 +120,7 @@ const DropDownMenu: React.FC<DropDownProps> = ({ editor, item }) => {
       icon: <DeleteOutlined />,
       key: "6",
       danger: true,
-      onClick: () => dispatch(deleteBlock({ id: item.id })),
+      onClick: () => removeBlock(),
     },
   ];
 

@@ -7,7 +7,7 @@
 
 .moreOptionsButton {
   display: block;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 .deleteImageButton {
   position: absolute;
@@ -20,7 +20,7 @@
 }
 
 .block:hover .moreOptionsButton {
-  color: grey;
+  color: rgb(14, 14, 14);
 }
 
 .block::after {
@@ -36,7 +36,7 @@
 .ProseMirror h1.is-empty:first-child::before,
 .ProseMirror h2.is-empty:first-child::before,
 .ProseMirror h3.is-empty:first-child::before {
-  color: #004b95;
+  color: rgb(0, 0, 0);
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -45,7 +45,7 @@
 
 .editable:hover {
   display: block;
-  background-color: rgba(128, 128, 128, 0.121) !important;
+  background-color: rgba(255, 255, 255, 0.121) !important;
 }
 .has-focus {
   border-radius: 3px;
@@ -53,16 +53,15 @@
 }
 
 .button-marks-is-active {
-  background-color: #004b95;
+  background-color: #000000;
   padding: 5px;
-
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .button-marks {
   padding: 5px;
   margin: 2px;
-  background-color: #474747;
+  background-color: #000000;
   border: 1px;
   color: white;
 }
@@ -70,7 +69,7 @@
 pre,
 pre.has-focus {
   background: #0d0d0d;
-  color: #fff;
+  color: rgb(0, 0, 0);
   font-family: "JetBrainsMono", monospace;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;

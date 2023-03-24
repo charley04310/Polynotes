@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, ObjectId, SchemaTypes } from 'mongoose';
 
 export type PageDocument = Page & Document;
 
@@ -10,10 +10,13 @@ export class Page {
   @Prop({ required: true })
   title: string;
 
+  @Prop({ required: true, type: SchemaTypes.ObjectId })
+  userId: ObjectId;
+
   @Prop({
-    required: true,
+    required: false,
   })
-  user_id: string;
+  parent: string | null;
 
   @Prop({ required: true })
   content: [];

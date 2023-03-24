@@ -10,8 +10,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
-          const data = request?.cookies['polynote-JWT'];
-          console.log('data', data);
+          const data = request?.cookies['polynote'];
+
           if (data) {
             return data;
           }

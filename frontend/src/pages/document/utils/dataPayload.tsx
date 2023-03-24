@@ -1,10 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
-import { typeIndex } from "../../../modules/interfaces/database";
-
 import { IBlockState, BlockType } from "../../../store/interfaces/block";
 
 export const initialState: IBlockState[] = [
-  {
+  /*  {
     id: uuidv4(),
     type: BlockType.TIPTAP,
     ref: null,
@@ -15,13 +13,13 @@ export const initialState: IBlockState[] = [
     type: BlockType.TIPTAP,
     ref: null,
     content: "",
-  },
-  {
+  }, */
+  /*  {
     id: uuidv4(),
     type: BlockType.TRELLO,
     ref: null,
     content: "",
-  },
+  }, */
   /*   {
     id: uuidv4(),
     type: BlockType.IMAGE,

@@ -5,12 +5,15 @@ import {
   EditableRow,
 } from "../../../modules/database/EditTableContent";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteRows, setNewRow } from "../../../store/slices/blockSlice";
 
 import AddColumnDataBase from "../../../modules/database/AddColumnTable";
 import { IBlockState } from "../../../store/interfaces/block";
 import { IColumnTableDataBase } from "../../../modules/interfaces/database";
+import { RootState } from "../../../store/store";
+import { useParams } from "react-router-dom";
+import { updatePageContent } from "../../../store/API/Page";
 
 type EditableTableProps = Parameters<typeof Table>[0];
 
@@ -22,12 +25,27 @@ interface EditableTableState {
 }
 const TableDataBase: React.FC<EditableTableState> = ({ dataSource, index }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const globalState = useSelector((state: RootState) => state.blocks);
+  const [updateDataBase, setUpdateData] = useState(false);
+  const param = useParams();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => {
+      if (updateDataBase) {
+        console.log(`Database is Updating TRELLO`, globalState);
+        if (!param.id) return;
+        const page = await updatePageContent(param.id, globalState);
+        setUpdateData(false);
+        console.log(`Page Updated`, page);
+      }
+    })();
+  }, [updateDataBase, globalState, param.id]);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
-
-  const dispatch = useDispatch();
 
   if (typeof dataSource.content === "string") return null;
 
@@ -68,6 +86,7 @@ const TableDataBase: React.FC<EditableTableState> = ({ dataSource, index }) => {
 
   const deleteAllSelectedRowKeys = () => {
     dispatch(deleteRows(rowToDelete));
+    setUpdateData(true);
     setSelectedRowKeys([]);
   };
 

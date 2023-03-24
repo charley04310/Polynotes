@@ -1,5 +1,4 @@
-import { Button, Col, Row } from "antd";
-import dologo from "./dologo.svg";
+import { Button, Row } from "antd";
 
 interface WelcomePageProps {
   onPageStateChange: (newState: string) => void;
@@ -18,7 +17,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onPageStateChange }) => {
           justifyContent: "center",
         }}
       >
-        <img src={dologo} alt="OKOk" width={"50%"} />
+        {/*   <img src={dologo} alt="OKOk" width={"50%"} /> */}
       </div>
       <Row justify="center">
         <Button

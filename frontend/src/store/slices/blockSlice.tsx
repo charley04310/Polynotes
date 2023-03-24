@@ -14,6 +14,11 @@ const blockSlice = createSlice({
   initialState,
   reducers: {
     /*************************************** PARTIE BLOCK ***************************************/
+    setStoreState: (state, action) => {
+      const { payload } = action;
+      console.log("payload content", payload.content);
+      return payload.content;
+    },
     setBlockContent: (state, action) => {
       const { item, content } = action.payload;
       const blockIndex = state.findIndex((block) => block.id === item.id);
@@ -182,6 +187,7 @@ const blockSlice = createSlice({
 });
 
 export const {
+  setStoreState,
   setNewBlock,
   deleteBlock,
   setBlockContent,

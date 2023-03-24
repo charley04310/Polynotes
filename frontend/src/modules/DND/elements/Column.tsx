@@ -19,14 +19,15 @@ import {
   BgColorsOutlined,
   FormatPainterFilled,
 } from "@ant-design/icons";
-import { v4 as uuidv4 } from "uuid";
-
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setColumnNewTitle,
   deleteTrelloColumn,
   setStyleColumn,
 } from "../../../store/slices/blockSlice";
+import { RootState } from "../../../store/store";
+import { useParams } from "react-router-dom";
+import { updatePageContent } from "../../../store/API/Page";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -42,9 +43,22 @@ export const Column: FC<IColumn> = ({
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(heading);
   const [HeaderBackground, setHeaderBackground] = useState("yellow");
-
   const form = useContext(EditableContext)!;
   const inputRef = useRef<InputRef>(null);
+  const globalState = useSelector((state: RootState) => state.blocks);
+  const [updateDataBase, setUpdateData] = useState(false);
+  const param = useParams();
+
+  useEffect(() => {
+    (async () => {
+      if (updateDataBase) {
+        if (!param.id) return;
+        const page = await updatePageContent(param.id, globalState);
+        setUpdateData(false);
+        console.log(`Delete Column`, page);
+      }
+    })();
+  }, [updateDataBase, globalState, param.id]);
 
   const color = {
     primaire: "#001529",
@@ -68,6 +82,7 @@ export const Column: FC<IColumn> = ({
       indexColumn: columnTrelloIndex,
     };
     dispatch(setStyleColumn(newHeaderColor));
+    setUpdateData(true);
 
     setHeaderBackground(color);
   };
@@ -110,8 +125,21 @@ export const Column: FC<IColumn> = ({
       newValue: inputValue,
     };
     dispatch(setColumnNewTitle(newValues));
+    setUpdateData(true);
     toggleEdit();
   };
+
+  const deleteColumn = () => {
+    dispatch(
+      deleteTrelloColumn({
+        blockIndex: blockIndex,
+        columnTrelloIndex: columnTrelloIndex,
+        value: inputValue,
+      })
+    );
+    setUpdateData(true);
+  };
+
   const toggleEdit = () => {
     setEditing(!editing);
   };
@@ -180,15 +208,7 @@ export const Column: FC<IColumn> = ({
           <ContainerButtonDelete>
             <Button
               type="text"
-              onClick={() =>
-                dispatch(
-                  deleteTrelloColumn({
-                    blockIndex: blockIndex,
-                    columnTrelloIndex: columnTrelloIndex,
-                    value: inputValue,
-                  })
-                )
-              }
+              onClick={() => deleteColumn()}
               style={{ color: "red", marginLeft: 0 }}
               disabled={false}
               icon={<DeleteOutlined />}

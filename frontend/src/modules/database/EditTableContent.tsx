@@ -14,9 +14,12 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { EditableCellProps, EditableRowProps } from "../interfaces/database";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRowData } from "../../store/slices/blockSlice";
 import { PlusOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import { RootState } from "../../store/store";
+import { updatePageContent } from "../../store/API/Page";
 
 dayjs.extend(customParseFormat);
 
@@ -36,12 +39,26 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
   const dispatch = useDispatch();
+  const globalState = useSelector((state: RootState) => state.blocks);
+  const param = useParams();
+  const [updateDataBase, setUpdateData] = useState(false);
 
   useEffect(() => {
     if (editing) {
       inputRef.current!.focus();
     }
   }, [editing]);
+
+  useEffect(() => {
+    (async () => {
+      if (updateDataBase) {
+        if (!param.id) return;
+        await updatePageContent(param.id, globalState);
+        console.log("updateDataBase", updateDataBase);
+        setUpdateData(false);
+      }
+    })();
+  }, [updateDataBase, globalState, param.id]);
 
   const toggleEdit = () => {
     setEditing(!editing);
@@ -59,6 +76,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       };
       toggleEdit();
       dispatch(setRowData({ ...record, ...newValues }));
+      setUpdateData(true);
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
     }
@@ -78,6 +96,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     try {
       toggleEdit();
       dispatch(setRowData({ ...record, ...newDate }));
+      setUpdateData(true);
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
     }

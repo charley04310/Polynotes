@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { autoLogin, logoutUser } from "../store/API/Authentification";
+import { setIsAuthenticated, setUser } from "../store/slices/authSlice";
+import { Colors } from "../assets/colors";
+import { IServerResponse } from "../App";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -18,55 +22,79 @@ export type MainLayoutProps = {
 export function getItem(
   label: React.ReactNode,
   key: React.Key,
-  to: string, // new 'to' prop added for the link
+  to?: string, // new 'to' prop added for the link
   icon?: React.ReactNode,
-  children?: MenuItem[]
+  method = () => {}
 ): MenuItem {
   return {
     key,
     icon,
-    children,
-    label: (
-      <Link to={to}>
-        {" "}
-        {/* wrap label in Link component */}
-        {label}
-      </Link>
-    ),
+    onClick: async () => method(),
+    label: <Link to={to || ""}>{label}</Link>,
   } as MenuItem;
 }
 
-const MenuAuthAccess = (): MenuItem[] => {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
-  return !isAuthenticated
-    ? [
-        getItem(
-          "Acceuil",
-          "acceuil",
-          "/authentification",
-          <PieChartOutlined />
-        ),
-        //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
-      ]
-    : [
-        getItem("Acceuil", "acceuil", "/", <PieChartOutlined />),
-        getItem(
-          "My Workspace",
-          "workspace",
-          "/workspace",
-          <PieChartOutlined />
-        ),
-        getItem("Deconnexion", "logout", "/logout", <PieChartOutlined />),
-      ];
-};
-
 const MainLayout = ({ children }: MainLayoutProps) => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const userAutoLogin = async (): Promise<IServerResponse> => {
+    const userLogedIn = await autoLogin();
+    return userLogedIn;
+  };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => {
+      const isLoggedIn = await userAutoLogin();
+      if (isLoggedIn.message === undefined) return;
+      dispatch(setIsAuthenticated(true));
+      dispatch(setUser(isLoggedIn.user));
+    })();
+  });
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const MenuAuthAccess = (): MenuItem[] => {
+    const isAuthenticated = useSelector(
+      (state: RootState) => state.auth.isAuthenticated
+    );
+    return !isAuthenticated
+      ? [
+          getItem(
+            "Acceuil",
+            "acceuil",
+            "/authentification",
+            <PieChartOutlined />
+          ),
+          //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
+        ]
+      : [
+          getItem("Acceuil", "acceuil", "/", <PieChartOutlined />),
+          getItem(
+            "My Workspace",
+            "workspace",
+            "/workspace",
+            <PieChartOutlined />
+          ),
+          getItem(
+            "Deconnexion",
+            "logout",
+            undefined,
+            <PieChartOutlined />,
+            logOutUser
+          ),
+        ];
+  };
+
+  const logOutUser = async () => {
+    const userLogout = await logoutUser();
+    if (userLogout.message !== undefined) {
+      dispatch(setIsAuthenticated(false));
+    }
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -79,7 +107,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             margin: 16,
           }}
         >
-          <img src={logo} alt="OKOk" style={{ width: "100%" }} />
+          <img src={logo} alt="polynote-logo" style={{ width: "100%" }} />
         </div>
         <Menu
           theme="dark"
@@ -88,7 +116,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           items={MenuAuthAccess()}
         />
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout" style={{ background: "#131629" }}>
         <Content style={{ margin: "0 16px" }}>
           <div
             className="App"
@@ -101,7 +129,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
+        <Footer style={{ textAlign: "center", background: "#131629" }}>
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>

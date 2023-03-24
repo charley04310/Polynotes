@@ -1,5 +1,7 @@
 import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { ObjectId } from 'mongoose';
 export class CreatePageDto {
+  readonly pageId: ObjectId;
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -7,7 +9,9 @@ export class CreatePageDto {
   readonly title: string;
   @IsString()
   @IsNotEmpty()
-  readonly user_id: string;
+  readonly userId: string;
+
+  readonly parent: string | null;
 
   @IsNotEmpty()
   readonly content: [];

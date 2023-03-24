@@ -11,6 +11,7 @@ import {
   Param,
   Redirect,
   Res,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,8 +19,9 @@ import { LoginUserDto } from '../users/dto/login-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
-import { Response } from 'express';
-
+import { Request as ExpressRequest, Response } from 'express';
+import { ExtractJwt } from 'passport-jwt';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -33,15 +35,16 @@ export class AuthController {
     try {
       const user = await this.authService.login(req.user);
       response
-        .cookie('polynote-JWT', user.access_token, {
+        .cookie('polynote', user.access_token, {
           httpOnly: true,
           secure: false,
-          sameSite: 'none',
+          sameSite: 'strict',
         })
         .send({
           message: 'Logged in successfully 😊 👌',
           user: {
-            user_email: user.email,
+            userId: user.userId,
+            email: user.email,
             username: user.username,
           },
         });
@@ -53,10 +56,32 @@ export class AuthController {
       );
     }
   }
+  @UseGuards(JwtAuthGuard)
+  @Get('auto-login')
+  async autoLogin(@Req() request: any) {
+    const user = request.user;
+    return {
+      message: 'Logged in successfully 😊 👌',
+      user: {
+        userId: user.userId,
+        email: user.email,
+        username: user.username,
+      },
+      status: HttpStatus.OK,
+    };
+  }
 
   @Post('logout')
   async logout(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('polynote-JWT').json('Logged out successfully 😊 👌');
+    const cookie = response.clearCookie('polynote');
+    if (!cookie)
+      throw new HttpException(
+        'Aucun cookie Polynote présent !!',
+        HttpStatus.BAD_REQUEST,
+      );
+    return {
+      message: 'Logged out successfully 😊 👌',
+    };
   }
 
   @Post('signup')

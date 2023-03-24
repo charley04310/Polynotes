@@ -8,10 +8,13 @@ import {
 } from "@ant-design/icons";
 
 import { Button, Form, Input, Select } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setNewColumn, setNewTypeBlock } from "../../store/slices/blockSlice";
 import { typeIndex } from "../interfaces/database";
 import { BlockType } from "../../store/interfaces/block";
+import { RootState } from "../../store/store";
+import { useParams } from "react-router-dom";
+import { updatePageContent } from "../../store/API/Page";
 
 const { Option } = Select;
 interface AddColumnDataBaseProps {
@@ -35,6 +38,20 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
   const dispatch = useDispatch();
+  const globalState = useSelector((state: RootState) => state.blocks);
+  const [updateDataBase, setUpdateData] = useState(false);
+  const param = useParams();
+
+  // MISE A JOUR DE LA BASE DE DONNE A CHAQUE MODIFICATION
+  useEffect(() => {
+    (async () => {
+      if (updateDataBase) {
+        if (!param.id) return;
+        await updatePageContent(param.id, globalState);
+        setUpdateData(false);
+      }
+    })();
+  }, [updateDataBase, globalState, param.id]);
   // To disable submit button at the beginning.
   useEffect(() => {
     forceUpdate({});
@@ -48,6 +65,7 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
       typeIndex: element.typeIndex,
     };
     dispatch(setNewColumn(values));
+    setUpdateData(true);
     form.resetFields();
   };
 
@@ -58,6 +76,7 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
     };
 
     dispatch(setNewTypeBlock(values));
+    setUpdateData(true);
   };
 
   return (

@@ -2,23 +2,38 @@ import React from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { Col, Row } from "antd";
 import dologo from "./dologo.svg";
+import { loginUser } from "../../store/API/Authentification";
 
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
 interface LoginPageProps {
   onPageStateChange: (newState: string) => void;
+  setNotification: (userSaved: any) => void;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ onPageStateChange }) => {
+const LoginPage: React.FC<LoginPageProps> = ({
+  onPageStateChange,
+  setNotification,
+}) => {
   const [form] = Form.useForm();
 
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
   const handleStateClick = (value: string) => {
     onPageStateChange(value);
+  };
+
+  const onFinish = async (values: any) => {
+    const { email, password } = values;
+
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    console.log("user", user);
+
+    const userLoginResponse = await loginUser(user);
+    setNotification(userLoginResponse);
   };
 
   return (
@@ -31,7 +46,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onPageStateChange }) => {
               justifyContent: "center",
             }}
           >
-            <img src={dologo} alt="OKOk" width={500} />
+            {/* <img src={dologo} alt="OKOk" width={500} /> */}
           </div>
         </>
         <Form
@@ -42,28 +57,26 @@ const LoginPage: React.FC<LoginPageProps> = ({ onPageStateChange }) => {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
             rules={[{ required: true, message: "Please input your username!" }]}
+            style={{ color: "#1e1e1e" }}
           >
-            <Input />
+            <Input placeholder="input placeholder" />
           </Form.Item>
 
           <Form.Item
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
+            style={{ color: "#1e1e1e" }}
           >
             <Input.Password />
           </Form.Item>
 
-          <Form.Item name="remember" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button htmlType="submit" style={{ background: "#49aa19" }}>
+              SE CONNECTER
             </Button>
           </Form.Item>
         </Form>

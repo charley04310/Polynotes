@@ -9,16 +9,18 @@ import { BlockType, IBlockState } from "../../../store/interfaces/block";
 import {
   IRowTrello,
   IStyleHeaderTrello,
-  ITrelloState,
 } from "../../../modules/interfaces/database";
 import { Button, Input } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setNewTypeBlock,
   setNewTrelloColumn,
   setRowTrelloToColumn,
 } from "../../../store/slices/blockSlice";
 import { INewTypeBlock } from "../../../modules/database/AddColumnTable";
+import { RootState } from "../../../store/store";
+import { useParams } from "react-router-dom";
+import { updatePageContent } from "../../../store/API/Page";
 
 const { Search } = Input;
 
@@ -34,6 +36,10 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
   const [rowsTrello, setrowsTrello] = useState<IRowTrello[]>();
   const [Columns, setColumns] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const globalState = useSelector((state: RootState) => state.blocks);
+  const [updateDataBase, setUpdateData] = useState(false);
+  const param = useParams();
+
   const [styleHeadersColumns, setStyleHeadersColumns] = useState<
     IStyleHeaderTrello[]
   >([]);
@@ -50,6 +56,16 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
     setrowsTrello(initRowsValue);
   }, [dataSource.content, index]);
 
+  useEffect(() => {
+    (async () => {
+      if (updateDataBase) {
+        if (!param.id) return;
+        await updatePageContent(param.id, globalState);
+        setUpdateData(false);
+      }
+    })();
+  }, [updateDataBase, globalState, param.id]);
+
   const handleOnDragEnd = useCallback(
     ({ active, over }: DragEndEvent) => {
       if (!rowsTrello) return;
@@ -61,9 +77,8 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
           index: index,
           value: updatedState,
         };
-
-        // console.log(newStoreValues);
         dispatch(setRowTrelloToColumn(newStoreValues));
+        setUpdateData(true);
       };
 
       const updatedState = deepCopy.map((elm): IRowTrello => {
@@ -86,18 +101,17 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
       index: index,
       type: BlockType.DATABASE,
     };
-
     dispatch(setNewTypeBlock(values));
   };
 
   const setTrelloColumn = (title: string) => {
-    
     const value = {
       index: index,
       title: title,
     };
 
     dispatch(setNewTrelloColumn(value));
+    setUpdateData(true);
     setSearchValue("");
   };
 

@@ -1,11 +1,29 @@
 import { Avatar, Button, Card, Empty } from "antd";
 import FileExplorer from "../../modules/explorer/FileExplorer";
 import { Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { createNewPage } from "../../store/API/Page";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const { Title } = Typography;
 const { Meta } = Card;
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const user = useSelector((state: any) => state.auth.user);
+  const [userState, setUserState] = useState(user);
+
+  useEffect(() => {
+    setUserState(user);
+  }, [user]);
+
+  const setNewDocumentPage = async () => {
+    const page = await createNewPage(userState.userId);
+    if (page.pageId === undefined) return;
+    console.log(page.pageId);
+    navigate(`/document/${page.pageId}`);
+  };
   return (
     <>
       <Card
@@ -28,7 +46,9 @@ const HomePage = () => {
           </span>
         }
       >
-        <Button type="primary">Créér un nouveau document</Button>
+        <Button type="primary" onClick={setNewDocumentPage}>
+          Créer une noveau Document
+        </Button>
       </Empty>
 
       <FileExplorer />
