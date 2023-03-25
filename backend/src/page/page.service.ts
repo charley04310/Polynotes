@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
 import { Page, PageDocument } from './schemas/page.schema';
@@ -29,8 +29,9 @@ export class PageService {
 
   async findPageByUserId(userId: string): Promise<PageDocument[]> {
     return this.pageModel
-      .find({ user_id: userId })
-      .sort({ createdAt: -1 })
+      .find({ userId })
+      .select('title _id')
+      .sort({ created: -1 })
       .limit(10)
       .exec();
   }
@@ -56,7 +57,16 @@ export class PageService {
     return page.save();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} page`;
+  async updatePageTitle(
+    pageId: string,
+    newTitle: string,
+  ): Promise<PageDocument> {
+    console.log('pageId', pageId);
+    const updatedPage = await this.pageModel.findByIdAndUpdate(
+      pageId,
+      { title: newTitle.replace(/\s/g, '_') },
+      { new: true },
+    );
+    return updatedPage;
   }
 }

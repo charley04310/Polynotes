@@ -20,7 +20,6 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { Request as ExpressRequest, Response } from 'express';
-import { ExtractJwt } from 'passport-jwt';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @Controller('auth')
 export class AuthController {
@@ -95,15 +94,12 @@ export class AuthController {
       return `A verification email has been sent to the following email address: ${createUserDto.email}`;
     } catch (error) {
       console.log(error);
-      throw new HttpException(
-        'Email address already exists. Please try again.',
-        HttpStatus.CONFLICT,
-      );
+      throw new HttpException(error.message, HttpStatus.CONFLICT);
     }
   }
 
   @Get('email-verification/:token')
-  @Redirect('https://nestjs.com', 301)
+  @Redirect('http://localhost:3100/authentification', 301)
   async verifyTokenAuthentification(@Param('token') token: string) {
     const decodedToken = await this.authService.decodeJwtToken(token);
     if (typeof decodedToken === 'string') {

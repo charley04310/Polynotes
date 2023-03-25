@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteRows, setNewRow } from "../../../store/slices/blockSlice";
 
 import AddColumnDataBase from "../../../modules/database/AddColumnTable";
-import { IBlockState } from "../../../store/interfaces/block";
+import { IContentBlock } from "../../../store/interfaces/block";
 import { IColumnTableDataBase } from "../../../modules/interfaces/database";
 import { RootState } from "../../../store/store";
 import { useParams } from "react-router-dom";
@@ -20,12 +20,12 @@ type EditableTableProps = Parameters<typeof Table>[0];
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
 interface EditableTableState {
-  dataSource: IBlockState;
+  dataSource: IContentBlock;
   index: number;
 }
 const TableDataBase: React.FC<EditableTableState> = ({ dataSource, index }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const globalState = useSelector((state: RootState) => state.blocks);
+  const globalState = useSelector((state: RootState) => state.blocks.content);
   const [updateDataBase, setUpdateData] = useState(false);
   const param = useParams();
 

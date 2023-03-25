@@ -38,7 +38,7 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
   const dispatch = useDispatch();
-  const globalState = useSelector((state: RootState) => state.blocks);
+  const globalState = useSelector((state: RootState) => state.blocks.content);
   const [updateDataBase, setUpdateData] = useState(false);
   const param = useParams();
 

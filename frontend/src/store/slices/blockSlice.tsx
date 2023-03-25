@@ -16,13 +16,14 @@ const blockSlice = createSlice({
     /*************************************** PARTIE BLOCK ***************************************/
     setStoreState: (state, action) => {
       const { payload } = action;
-      console.log("payload content", payload.content);
-      return payload.content;
+      return payload;
     },
     setBlockContent: (state, action) => {
       const { item, content } = action.payload;
-      const blockIndex = state.findIndex((block) => block.id === item.id);
-      state[blockIndex].content = content;
+      const blockIndex = state.content.findIndex(
+        (block) => block.id === item.id
+      );
+      state.content[blockIndex].content = content;
     },
     setNewBlock: (state, action) => {
       const { type, content, id } = action.payload;
@@ -33,21 +34,21 @@ const blockSlice = createSlice({
         content: content,
       };
 
-      const blockIndex = state.findIndex((block) => block.id === id);
+      const blockIndex = state.content.findIndex((block) => block.id === id);
 
-      state.splice(blockIndex + 1, 0, newBlock);
+      state.content.splice(blockIndex + 1, 0, newBlock);
     },
     deleteBlock: (state, action) => {
-      if (state.length > 1) {
+      if (state.content.length > 1) {
         const { id } = action.payload;
-        const blockIndex = state.findIndex((block) => block.id === id);
-        state.splice(blockIndex, 1);
+        const blockIndex = state.content.findIndex((block) => block.id === id);
+        state.content.splice(blockIndex, 1);
       }
     },
     setNewTypeBlock: (state, action) => {
       const { index, type } = action.payload;
       //console.log("index", JSON.stringify(state[index]));
-      state[index].type = type;
+      state.content[index].type = type;
     },
     /*************************************** PARTIE DATABASE ***************************************/
     setNewColumn: (
@@ -57,7 +58,7 @@ const blockSlice = createSlice({
       }
     ) => {
       const { index, title, typeIndex } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
       if (title === "") return;
       if (content.columns.some((item) => item.title === title)) return;
 
@@ -73,7 +74,7 @@ const blockSlice = createSlice({
     },
     setNewRow: (state, action) => {
       const { index } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
 
       if (!content.rows) return;
 
@@ -94,7 +95,7 @@ const blockSlice = createSlice({
     },
     setRowData: (state, action) => {
       const { index, key } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
       if (!content.rows) return;
 
       const indexRow = content.rows.findIndex((item) => key === item.key);
@@ -113,7 +114,7 @@ const blockSlice = createSlice({
     },
     deleteRows: (state, action) => {
       const { index, keys } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
       content.rows = content.rows.filter((item) => !keys.includes(item.key));
       content.trello.rowsTrello = content.trello.rowsTrello.filter(
         (item) => !keys.includes(item.id)
@@ -123,7 +124,7 @@ const blockSlice = createSlice({
     /*************************************** PARTIE TRELLO ***************************************/
     setNewTrelloColumn: (state, action) => {
       const { index, title } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
 
       if (title === "") return;
       if (content.trello.columnsTrello.includes(title)) return;
@@ -136,12 +137,12 @@ const blockSlice = createSlice({
     },
     setRowTrelloToColumn: (state, action) => {
       const { index, value } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
       content.trello.rowsTrello = value;
     },
     setColumnNewTitle: (state, action) => {
       const { index, valueToReplace, newValue } = action.payload;
-      const content = state[index].content as ITableState;
+      const content = state.content[index].content as ITableState;
 
       if (newValue === "") return;
       if (content.trello.columnsTrello.includes(newValue)) return;
@@ -158,7 +159,7 @@ const blockSlice = createSlice({
     },
     deleteTrelloColumn: (state, action) => {
       const { blockIndex, columnTrelloIndex, value } = action.payload;
-      const content = state[blockIndex].content as ITableState;
+      const content = state.content[blockIndex].content as ITableState;
 
       if (content.trello.columnsTrello.length === 1) return;
 
@@ -177,7 +178,7 @@ const blockSlice = createSlice({
     },
     setStyleColumn: (state, action) => {
       const { background, indexBlock, indexColumn } = action.payload;
-      const content = state[indexBlock].content as ITableState;
+      const content = state.content[indexBlock].content as ITableState;
 
       content.trello.columnsTrelloStyle[indexColumn] = {
         background: background,

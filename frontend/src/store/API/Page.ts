@@ -2,7 +2,6 @@ import { api } from "../axios/config";
 import { setErrorMessage, setSuccessMessage } from "./SuccessErrorMessage";
 import { v4 as uuidv4 } from "uuid";
 import { BlockType } from "../interfaces/block";
-import { Params } from "react-router-dom";
 
 export const createNewPage = async (userId: string) => {
   try {
@@ -49,6 +48,7 @@ export const getPages = async () => {
 export const getPageByid = async (id: string): Promise<IResponsePage> => {
   try {
     const response = await api.get(`/page/${id}`);
+    console.log("response:", response.data);
     return {
       title: response.data.title,
       error: undefined,
@@ -68,7 +68,7 @@ export const updatePageContent = async (
   content: any
 ): Promise<IResponsePage> => {
   try {
-    console.log("content:",content);
+    console.log("content:", content);
     const response = await api.patch(`/page/${id}`, {
       content: content,
     });
@@ -86,12 +86,20 @@ export const updatePageContent = async (
   }
 };
 
-export const updateAllPageContent = async (
+export const updDateTitlePage = async (
   id: string,
-  content: any,
   title: string
 ): Promise<any> => {
-  return "test";
+  const response = await api.patch(`/page/title/${id}`, {
+    id: id,
+    title: title,
+  });
+  return response.data;
+};
+
+export const getPageByUserId = async (userId: string) => {
+  const response = await api.get(`/page/user/${userId}`);
+  return response.data;
 };
 
 export interface IResponsePage {

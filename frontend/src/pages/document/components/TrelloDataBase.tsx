@@ -5,7 +5,7 @@ import { styled } from "@stitches/react";
 import { RightCircleOutlined } from "@ant-design/icons";
 
 import { Column } from "../../../modules/DND/elements/Column";
-import { BlockType, IBlockState } from "../../../store/interfaces/block";
+import { BlockType, IContentBlock } from "../../../store/interfaces/block";
 import {
   IRowTrello,
   IStyleHeaderTrello,
@@ -25,7 +25,7 @@ import { updatePageContent } from "../../../store/API/Page";
 const { Search } = Input;
 
 interface EditableTrelloStateProps {
-  dataSource: IBlockState;
+  dataSource: IContentBlock;
   index: number;
 }
 
@@ -36,7 +36,7 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
   const [rowsTrello, setrowsTrello] = useState<IRowTrello[]>();
   const [Columns, setColumns] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState("");
-  const globalState = useSelector((state: RootState) => state.blocks);
+  const globalState = useSelector((state: RootState) => state.blocks.content);
   const [updateDataBase, setUpdateData] = useState(false);
   const param = useParams();
 

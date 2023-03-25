@@ -45,7 +45,7 @@ export const Column: FC<IColumn> = ({
   const [HeaderBackground, setHeaderBackground] = useState("yellow");
   const form = useContext(EditableContext)!;
   const inputRef = useRef<InputRef>(null);
-  const globalState = useSelector((state: RootState) => state.blocks);
+  const globalState = useSelector((state: RootState) => state.blocks.content);
   const [updateDataBase, setUpdateData] = useState(false);
   const param = useParams();
 

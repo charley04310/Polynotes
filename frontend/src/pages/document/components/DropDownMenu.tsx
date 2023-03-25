@@ -11,11 +11,11 @@ import { Dropdown } from "antd";
 import { Editor } from "@tiptap/react";
 import { useDispatch } from "react-redux";
 import { deleteBlock, setNewBlock } from "../../../store/slices/blockSlice";
-import { IBlockState, BlockType } from "../../../store/interfaces/block";
+import {  BlockType, IContentBlock } from "../../../store/interfaces/block";
 
 interface DropDownProps {
   editor: Editor | null;
-  item: IBlockState;
+  item: IContentBlock;
   setUpdateData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

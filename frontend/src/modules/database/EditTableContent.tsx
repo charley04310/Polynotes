@@ -39,7 +39,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
   const dispatch = useDispatch();
-  const globalState = useSelector((state: RootState) => state.blocks);
+  const globalState = useSelector((state: RootState) => state.blocks.content);
   const param = useParams();
   const [updateDataBase, setUpdateData] = useState(false);
 

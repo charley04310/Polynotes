@@ -28,12 +28,12 @@ import { PageModule } from './page/page.module';
     MailerModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         transport: {
-          host: configService.get<string>('MAILER_HOST'),
-          port: configService.get<number>('MAILER_PORT'),
+          host: configService.get<string>('MAILER_HOST'), // 587
+          port: configService.get<number>('MAILER_PORT'), // smtp.etu.umontpellier.fr
           secure: false,
           auth: {
-            user: configService.get<string>('MAILER_USER'),
-            pass: configService.get<string>('MAILER_PASSWORD'),
+            user: configService.get<string>('MAILER_USER'), // charley.geoffroy@etu.umontpellier.fr
+            pass: configService.get<string>('MAILER_PASSWORD'), // 123456789
           },
         },
         defaults: {

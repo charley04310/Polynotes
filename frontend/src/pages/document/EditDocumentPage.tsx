@@ -4,7 +4,11 @@ import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import Tiptap from "./components/EditorContent";
 import { Editor } from "@tiptap/react";
-import { IBlockState, BlockType } from "../../store/interfaces/block";
+import {
+  IBlockState,
+  BlockType,
+  IContentBlock,
+} from "../../store/interfaces/block";
 import ImageBlockComponent from "./components/ImageBlock";
 import DropDownMenu from "./components/DropDownMenu";
 import TableDataBase from "./components/DataBaseTable";
@@ -12,15 +16,17 @@ import { TrelloDataBase } from "./components/TrelloDataBase";
 import TitleDocumentPage from "./components/TitleDocumentPage";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPageByid, updatePageContent } from "../../store/API/Page";
-import { setStoreState } from "../../store/slices/blockSlice";
+import { deleteBlock, setStoreState } from "../../store/slices/blockSlice";
+import { handleKeyEventRefs } from "./composables/handleEventKeyDown";
 
 const EditDocumentPage = () => {
   const refs = useRef<(Editor | null)[]>([]);
   const params = useParams();
   const [updateDataBaseBlock, setUpdateDataBaseBlock] = useState(false);
-  const blocksPage: IBlockState[] = useSelector(
-    (state: RootState) => state.blocks
+  const blocksPage: IContentBlock[] = useSelector(
+    (state: RootState) => state.blocks.content
   );
+  const [html, setHtml] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +40,12 @@ const EditDocumentPage = () => {
       if (pageContent.error) {
         return navigate("/acceuil");
       }
-      dispatch(setStoreState(pageContent));
+      const store = {
+        content: pageContent.content,
+        title: pageContent.title,
+      };
+      dispatch(setStoreState(store));
+      //if (pageContent.title) setTitleDocument(pageContent.title);
       // on verifie si l'utilisateur ajouter un nouveau block
     })();
   }, [params.id, navigate, dispatch, refs]);
@@ -73,11 +84,8 @@ const EditDocumentPage = () => {
               ref={(ref) => {
                 refs.current[index] = ref;
               }}
-              onArrowPressed={(event) => {
-                let newIndex = index;
-                if (event.key === "ArrowUp") newIndex--;
-                if (event.key === "ArrowDown") newIndex++;
-                getNewFocus(newIndex);
+              handleKeyEventRefs={(event) => {
+                handleKeyEventRefs(event, index, refs, dispatch, getNewFocus);
               }}
             />
           ) : null}

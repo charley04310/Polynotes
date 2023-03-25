@@ -12,32 +12,33 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { HandleKeyDown } from "../composables/handleKeyDown";
+import { HandleKeyDown } from "../composables/handleEventKeyDown";
 import { useDispatch, useSelector } from "react-redux";
 import Placeholder from "@tiptap/extension-placeholder";
-import { IBlockState } from "../../../store/interfaces/block";
+import { IContentBlock } from "../../../store/interfaces/block";
 import BubbleMenuComponent from "./BubbleMenu";
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import { RootState } from "../../../store/store";
 import { updatePageContent } from "../../../store/API/Page";
 import { useParams } from "react-router-dom";
 
 export interface TiptapProps {
-  blockState: IBlockState;
-  onArrowPressed?: (event: any) => void;
+  blockState: IContentBlock;
+  handleKeyEventRefs?: (event: any) => void;
 }
 
 const Tiptap = forwardRef(
-  ({ blockState, onArrowPressed }: TiptapProps, ref: Ref<Editor | null>) => {
+  (
+    { blockState, handleKeyEventRefs }: TiptapProps,
+    ref: Ref<Editor | null>
+  ) => {
     const dispatch = useDispatch();
-    const globalState = useSelector((state: RootState) => state.blocks);
+    const globalState = useSelector((state: RootState) => state.blocks.content);
     const param = useParams();
     const [updateDataBase, setUpdateDataBase] = useState(false);
     const editor = useEditor({
       extensions: [
         StarterKit,
         Highlight,
-        HorizontalRule,
         Typography,
 
         Placeholder.configure({
@@ -58,6 +59,7 @@ const Tiptap = forwardRef(
       autofocus: "end",
     });
     const html = editor != null ? editor.getHTML() : "";
+
     useImperativeHandle(ref, () => editor, [editor]);
 
     useEffect(() => {
@@ -71,17 +73,6 @@ const Tiptap = forwardRef(
       })();
     }, [updateDataBase, globalState, param.id]);
 
-    const handleDeleteBlock = async (event: any) => {
-      if (html === "<p></p>" && event.key === "Backspace") {
-        dispatch(deleteBlock({ id: blockState.id }));
-        setTimeout(() => {
-          console.log(globalState);
-        }, 2000);
-        /*  if (!param.id) return;
-        await updatePageContent(param.id, globalState); */
-      }
-    };
-
     return (
       <>
         {editor && <BubbleMenuComponent editor={editor} />}
@@ -91,7 +82,7 @@ const Tiptap = forwardRef(
           className="editable"
           style={{ caretColor: "black", width: "90%" }}
           onKeyDown={(event) => {
-            onArrowPressed?.(event);
+            handleKeyEventRefs?.(event);
             HandleKeyDown(
               event,
               blockState,
@@ -99,7 +90,6 @@ const Tiptap = forwardRef(
               dispatch,
               setUpdateDataBase
             );
-            handleDeleteBlock(event);
           }}
           onBlur={() => {
             dispatch(

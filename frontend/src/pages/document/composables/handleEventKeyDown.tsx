@@ -5,13 +5,17 @@ import {
   setNewBlock,
   setBlockContent,
 } from "../../../store/slices/blockSlice";
-import { IBlockState, BlockType } from "../../../store/interfaces/block";
+import {
+  IBlockState,
+  BlockType,
+  IContentBlock,
+} from "../../../store/interfaces/block";
 
 let timeoutId: NodeJS.Timeout | null = null;
 
 export const HandleKeyDown = (
   event: React.KeyboardEvent<HTMLDivElement>,
-  blockState: IBlockState,
+  blockState: IContentBlock,
   editor: Editor | null,
   dispatch: Dispatch<any>,
   setUpdateDataBase: (value: boolean) => void
@@ -65,5 +69,25 @@ export const HandleKeyDown = (
         }, 1500);
         break;
       }
+  }
+};
+export const handleKeyEventRefs = (
+  event: React.KeyboardEvent<HTMLDivElement>,
+  index: any,
+  refs: any,
+  dispatch: Dispatch<any>,
+  getNewFocus: any
+) => {
+  let newIndex = index;
+  const item = refs.current[index]?.state;
+
+  if (event.key === "ArrowUp") newIndex--;
+  if (event.key === "ArrowDown") newIndex++;
+  getNewFocus(newIndex);
+
+  if (refs.current[index]?.isEmpty && event.key === "Backspace") {
+    newIndex--;
+    getNewFocus(newIndex);
+    dispatch(deleteBlock({ id: item.id }));
   }
 };
