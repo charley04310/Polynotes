@@ -3,10 +3,11 @@ import { setErrorMessage, setSuccessMessage } from "./SuccessErrorMessage";
 import { v4 as uuidv4 } from "uuid";
 import { BlockType } from "../interfaces/block";
 
-export const createNewPage = async (userId: string) => {
+export const createNewPage = async (userId: string, title?: string) => {
   try {
+    if (!title) title = "New Page";
     const response = await api.post("/page/add", {
-      title: "Default Title",
+      title: title,
       userId: userId,
       parent: null,
       content: [

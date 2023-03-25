@@ -1,50 +1,23 @@
-import { NodeFileNavigator } from "../explorer/FileExplorer";
-
-export const treeData: NodeFileNavigator = {
+import { v4 as uuidv4 } from "uuid";
+export const treeDataInitialState: NodeFileNavigator = {
   title: "Home",
-  key: "0-0",
-  children: [
-    {
-      title: "parent 1-0",
-      key: "0-0-0",
-      children: [
-        {
-          title: "leaf",
-          key: "0-0-0-0",
-        },
-        {
-          title: "leaf",
-          key: "0-0-0-1",
-        },
-        {
-          title: "leaf",
-          key: "0-0-0-2",
-        },
-      ],
-    },
-    {
-      title: "parent 1-1",
-      key: "0-0-1",
-      children: [
-        {
-          title: "leaf",
-          key: "0-0-1-0",
-        },
-      ],
-    },
-    {
-      title: "parent 1-2",
-      key: "0-0-2",
-      children: [
-        {
-          title: "leaf",
-          key: "0-0-2-0",
-        },
-        {
-          title: "leaf",
-          key: "0-0-2-1",
-        },
-      ],
-    },
-  ],
+  key: uuidv4(),
+  children: [],
 };
+
+export const newFolderNode: NodeFileNavigator = {
+  title: "New folder",
+  key: uuidv4(),
+  children: [],
+};
+
+export const newFileNode: NodeFileNavigator = {
+  title: "New file",
+  key: uuidv4(),
+};
+
+export interface NodeFileNavigator {
+  title: string;
+  key: string;
+  children?: NodeFileNavigator[];
+}

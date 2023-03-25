@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
-import { IBlockState, BlockType } from "../../../store/interfaces/block";
+import { IBlockState } from "../../../store/interfaces/block";
 
 export const initialState: IBlockState = {
   title: "",

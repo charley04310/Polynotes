@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Divider, Empty } from "antd";
+import { Avatar, Button, Card, Col, Divider, Empty, Row, Tooltip } from "antd";
 import FileExplorer from "./explorer/FileExplorer";
 import { Typography } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -8,13 +8,11 @@ import { useEffect, useState } from "react";
 import { FileTextOutlined } from "@ant-design/icons";
 import "./index.css";
 import { truncateTitle } from "./composables/Formater";
-import { treeData } from "./utils/DataPayload";
 
 const { Title } = Typography;
 const { Meta } = Card;
 
 const HomePage = () => {
-  const navigate = useNavigate();
   const user = useSelector((state: any) => state.auth.user);
   const [userState, setUserState] = useState(user);
   const [files, setFiles] = useState<any>([]);
@@ -26,17 +24,9 @@ const HomePage = () => {
   useEffect(() => {
     (async () => {
       const pages = await getPageByUserId(userState.userId);
-      console.log(pages);
       setFiles(pages);
     })();
   }, [userState]);
-
-  const setNewDocumentPage = async () => {
-    const page = await createNewPage(userState.userId);
-    if (page.pageId === undefined) return;
-    console.log(page.pageId);
-    navigate(`/document/${page.pageId}`);
-  };
   return (
     <>
       <Card
@@ -44,8 +34,12 @@ const HomePage = () => {
         loading={false}
       >
         <Meta
-          avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-          title={userState.username}
+          avatar={
+            <Avatar style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}>
+              {userState.username.charAt(0).toUpperCase()}
+            </Avatar>
+          }
+          title={userState.username.toUpperCase()}
         />
       </Card>
       <Title level={3}>Documents récents</Title>
@@ -82,13 +76,7 @@ const HomePage = () => {
           </Card>
         ))}
       </div>
-      <Button
-        type="primary"
-        onClick={setNewDocumentPage}
-        style={{ marginRight: 8 }}
-      >
-        Créer une noveau Document
-      </Button>
+
       {files.length === 0 && (
         <Empty
           image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
@@ -98,17 +86,13 @@ const HomePage = () => {
               Aucun document disponible <br />
             </span>
           }
-        >
-          <Button type="primary" onClick={setNewDocumentPage}>
-            Créer une noveau Document
-          </Button>
-        </Empty>
+        ></Empty>
       )}
       <Divider />
 
       <Title level={3}>Explorateur de fichiers</Title>
 
-      <FileExplorer treeData={treeData} />
+      <FileExplorer />
     </>
   );
 };
