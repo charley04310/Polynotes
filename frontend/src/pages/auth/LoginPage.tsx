@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { Col, Row } from "antd";
 import dologo from "./dologo.svg";
-import { loginUser } from "../../store/API/Authentification";
+import { ILoginUser, loginUser } from "../../store/API/Authentification";
 
 interface LoginPageProps {
   onPageStateChange: (newState: string) => void;
@@ -22,7 +22,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
     onPageStateChange(value);
   };
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: ILoginUser) => {
     const { email, password } = values;
 
     const user = {

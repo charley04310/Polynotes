@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 
 export interface TiptapProps {
   blockState: IContentBlock;
-  handleKeyEventRefs?: (event: any) => void;
+  handleKeyEventRefs?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const Tiptap = forwardRef(

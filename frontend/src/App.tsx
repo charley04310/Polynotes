@@ -7,16 +7,11 @@ import PrivateRoutes from "./routes/PrivateRoutes";
 import NotFoundPage from "./pages/notfound/NotFound";
 
 import ManifestPage from "./pages/manifest/ManifestPage";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store/store";
 import PublicRoutes from "./routes/PublicRoutes";
 import EditDocumentPage from "./pages/document/EditDocumentPage";
-export interface IServerResponse {
-  status?: number;
-  message?: string;
-  error?: string;
-  user?: any;
-}
+
 const App: React.FC = () => {
   return (
     <Provider store={store}>
@@ -24,7 +19,7 @@ const App: React.FC = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path="/document" element={<EditDocumentPage />} />
-            <Route path="/" element={<HomePage />} />
+            <Route path="/accueil" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

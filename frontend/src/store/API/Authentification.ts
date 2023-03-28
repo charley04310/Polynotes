@@ -1,17 +1,23 @@
-import { IServerResponse } from "../../App";
 import { api } from "../axios/config";
 import {
   setErrorMessage,
   setSuccessMessage,
   setLoginSuccesMessage,
+  IReponseSuccess,
+  IReponseError,
 } from "./SuccessErrorMessage";
 export interface IUser {
   username: string;
   password: string;
   email: string;
 }
-
-export const registerUser = async (data: IUser) => {
+export interface ILoginUser {
+  password: string;
+  email: string;
+}
+export const registerUser = async (
+  data: IUser
+): Promise<IReponseSuccess | IReponseError> => {
   try {
     const response = await api.post("/auth/signup", {
       username: data.username,
@@ -23,7 +29,7 @@ export const registerUser = async (data: IUser) => {
     return setErrorMessage(err.response.data.message, err.response.status);
   }
 };
-export const loginUser = async (data: any) => {
+export const loginUser = async (data: ILoginUser) => {
   try {
     const response = await api.post("/auth/login", {
       password: data.password,
@@ -38,7 +44,7 @@ export const loginUser = async (data: any) => {
     setErrorMessage(err.response.data.message, err.response.status);
   }
 };
-export const autoLogin = async (): Promise<IServerResponse> => {
+export const autoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   try {
     const response = await api.get("/auth/auto-login");
 

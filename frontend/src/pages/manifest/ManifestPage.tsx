@@ -11,12 +11,12 @@ const Context = React.createContext({ name: "Default" });
 const ManifestPage = () => {
   const [pageState, setPageState] = useState("welcome");
   const dispatch = useDispatch();
-  const handleStateChange = (newState: string) => {
-    setPageState(newState);
-  };
   const contextValue = useMemo(() => ({ name: "Ant Design" }), []);
   const [api, contextHolder] = notification.useNotification();
 
+  const handleStateChange = (newState: string) => {
+    setPageState(newState);
+  };
   const registerNotificationMessage = (userSaved: any) => {
     if (userSaved.message === undefined) {
       api.error({

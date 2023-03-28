@@ -5,13 +5,22 @@
   size: 12;
   padding: 8;
   display: flex;
+  flex-wrap: wrap;
   text-align: center;
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;
   transition: all 0.3s;
+  margin: 16 0;
 }
 
+.file-icon-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: #001529;
+}
 .file-card-icon {
   width: 120px;
   border: 0;
@@ -31,7 +40,12 @@
 h4.ant-list-item-meta-title {
   margin: 8px;
 }
-
+.list-item-file-explore {
+  display: "flex";
+  align-items: "center";
+  justify-content: "space-between";
+  padding: "0 8px";
+}
 .list-item-file-explore:hover {
   background: rgba(169, 169, 169, 0.105);
 }

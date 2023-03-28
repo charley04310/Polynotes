@@ -9,6 +9,7 @@ import {
   Popover,
   Input,
   InputRef,
+  Tooltip,
 } from "antd";
 import {
   FolderOutlined,
@@ -24,9 +25,20 @@ import {
   newFolderNode,
   NodeFileNavigator,
 } from "../utils/DataPayload";
-import { addNode } from "../../../store/slices/TreeFileExplorerSlice";
+import {
+  addNode,
+  getNode,
+  getNodesPath,
+  setStore,
+} from "../../../store/slices/TreeFileExplorerSlice";
 import { createNewPage } from "../../../store/API/Page";
 import { useNavigate } from "react-router-dom";
+import { navigateToDocumentPage } from "../composables/Navigation";
+import EmptyData from "../../../global-components/EmptyData";
+import {
+  createOrUpdateTreeFileSystem,
+  getTreeFileSystem,
+} from "../../../store/API/FileSystemTree";
 
 interface IPropsFileExplorer {}
 
@@ -38,10 +50,56 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
   const [pageTitle, setPageTitle] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [openFileEditor, setopenFileEditor] = useState(false);
+  const [updateTreeFile, setUpdateTreeFile] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const inputRef = useRef<InputRef>(null);
+  useEffect(() => {
+    (async () => {
+      const tree = await getTreeFileSystem(userId!);
+      dispatch(setStore(tree!));
+      setCurrentNode(tree!);
+    })();
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    const getNode = (
+      rootNode: NodeFileNavigator,
+      key: string
+    ): NodeFileNavigator | undefined => {
+      // If the node's key matches the search key, return the node
+      if (rootNode.key === key) {
+        return rootNode;
+      }
+      // If the node has children, recursively search them for the key
+      if (rootNode.children) {
+        for (let child of rootNode.children) {
+          const childNode = getNode(child, key);
+          if (childNode) {
+            return childNode;
+          }
+        }
+      }
+      // If the node has no children and its key does not match the search key, return undefined
+      return undefined;
+    };
+    const newNode = getNode(treeData, currentNode.key);
+    if (newNode) {
+      setCurrentNode(newNode);
+    }
+  }, [currentNode.key, treeData]);
+
+  useEffect(() => {
+    if (updateTreeFile) {
+      console.log("update tree file");
+      (async () => {
+        await createOrUpdateTreeFileSystem(userId!, treeData);
+        setUpdateTreeFile(false);
+      })();
+    }
+  }, [updateTreeFile, userId, treeData]);
 
   const handleOpenChange = () => {
     setPageTitle("");
@@ -59,35 +117,6 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
     setopenFileEditor(!openFileEditor);
   };
 
-  useEffect(() => {
-    const getNode = (
-      rootNode: NodeFileNavigator,
-      key: string
-    ): NodeFileNavigator | undefined => {
-      // If the node's key matches the search key, return the node
-      if (rootNode.key === key) {
-        return rootNode;
-      }
-
-      // If the node has children, recursively search them for the key
-      if (rootNode.children) {
-        for (let child of rootNode.children) {
-          const childNode = getNode(child, key);
-          if (childNode) {
-            return childNode;
-          }
-        }
-      }
-
-      // If the node has no children and its key does not match the search key, return undefined
-      return undefined;
-    };
-    const newNode = getNode(treeData, currentNode.key);
-    if (newNode) {
-      setCurrentNode(newNode);
-    }
-  }, [currentNode.key, treeData]);
-
   const handleAddNode = async (
     type: string,
     parentNode: NodeFileNavigator,
@@ -97,61 +126,11 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
       const page = await createNewPage(userId, pageTitle);
       nodeToAdd.key = page.pageId;
     }
-    console.log("nodeToadd key", nodeToAdd.key);
-
     nodeToAdd.title = pageTitle;
     dispatch(addNode({ parentNode, nodeToAdd }));
-  };
+    setUpdateTreeFile(true);
 
-  const navigateToDocumentPage = (id: string) => {
-    console.log("navigate to document page", id);
-    navigate(`/document/${id}`);
-  };
-
-  const getNode = (
-    rootNode: NodeFileNavigator,
-    key: string
-  ): NodeFileNavigator | undefined => {
-    // If the node's key matches the search key, return the node
-    if (rootNode.key === key) {
-      return rootNode;
-    }
-
-    // If the node has children, recursively search them for the key
-    if (rootNode.children) {
-      for (let child of rootNode.children) {
-        const childNode = getNode(child, key);
-        if (childNode) {
-          return childNode;
-        }
-      }
-    }
-
-    // If the node has no children and its key does not match the search key, return undefined
-    return undefined;
-  };
-
-  const getNodesPath = (
-    rootNode: NodeFileNavigator,
-    key: string
-  ): { key: string; title: string }[] => {
-    // If the node's key matches the search key, return an object with its key and title properties in a new array
-    if (rootNode.key === key) {
-      return [{ key: rootNode.key, title: rootNode.title }];
-    }
-
-    // If the node has children, recursively search them for the key
-    if (rootNode.children) {
-      for (let child of rootNode.children) {
-        const childTitles = getNodesPath(child, key);
-        if (childTitles.length > 0) {
-          // If the child has the matching key, add its object to the list and return it
-          return [{ key: rootNode.key, title: rootNode.title }, ...childTitles];
-        }
-      }
-    }
-
-    return [];
+    //await createOrUpdateTreeFileSystem(userId!, treeData);
   };
 
   return (
@@ -229,7 +208,9 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
             open={open}
             onOpenChange={handleOpenChange}
           >
-            <Button shape="circle" icon={<FolderAddOutlined />} />
+            <Tooltip placement="top" title={"Nouveau dossier"}>
+              <Button shape="circle" icon={<FolderAddOutlined />} />
+            </Tooltip>
           </Popover>
 
           <Popover
@@ -265,38 +246,27 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
             open={openFileEditor}
             onOpenChange={handleTitleChange}
           >
-            <Button
-              style={{ marginLeft: 8 }}
-              shape="circle"
-              icon={<FileAddOutlined style={{ color: "green" }} />}
-            />
+            <Tooltip placement="top" title={"Nouveau fichier"}>
+              <Button
+                style={{ marginLeft: 8 }}
+                shape="circle"
+                icon={<FileAddOutlined style={{ color: "green" }} />}
+              />
+            </Tooltip>
           </Popover>
         </Col>
       </Row>
       <Divider style={{ marginBottom: 0 }} />
-
-      <div
-        id="scrollableDiv"
-        style={{
-          height: "auto",
-          overflow: "auto",
-        }}
-      >
+      {currentNode.children && currentNode.children.length > 0 ? (
         <List
           dataSource={currentNode.children}
           renderItem={(item) => (
             <List.Item
               className="list-item-file-explore"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                paddingLeft: 6,
-              }}
               onClick={() =>
                 item.children
                   ? setCurrentNode(item)
-                  : navigateToDocumentPage(item.key)
+                  : navigateToDocumentPage(`/document/${item.key}`, navigate)
               }
             >
               <List.Item.Meta
@@ -305,7 +275,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
                   <Avatar
                     style={
                       item.children
-                        ? { backgroundColor: "#87d068" }
+                        ? { backgroundColor: "#001529" }
                         : { backgroundColor: "#1890ff" }
                     }
                     icon={
@@ -318,7 +288,9 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
             </List.Item>
           )}
         />
-      </div>
+      ) : (
+        <EmptyData message={"Aucun document disponible"} />
+      )}
     </>
   );
 };

@@ -5,9 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   UseGuards,
-  Put,
 } from '@nestjs/common';
 import { PageService } from './page.service';
 import { CreatePageDto } from './dto/create-page.dto';
@@ -19,6 +17,7 @@ import { UpdateTitlePageDto } from './dto/update-title-page.dto';
 export class PageController {
   constructor(private readonly pageService: PageService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('add')
   async create(@Body() createPageDto: CreatePageDto) {
     return await this.pageService.createOrReturnExistingPage(createPageDto);
@@ -48,14 +47,4 @@ export class PageController {
   ) {
     return this.pageService.updatePageTitle(id, updateTitlePageDto.title);
   }
-
-  /*   @Put(':id')
-  updatePut(@Param('id') id: string, @Body() createPageDto: CreatePageDto) {
-    return this.pageService.updatePage(id, createPageDto);
-  } */
-  /* 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pageService.remove(+id);
-  } */
 }

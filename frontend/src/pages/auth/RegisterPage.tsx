@@ -3,7 +3,6 @@ import { Col, Row } from "antd";
 import React from "react";
 import { IUser, registerUser } from "../../store/API/Authentification";
 
-import dologo from "./dologo.svg";
 interface RegisterPageProps {
   onPageStateChange: (newState: string) => void;
   setNotification: (userSaved: any) => void;
@@ -162,7 +161,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                 minWidth: 150,
               }}
             >
-              Acceuil
+              Accueil
             </Button>
 
             <Button

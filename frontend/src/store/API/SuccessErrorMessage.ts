@@ -6,7 +6,10 @@ export const setErrorMessage = (error: string, status: number) => {
   };
 };
 
-export const setSuccessMessage = (message: string, status: number) => {
+export const setSuccessMessage = (
+  message: string,
+  status: number
+): IReponseSuccess => {
   return {
     message: message,
     error: undefined,
@@ -18,7 +21,7 @@ export const setLoginSuccesMessage = (
   user: {},
   message: string,
   status: number
-) => {
+): IReponseSuccess => {
   return {
     user: user,
     message: message,
@@ -26,3 +29,15 @@ export const setLoginSuccesMessage = (
     status: status,
   };
 };
+
+export interface IReponseSuccess {
+  user?: {};
+  message: string;
+  error: undefined;
+  status: number;
+}
+export interface IReponseError {
+  message: undefined;
+  error: string;
+  status: number;
+}

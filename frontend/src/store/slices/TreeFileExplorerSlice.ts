@@ -5,7 +5,7 @@ import {
 } from "../../pages/home/utils/DataPayload";
 import { v4 as uuidv4 } from "uuid";
 
-const getNode = (
+export const getNode = (
   node: NodeFileNavigator,
   key: string
 ): NodeFileNavigator | undefined => {
@@ -20,6 +20,29 @@ const getNode = (
   }
   return undefined;
 };
+export const getNodesPath = (
+  rootNode: NodeFileNavigator,
+  key: string
+): { key: string; title: string }[] => {
+  // If the node's key matches the search key, return an object with its key and title properties in a new array
+  if (rootNode.key === key) {
+    return [{ key: rootNode.key, title: rootNode.title }];
+  }
+
+  // If the node has children, recursively search them for the key
+  if (rootNode.children) {
+    for (let child of rootNode.children) {
+      const childTitles = getNodesPath(child, key);
+      if (childTitles.length > 0) {
+        // If the child has the matching key, add its object to the list and return it
+        return [{ key: rootNode.key, title: rootNode.title }, ...childTitles];
+      }
+    }
+  }
+
+  return [];
+};
+
 interface AddNodePayload {
   parentNode: NodeFileNavigator;
   nodeToAdd: NodeFileNavigator;
@@ -55,12 +78,20 @@ const TreeFileStructure = createSlice({
       }
 
       //      console.log("state", JSON.parse(JSON.stringify(state)));
-
+      console.log("state", JSON.parse(JSON.stringify(state)));
       return state;
+    },
+    setStore: (state, action: PayloadAction<NodeFileNavigator>) => {
+      const { title, key, children } = action.payload;
+      return{
+        title,
+        key,
+        children
+      }
     },
   },
 });
 
-export const { addNode } = TreeFileStructure.actions;
+export const { addNode, setStore } = TreeFileStructure.actions;
 
 export default TreeFileStructure.reducer;

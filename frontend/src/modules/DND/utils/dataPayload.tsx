@@ -1,41 +1,46 @@
 import { FormatPainterFilled } from "@ant-design/icons";
 import { MenuProps } from "antd";
-
-const color = {
-  primaire: "#001529",
-  green: "green",
-  orange: "orange",
-  red: "red",
-};
+export enum Color {
+  primaire = "#001529",
+  green = "green",
+  orange = "orange",
+  red = "red",
+}
 
 export const items = (
-  handleHeaderColor: (arg0: any) => void
+  handleHeaderColor: (color: Color) => void
 ): MenuProps["items"] => {
   return [
     {
       label: "Primaire",
-      icon: <FormatPainterFilled style={{ color: "#001529", fontSize: 20 }} />,
+      icon: (
+        <FormatPainterFilled style={{ color: Color.primaire, fontSize: 20 }} />
+      ),
       key: "1",
 
-      onClick: () => handleHeaderColor(color.primaire),
+      onClick: () => handleHeaderColor(Color.primaire),
     },
     {
       label: "Vert",
-      icon: <FormatPainterFilled style={{ color: "green", fontSize: 20 }} />,
+      icon: (
+        <FormatPainterFilled style={{ color: Color.green, fontSize: 20 }} />
+      ),
       key: "2",
-      onClick: () => handleHeaderColor(color.green),
+      onClick: () => handleHeaderColor(Color.green),
     },
     {
       label: "Orange",
-      icon: <FormatPainterFilled style={{ color: "orange", fontSize: 20 }} />,
+      icon: (
+        <FormatPainterFilled style={{ color: Color.orange, fontSize: 20 }} />
+      ),
       key: "3",
-      onClick: () => handleHeaderColor(color.orange),
+      onClick: () => handleHeaderColor(Color.orange),
     },
     {
       label: "Rouge",
-      icon: <FormatPainterFilled style={{ color: "red", fontSize: 20 }} />,
+      icon: <FormatPainterFilled style={{ color: Color.red, fontSize: 20 }} />,
       key: "4",
-      onClick: () => handleHeaderColor(color.red),
+      onClick: () => handleHeaderColor(Color.red),
     },
   ];
 };

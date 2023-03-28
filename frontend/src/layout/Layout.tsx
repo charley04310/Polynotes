@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { PieChartOutlined } from "@ant-design/icons";
+import {
+  FileOutlined,
+  FolderOutlined,
+  InboxOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
@@ -8,8 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { autoLogin, logoutUser } from "../store/API/Authentification";
 import { setIsAuthenticated, setUser } from "../store/slices/authSlice";
-import { Colors } from "../assets/colors";
-import { IServerResponse } from "../App";
+import {
+  IReponseError,
+  IReponseSuccess,
+} from "../store/API/SuccessErrorMessage";
+import { NodeFileNavigator } from "../pages/home/utils/DataPayload";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -19,25 +29,52 @@ export type MainLayoutProps = {
   children: React.ReactNode;
 };
 
-export function getItem(
+function getItem(
   label: React.ReactNode,
-  key: React.Key,
-  to?: string, // new 'to' prop added for the link
+  key?: React.Key | null,
   icon?: React.ReactNode,
-  method = () => {}
+  children?: MenuItem[]
 ): MenuItem {
   return {
     key,
     icon,
-    onClick: async () => method(),
-    label: <Link to={to || ""}>{label}</Link>,
+    children,
+    label: label,
   } as MenuItem;
 }
 
+function buildMenuData(data: NodeFileNavigator[] | undefined): MenuItem[] {
+  if (!data) return [];
+  return data.map((node) => {
+    if (node.children) {
+      return getItem(
+        node.title,
+        node.key,
+        <FolderOutlined />,
+        buildMenuData(node.children)
+      );
+    } else {
+      return getItem(
+        <Link to={`/document/${node.key}`}>{node.title}</Link>,
+        node.key,
+        <FileOutlined />,
+        undefined
+      );
+    }
+  });
+}
+
+const buildTreeMenuData = (treeData: NodeFileNavigator) => {
+  const menuData = buildMenuData(treeData.children);
+  return getItem("Workspace", "sub4", <InboxOutlined />, menuData);
+};
+
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const treeData = useSelector((state: RootState) => state.Tree);
+
   const [collapsed, setCollapsed] = useState(false);
 
-  const userAutoLogin = async (): Promise<IServerResponse> => {
+  const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
     const userLogedIn = await autoLogin();
     return userLogedIn;
   };
@@ -61,29 +98,16 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       (state: RootState) => state.auth.isAuthenticated
     );
     return !isAuthenticated
-      ? [
-          getItem(
-            "Acceuil",
-            "acceuil",
-            "/authentification",
-            <PieChartOutlined />
-          ),
-          //getItem("Récent", "recent", "/recent", <DesktopOutlined />),
-        ]
+      ? [getItem("Authentifiation", "1", <LoginOutlined />)]
       : [
-          getItem("Acceuil", "acceuil", "/", <PieChartOutlined />),
+          getItem(<Link to={"/accueil"}>Accueil</Link>, "1", <HomeOutlined />),
+          buildTreeMenuData(treeData),
           getItem(
-            "My Workspace",
-            "workspace",
-            "/workspace",
-            <PieChartOutlined />
-          ),
-          getItem(
-            "Deconnexion",
-            "logout",
-            undefined,
-            <PieChartOutlined />,
-            logOutUser
+            <Link to={"/authentification"} onClick={() => logOutUser()}>
+              Deconnexion
+            </Link>,
+            "2",
+            <LogoutOutlined />
           ),
         ];
   };
@@ -110,14 +134,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           <img src={logo} alt="polynote-logo" style={{ width: "100%" }} />
         </div>
         <Menu
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
           theme="dark"
-          defaultSelectedKeys={["acceuil"]}
           mode="inline"
           items={MenuAuthAccess()}
         />
       </Sider>
       <Layout className="site-layout" style={{ background: "#131629" }}>
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "0 " }}>
           <div
             className="App"
             style={{

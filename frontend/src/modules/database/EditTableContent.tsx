@@ -35,13 +35,17 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   record,
   ...restProps
 }) => {
-  const [editing, setEditing] = useState(false);
+  const globalState = useSelector((state: RootState) => state.blocks.content);
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
   const dispatch = useDispatch();
-  const globalState = useSelector((state: RootState) => state.blocks.content);
   const param = useParams();
+
   const [updateDataBase, setUpdateData] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [items, setItems] = useState<string[]>([]);
+  const [name, setName] = useState("");
+  let index = 0;
 
   useEffect(() => {
     if (editing) {
@@ -101,10 +105,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       console.log("Save failed:", errInfo);
     }
   };
-
-  const [items, setItems] = useState<string[]>([]);
-  const [name, setName] = useState("");
-  let index = 0;
 
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);

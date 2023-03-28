@@ -1,6 +1,12 @@
-import { IRowTrello } from "../../modules/interfaces/database";
+import {
+  IRowTableDataBase,
+  IRowTrello,
+} from "../../modules/interfaces/database";
 
-export const formatRow = (row: any, defaultColumn: string): IRowTrello => {
+export const formatRow = (
+  row: IRowTableDataBase,
+  defaultColumn: string
+): IRowTrello => {
   const content: any = {};
 
   Object.entries(row).forEach(([propName, propValue], index) => {

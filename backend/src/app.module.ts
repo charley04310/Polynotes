@@ -8,6 +8,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { AuthModule } from './auth/auth.module';
 import { PageModule } from './page/page.module';
+import { FileSystemModule } from './file-system/file-system.module';
 
 @Module({
   imports: [
@@ -44,6 +45,8 @@ import { PageModule } from './page/page.module';
     }),
 
     PageModule,
+
+    FileSystemModule,
   ],
   controllers: [AppController],
   providers: [AppService, MailService],
