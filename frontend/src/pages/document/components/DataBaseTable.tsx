@@ -18,7 +18,7 @@ import AddColumnDataBase, {
 import { BlockType, IContentBlock } from "../../../store/interfaces/block";
 import { IColumnTableDataBase } from "../../../modules/interfaces/database";
 import { RootState } from "../../../store/store";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { updatePageContent } from "../../../store/API/Page";
 
 type EditableTableProps = Parameters<typeof Table>[0];
@@ -28,11 +28,13 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 interface EditableTableState {
   dataSource: IContentBlock;
   isEditable: boolean;
+  isSubPage: boolean;
   index: number;
 }
 const TableDataBase: React.FC<EditableTableState> = ({
   dataSource,
   isEditable,
+  isSubPage,
   index,
 }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -158,13 +160,21 @@ const TableDataBase: React.FC<EditableTableState> = ({
             alignItems: "center",
           }}
         >
-          {isEditable ? <AddColumnDataBase blockIndex={index} /> : null}
-          <Button
-            style={{ marginTop: 12 }}
-            onClick={() => setToTrelloView(index)}
-          >
-            Trello view
-          </Button>
+          {!isSubPage ? (
+            <>
+              {isEditable ? (
+                <>
+                  <AddColumnDataBase blockIndex={index} />{" "}
+                </>
+              ) : null}
+              <Button
+                style={{ marginTop: 12 }}
+                onClick={() => setToTrelloView(index)}
+              >
+                Trello view
+              </Button>
+            </>
+          ) : null}
         </div>
       </div>
     </div>

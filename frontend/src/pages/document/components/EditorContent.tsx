@@ -90,13 +90,14 @@ const Tiptap = forwardRef(
 
     return (
       <>
-        {editor && <BubbleMenuComponent editor={editor} />}
+        {editor && isEditable ? <BubbleMenuComponent editor={editor} /> : null}
 
         <EditorContent
           editor={editor}
           className="editable"
           style={{ caretColor: "black", width: "90%" }}
           onKeyDown={(event) => {
+            if (isEditable === false) return;
             handleKeyEventRefs?.(event);
             HandleKeyDown(
               event,
@@ -107,6 +108,7 @@ const Tiptap = forwardRef(
             );
           }}
           onBlur={() => {
+            if (isEditable === false) return;
             dispatch(
               setBlockContent({
                 item: blockState,

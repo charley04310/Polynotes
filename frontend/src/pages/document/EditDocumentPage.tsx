@@ -93,14 +93,26 @@ const EditDocumentPage = () => {
             />
           ) : null}
           {item.type === BlockType.DATABASE ? (
-            <TableDataBase isEditable={true} dataSource={item} index={index} />
+            <TableDataBase
+              isSubPage={false}
+              isEditable={true}
+              dataSource={item}
+              index={index}
+            />
           ) : null}
 
           {item.type === BlockType.TRELLO && typeof item.content != "string" ? (
-            <TrelloDataBase isEditable={true} dataSource={item} index={index} />
+            <TrelloDataBase
+              isSubPage={false}
+              isEditable={true}
+              dataSource={item}
+              index={index}
+            />
           ) : null}
 
-          {item.type === BlockType.SUBPAGE ? <SubPageBlockComponent /> : null}
+          {item.type === BlockType.SUBPAGE ? (
+            <SubPageBlockComponent dataSource={item} index={index} />
+          ) : null}
         </div>
       ))}
     </>

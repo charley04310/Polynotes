@@ -27,13 +27,14 @@ const { Search } = Input;
 interface EditableTrelloStateProps {
   dataSource: IContentBlock;
   isEditable: boolean;
-
+  isSubPage: boolean;
   index: number;
 }
 
 export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
   dataSource,
   isEditable,
+  isSubPage,
   index,
 }) => {
   const [rowsTrello, setrowsTrello] = useState<IRowTrello[]>();
@@ -145,17 +146,23 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
           </MainWrapper>
         </DndContext>
         <div style={{ marginTop: 0 }}>
-          <Button onClick={() => setToTableView()}> Table view</Button>
-          {isEditable && (
-            <Search
-              placeholder="Ajouter une colonne"
-              value={searchValue}
-              style={{ width: 215, marginLeft: 10 }}
-              enterButton={<RightCircleOutlined />}
-              onSearch={(value) => setTrelloColumn(value)}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-          )}
+          {!isSubPage ? (
+            <>
+              {isEditable ? (
+                <>
+                  <Search
+                    placeholder="Ajouter une colonne"
+                    value={searchValue}
+                    style={{ width: 215, marginLeft: 10 }}
+                    enterButton={<RightCircleOutlined />}
+                    onSearch={(value) => setTrelloColumn(value)}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                  />
+                </>
+              ) : null}
+              <Button onClick={() => setToTableView()}> Table view</Button>
+            </>
+          ) : null}
         </div>
       </div>
     </>

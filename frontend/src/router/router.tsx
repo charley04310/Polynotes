@@ -50,7 +50,6 @@ const PolynoteRouter: React.FC = () => {
       if (userId === undefined) return;
       const tree = await getTreeFileSystem(userId);
       if (tree === undefined) return;
-      console.log("tree", tree);
       dispatch(setStore(tree));
     })();
   });

@@ -133,10 +133,10 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
       <div
         className="editable-cell-value-wrap"
         style={{
-          position: "absolute",
+          position: "fixed",
           display: "flex",
           alignItems: "center",
-          right: 50,
+          right: 25,
           zIndex: 1,
         }}
       >

@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getPageByid, updatePageContent } from "../../store/API/Page";
 import { setStoreState } from "../../store/slices/blockSlice";
 import { handleKeyEventRefs } from "./composables/handleEventKeyDown";
+import SubPageBlockComponent from "./components/SubPage";
 
 const SharedDocumentPage = () => {
   const refs = useRef<(Editor | null)[]>([]);
@@ -104,6 +105,7 @@ const SharedDocumentPage = () => {
           ) : null}
           {item.type === BlockType.DATABASE ? (
             <TableDataBase
+              isSubPage={false}
               isEditable={pageState.isEditable}
               dataSource={item}
               index={index}
@@ -112,10 +114,14 @@ const SharedDocumentPage = () => {
 
           {item.type === BlockType.TRELLO && typeof item.content != "string" ? (
             <TrelloDataBase
+              isSubPage={false}
               isEditable={pageState.isEditable}
               dataSource={item}
               index={index}
             />
+          ) : null}
+          {item.type === BlockType.SUBPAGE ? (
+            <SubPageBlockComponent dataSource={item} index={index} />
           ) : null}
         </div>
       ))}
