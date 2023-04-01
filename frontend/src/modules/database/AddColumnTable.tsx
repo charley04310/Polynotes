@@ -69,16 +69,6 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
     form.resetFields();
   };
 
-  const setToTrelloView = () => {
-    const values: INewTypeBlock = {
-      index: blockIndex,
-      type: BlockType.TRELLO,
-    };
-
-    dispatch(setNewTypeBlock(values));
-    setUpdateData(true);
-  };
-
   return (
     <>
       <Form
@@ -134,7 +124,6 @@ const AddColumnDataBase: React.FC<AddColumnDataBaseProps> = ({
             </Button>
           )}
         </Form.Item>
-        <Button onClick={() => setToTrelloView()}> Trello view</Button>
       </Form>
     </>
   );

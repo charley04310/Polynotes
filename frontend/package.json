@@ -29,6 +29,7 @@
     "dayjs": "^1.11.7",
     "react": "^18.2.0",
     "react-contenteditable": "^3.3.6",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^8.0.5",
@@ -61,5 +62,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-copy-to-clipboard": "^5.0.4"
   }
 }

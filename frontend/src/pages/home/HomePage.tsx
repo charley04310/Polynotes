@@ -1,8 +1,8 @@
 import { Avatar, Card, Divider } from "antd";
 import FileExplorer from "./explorer/FileExplorer";
 import { Typography } from "antd";
-import { getPageByUserId } from "../../store/API/Page";
-import { useSelector } from "react-redux";
+import { getPagesByUserId } from "../../store/API/Page";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { FileTextOutlined } from "@ant-design/icons";
 import "./index.css";
@@ -20,21 +20,23 @@ const HomePage = () => {
   const user: IUserState | undefined = useSelector(
     (state: RootState) => state.auth.user
   );
-  const [userState, setUserState] = useState(user);
+
   const [files, setFiles] = useState<any>([]);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setUserState(user);
     (async () => {
-      if (!userState) return;
-      const pages = await getPageByUserId(userState.userId);
+      if (!user) return;
+      const pages = await getPagesByUserId(user.userId);
       setFiles(pages);
     })();
-  }, [userState, user]);
+  }, [user, dispatch]);
+
   return (
     <>
-      {userState && (
+      {user && (
         <Card
           style={{ width: "100%", marginTop: 16, marginBottom: 32 }}
           loading={false}
@@ -43,10 +45,10 @@ const HomePage = () => {
             style={{ display: "flex", alignItems: "center" }}
             avatar={
               <Avatar style={{ backgroundColor: "#001529", color: "white" }}>
-                {userState.username.charAt(0).toUpperCase()}
+                {user.username.charAt(0).toUpperCase()}
               </Avatar>
             }
-            title={userState.username.toUpperCase()}
+            title={user.username.toUpperCase()}
           />
         </Card>
       )}

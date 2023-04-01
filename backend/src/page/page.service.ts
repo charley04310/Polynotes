@@ -1,17 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
+import { UpdatePrivacyPageDto } from './dto/update-privacy-page.dto';
 import { Page, PageDocument } from './schemas/page.schema';
 
 @Injectable()
 export class PageService {
   constructor(@InjectModel(Page.name) private pageModel: Model<PageDocument>) {}
   async createOrReturnExistingPage(
+    userId: string,
     createPageDto: CreatePageDto,
   ): Promise<PageDocument> {
-    const { pageId, title, content, userId } = createPageDto;
+    const { pageId, title, content } = createPageDto;
+
     if (pageId != null) {
       const page = await this.pageModel.findById(pageId).exec();
       if (page) {
@@ -51,7 +58,7 @@ export class PageService {
   ): Promise<any> {
     const page = await this.pageModel.findById(pageId);
     if (!page) {
-      throw new Error('Page not found');
+      throw new NotFoundException('Page not found');
     }
     page.content = updateDto.content;
     return page.save();
@@ -68,5 +75,22 @@ export class PageService {
       { new: true },
     );
     return updatedPage;
+  }
+
+  async updatePrivacy(
+    pageId: string,
+    userId: string,
+    updatePrivacy: UpdatePrivacyPageDto,
+  ) {
+    const page = await this.pageModel.findById(pageId);
+    if (!page) {
+      throw new Error('Page not found');
+    }
+    if (page.userId.toString() !== userId) {
+      throw new UnauthorizedException("You don't have permission");
+    }
+    page.isPublic = updatePrivacy.isPublic;
+    page.isEditable = updatePrivacy.isEditable;
+    return page.save();
   }
 }

@@ -15,6 +15,7 @@ import {
   FolderOutlined,
   FolderAddOutlined,
   FileAddOutlined,
+  FolderFilled,
 } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
 import { HomeOutlined, FileTextOutlined } from "@ant-design/icons";
@@ -29,22 +30,18 @@ import {
   addNode,
   getNode,
   getNodesPath,
-  setStore,
 } from "../../../store/slices/TreeFileExplorerSlice";
 import { createNewPage } from "../../../store/API/Page";
 import { useNavigate } from "react-router-dom";
 import { navigateToDocumentPage } from "../composables/Navigation";
 import EmptyData from "../../../global-components/EmptyData";
-import {
-  createOrUpdateTreeFileSystem,
-  getTreeFileSystem,
-} from "../../../store/API/FileSystemTree";
+import { createOrUpdateTreeFileSystem } from "../../../store/API/FileSystemTree";
 
 interface IPropsFileExplorer {}
 
 const FileExplorer: React.FC<IPropsFileExplorer> = () => {
-  const treeData = useSelector((state: RootState) => state.Tree);
   const userId = useSelector((state: RootState) => state.auth.user?.userId);
+  const treeData = useSelector((state: RootState) => state.Tree);
 
   const [currentNode, setCurrentNode] = useState<NodeFileNavigator>(treeData);
   const [pageTitle, setPageTitle] = useState<string>("");
@@ -56,24 +53,21 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
   const navigate = useNavigate();
 
   const inputRef = useRef<InputRef>(null);
-  useEffect(() => {
-    (async () => {
-      const tree = await getTreeFileSystem(userId!);
-      dispatch(setStore(tree!));
-      setCurrentNode(tree!);
-    })();
-  }, [dispatch, userId]);
 
+  useEffect(() => {
+    setCurrentNode(treeData);
+  }, [treeData]);
+  // Permet de mettre à jour le noeud courant
   useEffect(() => {
     const getNode = (
       rootNode: NodeFileNavigator,
       key: string
     ): NodeFileNavigator | undefined => {
-      // If the node's key matches the search key, return the node
+      // si la clé du noeud est égale à la clé recherchée, on retourne le noeud
       if (rootNode.key === key) {
         return rootNode;
       }
-      // If the node has children, recursively search them for the key
+      // si le noeud a des enfants, on parcourt les enfants
       if (rootNode.children) {
         for (let child of rootNode.children) {
           const childNode = getNode(child, key);
@@ -82,18 +76,20 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
           }
         }
       }
-      // If the node has no children and its key does not match the search key, return undefined
+      // si on arrive ici, c'est que le noeud n'a pas été trouvé
       return undefined;
     };
+    // on récupère le noeud à partir de la clé
     const newNode = getNode(treeData, currentNode.key);
     if (newNode) {
       setCurrentNode(newNode);
     }
   }, [currentNode.key, treeData]);
 
+  // Permet de mettre à jour le store et la base de données lorsque l'on ajoute un noeud
   useEffect(() => {
     if (updateTreeFile) {
-      console.log("update tree file");
+      // console.log("update tree file");
       (async () => {
         await createOrUpdateTreeFileSystem(userId!, treeData);
         setUpdateTreeFile(false);
@@ -122,21 +118,21 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
     parentNode: NodeFileNavigator,
     nodeToAdd: NodeFileNavigator
   ) => {
+    // Si le type est un fichier, on crée une nouvelle page
     if (type === "file" && userId) {
       const page = await createNewPage(userId, pageTitle);
       nodeToAdd.key = page.pageId;
     }
     nodeToAdd.title = pageTitle;
+    // On ajoute le noeud au store
     dispatch(addNode({ parentNode, nodeToAdd }));
+    // On met à jour la base de données
     setUpdateTreeFile(true);
-
-    //await createOrUpdateTreeFileSystem(userId!, treeData);
   };
 
   return (
     <>
       <Divider />
-
       <Row align="middle" justify="start">
         <Col span={"auto"}>
           <Breadcrumb style={{ marginRight: 18 }}>
@@ -263,6 +259,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
           renderItem={(item) => (
             <List.Item
               className="list-item-file-explore"
+              style={{ paddingLeft: 10 }}
               onClick={() =>
                 item.children
                   ? setCurrentNode(item)
@@ -275,11 +272,19 @@ const FileExplorer: React.FC<IPropsFileExplorer> = () => {
                   <Avatar
                     style={
                       item.children
-                        ? { backgroundColor: "#001529" }
-                        : { backgroundColor: "#1890ff" }
+                        ? {
+                            backgroundColor: "transparent",
+                            color: "#1890ff",
+                            fontSize: 25,
+                          }
+                        : {
+                            backgroundColor: "white",
+                            color: "#1890ff",
+                            fontSize: 25,
+                          }
                     }
                     icon={
-                      item.children ? <FolderOutlined /> : <FileTextOutlined />
+                      item.children ? <FolderFilled /> : <FileTextOutlined />
                     }
                   />
                 }

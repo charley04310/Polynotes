@@ -3,6 +3,8 @@ import { ITableState } from "../../modules/interfaces/database";
 
 export interface IBlockState {
   title: string;
+  isPublic: boolean;
+  isEditable: boolean;
   content: IContentBlock[] | [];
 }
 
@@ -17,5 +19,6 @@ export enum BlockType {
   TIPTAP = "tiptap",
   IMAGE = "image",
   DATABASE = "database",
+  SUBPAGE = "page",
   TRELLO = "trello",
 }

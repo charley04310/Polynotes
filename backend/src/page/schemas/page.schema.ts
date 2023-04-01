@@ -13,6 +13,12 @@ export class Page {
   @Prop({ required: true, type: SchemaTypes.ObjectId })
   userId: ObjectId;
 
+  @Prop({ required: true, default: false })
+  isPublic: boolean;
+
+  @Prop({ required: true, default: false })
+  isEditable: boolean;
+
   @Prop({
     required: false,
   })

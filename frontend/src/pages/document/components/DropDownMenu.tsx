@@ -5,13 +5,14 @@ import {
   DeleteOutlined,
   DatabaseOutlined,
   BlockOutlined,
+  FileTextOutlined,
 } from "@ant-design/icons";
 import { Button, MenuProps } from "antd";
 import { Dropdown } from "antd";
 import { Editor } from "@tiptap/react";
 import { useDispatch } from "react-redux";
 import { deleteBlock, setNewBlock } from "../../../store/slices/blockSlice";
-import {  BlockType, IContentBlock } from "../../../store/interfaces/block";
+import { BlockType, IContentBlock } from "../../../store/interfaces/block";
 
 interface DropDownProps {
   editor: Editor | null;
@@ -71,6 +72,12 @@ const DropDownMenu: React.FC<DropDownProps> = ({
     dispatch(setNewBlock({ type: BlockType.TIPTAP, content: "", id: item.id }));
   };
 
+  const setSubPageBlock = () => {
+    dispatch(
+      setNewBlock({ type: BlockType.SUBPAGE, content: "", id: item.id })
+    );
+  };
+
   const items: MenuProps["items"] = [
     {
       label: "Titre 1",
@@ -114,11 +121,20 @@ const DropDownMenu: React.FC<DropDownProps> = ({
     {
       type: "divider",
     },
+    {
+      label: "Importer une page",
+      icon: <FileTextOutlined />,
+      key: "6",
+      onClick: () => setSubPageBlock(),
+    },
+    {
+      type: "divider",
+    },
 
     {
       label: "Supprimer le block",
       icon: <DeleteOutlined />,
-      key: "6",
+      key: "7",
       danger: true,
       onClick: () => removeBlock(),
     },

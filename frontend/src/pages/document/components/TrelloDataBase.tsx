@@ -26,11 +26,14 @@ const { Search } = Input;
 
 interface EditableTrelloStateProps {
   dataSource: IContentBlock;
+  isEditable: boolean;
+
   index: number;
 }
 
 export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
   dataSource,
+  isEditable,
   index,
 }) => {
   const [rowsTrello, setrowsTrello] = useState<IRowTrello[]>();
@@ -68,6 +71,7 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
 
   const handleOnDragEnd = useCallback(
     ({ active, over }: DragEndEvent) => {
+      if (!isEditable) return;
       if (!rowsTrello) return;
       const elementId = active.id;
       const deepCopy = [...rowsTrello];
@@ -93,7 +97,7 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
 
       setRowToColumn();
     },
-    [rowsTrello, setrowsTrello, index, dispatch]
+    [rowsTrello, setrowsTrello, index, dispatch, isEditable]
   );
 
   const setToTableView = () => {
@@ -128,6 +132,7 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
               );
               return (
                 <Column
+                  isEditable={isEditable}
                   key={`column-${columnIndex}`}
                   heading={column}
                   styleColumnHeader={styleHeadersColumns[columnIndex]}
@@ -141,14 +146,16 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
         </DndContext>
         <div style={{ marginTop: 0 }}>
           <Button onClick={() => setToTableView()}> Table view</Button>
-          <Search
-            placeholder="Ajouter une colonne"
-            value={searchValue}
-            style={{ width: 215, marginLeft: 10 }}
-            enterButton={<RightCircleOutlined />}
-            onSearch={(value) => setTrelloColumn(value)}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
+          {isEditable && (
+            <Search
+              placeholder="Ajouter une colonne"
+              value={searchValue}
+              style={{ width: 215, marginLeft: 10 }}
+              enterButton={<RightCircleOutlined />}
+              onSearch={(value) => setTrelloColumn(value)}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+          )}
         </div>
       </div>
     </>

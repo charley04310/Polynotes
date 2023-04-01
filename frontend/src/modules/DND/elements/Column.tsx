@@ -33,6 +33,7 @@ const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 export const Column: FC<IColumn> = ({
   heading,
+  isEditable,
   elements,
   blockIndex,
   columnTrelloIndex,
@@ -55,7 +56,7 @@ export const Column: FC<IColumn> = ({
         if (!param.id) return;
         const page = await updatePageContent(param.id, globalState);
         setUpdateData(false);
-        console.log(`Delete Column`, page);
+        // console.log(`Delete Column`, page);
       }
     })();
   }, [updateDataBase, globalState, param.id]);
@@ -119,6 +120,7 @@ export const Column: FC<IColumn> = ({
     [elements, columnIdentifier]
   );
   const saveNewTitleColumn = () => {
+    if (!isEditable) return;
     const newValues = {
       index: blockIndex,
       valueToReplace: heading,
@@ -130,6 +132,7 @@ export const Column: FC<IColumn> = ({
   };
 
   const deleteColumn = () => {
+    if (!isEditable) return;
     dispatch(
       deleteTrelloColumn({
         blockIndex: blockIndex,
@@ -141,6 +144,7 @@ export const Column: FC<IColumn> = ({
   };
 
   const toggleEdit = () => {
+    if (!isEditable) return;
     setEditing(!editing);
   };
   return (
@@ -165,31 +169,39 @@ export const Column: FC<IColumn> = ({
           </>
         ) : (
           <>
-            <div onClick={toggleEdit}>
-              <Tooltip title="Éditer">{inputValue.toLocaleUpperCase()}</Tooltip>
-            </div>
-            <Dropdown
-              overlayStyle={{
-                width: 150,
-                color: "white",
-              }}
-              menu={{ items }}
-              trigger={["click", "hover"]}
-            >
-              <Tooltip title="Palette de couleur">
-                <Button
-                  className="dropdown-color"
-                  style={{
-                    position: "relative",
-                    right: -65,
-                    background: "none",
-                    color: "white",
-                    border: "none",
-                  }}
-                  icon={<BgColorsOutlined />}
-                />
-              </Tooltip>
-            </Dropdown>
+            {isEditable ? (
+              <div onClick={toggleEdit}>
+                <Tooltip title="Éditer">
+                  {inputValue.toLocaleUpperCase()}
+                </Tooltip>
+              </div>
+            ) : (
+              inputValue.toLocaleUpperCase()
+            )}
+            {isEditable ? (
+              <Dropdown
+                overlayStyle={{
+                  width: 150,
+                  color: "white",
+                }}
+                menu={{ items }}
+                trigger={["click", "hover"]}
+              >
+                <Tooltip title="Palette de couleur">
+                  <Button
+                    className="dropdown-color"
+                    style={{
+                      position: "relative",
+                      right: -65,
+                      background: "none",
+                      color: "white",
+                      border: "none",
+                    }}
+                    icon={<BgColorsOutlined />}
+                  />
+                </Tooltip>
+              </Dropdown>
+            ) : null}
           </>
         )}
 
@@ -204,7 +216,7 @@ export const Column: FC<IColumn> = ({
           />
         ))}
         <DropPlaceholder />
-        {columnTrelloIndex > 0 && (
+        {columnTrelloIndex > 0 && isEditable ? (
           <ContainerButtonDelete>
             <Button
               type="text"
@@ -214,7 +226,7 @@ export const Column: FC<IColumn> = ({
               icon={<DeleteOutlined />}
             />
           </ContainerButtonDelete>
-        )}
+        ) : null}
       </Droppable>
     </ColumnWrapper>
   );

@@ -5,11 +5,7 @@ import {
   setNewBlock,
   setBlockContent,
 } from "../../../store/slices/blockSlice";
-import {
-  IBlockState,
-  BlockType,
-  IContentBlock,
-} from "../../../store/interfaces/block";
+import { BlockType, IContentBlock } from "../../../store/interfaces/block";
 
 let timeoutId: NodeJS.Timeout | null = null;
 
@@ -57,14 +53,14 @@ export const HandleKeyDown = (
       if (key !== "Backspace") {
         timeoutId = setTimeout(() => {
           const content = editor?.getHTML();
-          console.log("content", content);
+          // console.log("content", content);
           dispatch(
             setBlockContent({
               item: blockState,
               content: content,
             })
           );
-          console.log("updateDataBase", content);
+          //   console.log("updateDataBase", content);
           setUpdateDataBase(true);
         }, 1500);
         break;

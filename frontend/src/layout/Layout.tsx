@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FileOutlined,
   FolderOutlined,
@@ -13,12 +13,9 @@ import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { autoLogin, logoutUser } from "../store/API/Authentification";
-import { setIsAuthenticated, setUser } from "../store/slices/authSlice";
-import {
-  IReponseError,
-  IReponseSuccess,
-} from "../store/API/SuccessErrorMessage";
+import { logoutUser } from "../store/API/Authentification";
+import { setIsAuthenticated } from "../store/slices/authSlice";
+
 import { NodeFileNavigator } from "../pages/home/utils/DataPayload";
 
 const { Content, Footer, Sider } = Layout;
@@ -29,7 +26,7 @@ export type MainLayoutProps = {
   children: React.ReactNode;
 };
 
-function getItem(
+export function getItem(
   label: React.ReactNode,
   key?: React.Key | null,
   icon?: React.ReactNode,
@@ -43,7 +40,9 @@ function getItem(
   } as MenuItem;
 }
 
-function buildMenuData(data: NodeFileNavigator[] | undefined): MenuItem[] {
+export function buildMenuData(
+  data: NodeFileNavigator[] | undefined
+): MenuItem[] {
   if (!data) return [];
   return data.map((node) => {
     if (node.children) {
@@ -64,31 +63,16 @@ function buildMenuData(data: NodeFileNavigator[] | undefined): MenuItem[] {
   });
 }
 
-const buildTreeMenuData = (treeData: NodeFileNavigator) => {
+export const buildTreeMenuData = (treeData: NodeFileNavigator) => {
   const menuData = buildMenuData(treeData.children);
   return getItem("Workspace", "sub4", <InboxOutlined />, menuData);
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const treeData = useSelector((state: RootState) => state.Tree);
-
   const [collapsed, setCollapsed] = useState(false);
-
-  const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
-    const userLogedIn = await autoLogin();
-    return userLogedIn;
-  };
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    (async () => {
-      const isLoggedIn = await userAutoLogin();
-      if (isLoggedIn.message === undefined) return;
-      dispatch(setIsAuthenticated(true));
-      dispatch(setUser(isLoggedIn.user));
-    })();
-  });
   const {
     token: { colorBgContainer },
   } = theme.useToken();

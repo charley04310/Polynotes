@@ -14,16 +14,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getPageByid, updatePageContent } from "../../store/API/Page";
 import { setStoreState } from "../../store/slices/blockSlice";
 import { handleKeyEventRefs } from "./composables/handleEventKeyDown";
-import SubPageBlockComponent from "./components/SubPage";
 
-const EditDocumentPage = () => {
+const SharedDocumentPage = () => {
   const refs = useRef<(Editor | null)[]>([]);
   const params = useParams();
 
   const [updateDataBaseBlock, setUpdateDataBaseBlock] = useState(false);
+
   const blocksPage: IContentBlock[] = useSelector(
     (state: RootState) => state.blocks.content
   );
+
+  const pageState = useSelector((state: RootState) => state.blocks);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,8 +33,14 @@ const EditDocumentPage = () => {
   // Avant de rendre la page on vérifie que l'id est bien présent dans l'url
   useEffect(() => {
     (async () => {
+      console.log("params.id", params.id);
       if (!params.id) return;
       const pageContent = await getPageByid(params.id);
+
+      console.log("pageContent", pageContent);
+      if (pageContent.error || !pageContent.isPublic) {
+        return navigate("/authentification");
+      }
 
       const store = {
         isPublic: pageContent.isPublic,
@@ -42,7 +50,7 @@ const EditDocumentPage = () => {
       };
       dispatch(setStoreState(store));
     })();
-  }, [params.id, navigate, dispatch, refs]);
+  }, [params.id, navigate, dispatch, refs, pageState.isPublic]);
 
   useEffect(() => {
     (async () => {
@@ -60,21 +68,23 @@ const EditDocumentPage = () => {
 
   return (
     <>
-      <TitleDocumentPage />
       {blocksPage.map((item, index) => (
         <div
           key={item.id}
           className="block"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <DropDownMenu
-            setUpdateData={setUpdateDataBaseBlock}
-            editor={refs.current[index]}
-            item={item}
-          />
+          {pageState.isEditable ? (
+            <DropDownMenu
+              setUpdateData={setUpdateDataBaseBlock}
+              editor={refs.current[index]}
+              item={item}
+            />
+          ) : null}
+
           {item.type === BlockType.TIPTAP ? (
             <Tiptap
-              isEditable={true}
+              isEditable={pageState.isEditable}
               blockState={item}
               ref={(ref) => {
                 refs.current[index] = ref;
@@ -87,24 +97,30 @@ const EditDocumentPage = () => {
 
           {item.type === BlockType.IMAGE && typeof item.content === "string" ? (
             <ImageBlockComponent
-              isEditable={true}
+              isEditable={pageState.isEditable}
               blockState={item}
               imageUrl={item.content}
             />
           ) : null}
           {item.type === BlockType.DATABASE ? (
-            <TableDataBase isEditable={true} dataSource={item} index={index} />
+            <TableDataBase
+              isEditable={pageState.isEditable}
+              dataSource={item}
+              index={index}
+            />
           ) : null}
 
           {item.type === BlockType.TRELLO && typeof item.content != "string" ? (
-            <TrelloDataBase isEditable={true} dataSource={item} index={index} />
+            <TrelloDataBase
+              isEditable={pageState.isEditable}
+              dataSource={item}
+              index={index}
+            />
           ) : null}
-
-          {item.type === BlockType.SUBPAGE ? <SubPageBlockComponent /> : null}
         </div>
       ))}
     </>
   );
 };
 
-export default EditDocumentPage;
+export default SharedDocumentPage;

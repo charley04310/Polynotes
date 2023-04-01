@@ -28,6 +28,7 @@ const EditableContext = React.createContext<FormInstance<any> | null>(null);
 export const EditableCell: React.FC<EditableCellProps> = ({
   title,
   editable,
+  isEditable,
   children,
   dataIndex,
   typeIndex,
@@ -58,13 +59,14 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       if (updateDataBase) {
         if (!param.id) return;
         await updatePageContent(param.id, globalState);
-        console.log("updateDataBase", updateDataBase);
+        //console.log("updateDataBase", updateDataBase);
         setUpdateData(false);
       }
     })();
   }, [updateDataBase, globalState, param.id]);
 
   const toggleEdit = () => {
+    if (!isEditable) return;
     setEditing(!editing);
     form.setFieldsValue({ [dataIndex]: record[dataIndex] });
   };
@@ -82,7 +84,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       dispatch(setRowData({ ...record, ...newValues }));
       setUpdateData(true);
     } catch (errInfo) {
-      console.log("Save failed:", errInfo);
+      // console.log("Save failed:", errInfo);
     }
   };
 
@@ -102,7 +104,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       dispatch(setRowData({ ...record, ...newDate }));
       setUpdateData(true);
     } catch (errInfo) {
-      console.log("Save failed:", errInfo);
+      // console.log("Save failed:", errInfo);
     }
   };
 
@@ -120,7 +122,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     }, 0);
   };
   const checkBoxChange = (e: CheckboxChangeEvent) => {
-    console.log(`checked = ${e.target.checked}`);
+    // console.log(`checked = ${e.target.checked}`);
   };
   const getInputElement = (): JSX.Element => {
     switch (typeIndex) {

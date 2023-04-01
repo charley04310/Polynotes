@@ -8,11 +8,13 @@ const { Search } = Input;
 
 interface ImagePropsBlock {
   blockState: IContentBlock;
+  isEditable: boolean;
   imageUrl: string;
 }
 
 const ImageBlockComponent: React.FC<ImagePropsBlock> = ({
   imageUrl,
+  isEditable,
   blockState,
 }) => {
   const dispatch = useDispatch();
@@ -47,19 +49,21 @@ const ImageBlockComponent: React.FC<ImagePropsBlock> = ({
       ) : (
         <>
           <div className="imageBlock">
-            <Image width={"50%"} src={imageUrl} />
+            <Image width={"100%"} src={imageUrl} />
             <div className="deleteImageButton">
-              <Button
-                type="link"
-                shape="default"
-                icon={
-                  <DeleteOutlined
-                    style={{ fontSize: "15px", color: "white" }}
-                  />
-                }
-                size={"large"}
-                onClick={() => handleDelete()}
-              />
+              {isEditable && (
+                <Button
+                  type="link"
+                  shape="default"
+                  icon={
+                    <DeleteOutlined
+                      style={{ fontSize: "15px", color: "white" }}
+                    />
+                  }
+                  size={"large"}
+                  onClick={() => handleDelete()}
+                />
+              )}
             </div>
           </div>
         </>

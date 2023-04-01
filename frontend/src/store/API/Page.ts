@@ -36,6 +36,18 @@ export const createNewPage = async (userId: string, title?: string) => {
     };
   }
 };
+export const updatePrivacyPage = async (
+  pageId: string,
+  isPublic: boolean,
+  isEditablePage: boolean
+): Promise<any> => {
+  const response = await api.patch(`/page/privacy/${pageId}`, {
+    isPublic: isPublic,
+    isEditable: isEditablePage,
+  });
+
+  return response.data;
+};
 
 export const getPages = async () => {
   try {
@@ -46,12 +58,14 @@ export const getPages = async () => {
   }
 };
 
-export const getPageByid = async (id: string): Promise<IResponsePage> => {
+export const getPageByid = async (id: string): Promise<IResponsePage | any> => {
   try {
     const response = await api.get(`/page/${id}`);
-    console.log("response:", response.data);
+    // console.log("response:", response.data);
     return {
       title: response.data.title,
+      isPublic: response.data.isPublic,
+      isEditable: response.data.isEditable,
       error: undefined,
       content: response.data.content,
     };
@@ -67,14 +81,16 @@ export const getPageByid = async (id: string): Promise<IResponsePage> => {
 export const updatePageContent = async (
   id: string,
   content: any
-): Promise<IResponsePage> => {
+): Promise<IResponsePage | any> => {
   try {
-    console.log("content:", content);
+    // console.log("content:", content);
     const response = await api.patch(`/page/${id}`, {
       content: content,
     });
     return {
       title: response.data.title,
+      isPublic: response.data.isPublic,
+      isEditable: response.data.isEditable,
       error: undefined,
       content: response.data.content,
     };
@@ -98,13 +114,15 @@ export const updDateTitlePage = async (
   return response.data;
 };
 
-export const getPageByUserId = async (userId: string) => {
+export const getPagesByUserId = async (userId: string) => {
   const response = await api.get(`/page/user/${userId}`);
   return response.data;
 };
 
 export interface IResponsePage {
   title?: string;
+  isPublic: boolean;
+  isEditable: boolean;
   content?: any;
   error?: string;
 }

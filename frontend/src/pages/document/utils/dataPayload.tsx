@@ -2,6 +2,8 @@ import { IBlockState } from "../../../store/interfaces/block";
 
 export const initialState: IBlockState = {
   title: "",
+  isPublic: false,
+  isEditable: false,
   content: [],
   /*  {
       id: uuidv4(),

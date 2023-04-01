@@ -1,11 +1,9 @@
-import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router";
-import { RootState } from "../store/store";
+interface Props {
+  isAuthenticated: boolean;
+}
 
-const PrivateRoutes = () => {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+const PrivateRoutes: React.FC<Props> = ({ isAuthenticated }) => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/authentification" />;
 };
 

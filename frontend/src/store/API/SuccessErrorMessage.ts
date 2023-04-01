@@ -18,7 +18,11 @@ export const setSuccessMessage = (
 };
 
 export const setLoginSuccesMessage = (
-  user: {},
+  user: {
+    userId: string;
+    username: string;
+    email: string;
+  },
   message: string,
   status: number
 ): IReponseSuccess => {
@@ -31,7 +35,11 @@ export const setLoginSuccesMessage = (
 };
 
 export interface IReponseSuccess {
-  user?: {};
+  user?: {
+    userId: string;
+    username: string;
+    email: string;
+  };
   message: string;
   error: undefined;
   status: number;

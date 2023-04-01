@@ -3,7 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
 import Focus from "@tiptap/extension-focus";
-import { setBlockContent, deleteBlock } from "../../../store/slices/blockSlice";
+import { setBlockContent } from "../../../store/slices/blockSlice";
 import "../index.css";
 import {
   forwardRef,
@@ -23,18 +23,17 @@ import { useParams } from "react-router-dom";
 
 export interface TiptapProps {
   blockState: IContentBlock;
+  isEditable: boolean;
   handleKeyEventRefs?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const Tiptap = forwardRef(
   (
-    { blockState, handleKeyEventRefs }: TiptapProps,
+    { blockState, isEditable, handleKeyEventRefs }: TiptapProps,
     ref: Ref<Editor | null>
   ) => {
-    const dispatch = useDispatch();
-    const globalState = useSelector((state: RootState) => state.blocks.content);
-    const param = useParams();
     const [updateDataBase, setUpdateDataBase] = useState(false);
+    const globalState = useSelector((state: RootState) => state.blocks.content);
     const editor = useEditor({
       extensions: [
         StarterKit,
@@ -58,14 +57,30 @@ const Tiptap = forwardRef(
       content: blockState.content,
       autofocus: "end",
     });
-    const html = editor != null ? editor.getHTML() : "";
 
+    const param = useParams();
+    const dispatch = useDispatch();
+
+    // permet de récupérer le contenu de l'éditeur depuis la librairie
+    const html = editor != null ? editor.getHTML() : "";
+    useEffect(() => {
+      console.log("editable", isEditable);
+
+      if (isEditable) {
+        if (editor) editor.setEditable(true);
+      } else {
+        if (editor) editor.setEditable(false);
+      }
+    }, [editor, isEditable]);
+
+    // permet de récupérer l'éditeur dans le parent
     useImperativeHandle(ref, () => editor, [editor]);
 
+    // on recupère les evenements clavier pour mettre à jour la base de donnée
     useEffect(() => {
       (async () => {
         if (updateDataBase) {
-          console.log("updateDataBase");
+          // console.log("updateDataBase");
           if (!param.id) return;
           await updatePageContent(param.id, globalState);
           setUpdateDataBase(false);

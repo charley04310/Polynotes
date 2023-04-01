@@ -26,7 +26,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
   };
 
   const onFinishFailed = (values: any) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
   };
 
   const handleStateClick = (value: string) => {

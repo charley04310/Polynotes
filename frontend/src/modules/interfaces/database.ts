@@ -4,6 +4,7 @@ export interface EditableRowProps {
 export interface EditableCellProps {
   title: React.ReactNode;
   editable: boolean;
+  isEditable: boolean;
   typeIndex: typeIndex;
   children: React.ReactNode;
   dataIndex: string;
@@ -50,6 +51,7 @@ export interface IRowTrello {
 
 export interface IColumn {
   heading: string;
+  isEditable: boolean;
   elements: IRowTrello[];
   blockIndex: number;
   columnTrelloIndex: number;

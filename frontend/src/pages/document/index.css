@@ -95,3 +95,7 @@ code {
   opacity: 1 !important;
   transition: opacity 1s ease-in-out;
 }
+
+.popover-share {
+  padding: 0 !important;
+}

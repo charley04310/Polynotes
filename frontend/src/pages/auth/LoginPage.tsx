@@ -16,7 +16,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
   const [form] = Form.useForm();
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
   };
   const handleStateClick = (value: string) => {
     onPageStateChange(value);
@@ -29,8 +29,6 @@ const LoginPage: React.FC<LoginPageProps> = ({
       email: email,
       password: password,
     };
-
-    console.log("user", user);
 
     const userLoginResponse = await loginUser(user);
     setNotification(userLoginResponse);

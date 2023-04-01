@@ -78,16 +78,17 @@ const TreeFileStructure = createSlice({
       }
 
       //      console.log("state", JSON.parse(JSON.stringify(state)));
-      console.log("state", JSON.parse(JSON.stringify(state)));
+      //  console.log("state", JSON.parse(JSON.stringify(state)));
       return state;
     },
     setStore: (state, action: PayloadAction<NodeFileNavigator>) => {
       const { title, key, children } = action.payload;
-      return{
+      // console.log("action.payload", action.payload);
+      return {
         title,
         key,
-        children
-      }
+        children,
+      };
     },
   },
 });
