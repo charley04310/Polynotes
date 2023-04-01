@@ -28,3 +28,10 @@ jobs:
           push: true
           tags: lamenace90/polynotes-frontend:${{ steps.commit.outputs.short }}
           labels: test
+      ## BACKEND
+      - name: Build and push backend
+        uses: docker/build-push-action@v4
+        with:
+          context: backend
+          push: true
+          tags: lamenace90/polynotes-backend:${{ steps.commit.outputs.short }}
