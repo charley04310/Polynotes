@@ -19,6 +19,7 @@ import {
 import { setIsAuthenticated, setUser } from "../store/slices/authSlice";
 import { setStore } from "../store/slices/TreeFileExplorerSlice";
 import { RootState } from "../store/store";
+
 const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   const userLogedIn = await autoLogin();
   return userLogedIn;

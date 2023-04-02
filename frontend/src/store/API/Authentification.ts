@@ -19,7 +19,7 @@ export const registerUser = async (
   data: IUser
 ): Promise<IReponseSuccess | IReponseError> => {
   try {
-    const response = await api.post("/auth/signup", {
+    const response = await api.post("api/auth/signup", {
       username: data.username,
       password: data.password,
       email: data.email,
@@ -31,7 +31,7 @@ export const registerUser = async (
 };
 export const loginUser = async (data: ILoginUser) => {
   try {
-    const response = await api.post("/auth/login", {
+    const response = await api.post("api/auth/login", {
       password: data.password,
       email: data.email,
     });
@@ -46,7 +46,7 @@ export const loginUser = async (data: ILoginUser) => {
 };
 export const autoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   try {
-    const response = await api.get("/auth/auto-login");
+    const response = await api.get("api/auth/auto-login");
 
     return setLoginSuccesMessage(
       response.data.user,
@@ -59,7 +59,7 @@ export const autoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
 };
 export const logoutUser = async () => {
   try {
-    const response = await api.post("/auth/logout");
+    const response = await api.post("api/auth/logout");
 
     return setSuccessMessage(response.data, response.status);
   } catch (err: any) {
