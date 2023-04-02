@@ -34,7 +34,7 @@ const PolynoteRouter: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  useEffect(() => {
+/*   useEffect(() => {
     (async () => {
       // si l'utilisateur est sur la page d'authentification, on ne fait rien
       if (location.pathname === "/authentification") return;
@@ -55,7 +55,7 @@ const PolynoteRouter: React.FC = () => {
       if (tree === undefined) return;
       dispatch(setStore(tree));
     })();
-  });
+  }); */
 
   return (
     <MainLayout>
