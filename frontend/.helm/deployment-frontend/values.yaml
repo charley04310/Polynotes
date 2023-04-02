@@ -17,5 +17,5 @@ resources:
     memory: 128Mi
 
 env:
-  - name: REACT_APP_BASE_URL
-    value: "https://polynotes.cluster-2022-5.dopolytech.fr/api"
+- name: REACT_APP_BASE_URL
+  value: "https://polynotes.cluster-2022-5.dopolytech.fr/api"
