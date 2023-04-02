@@ -11,10 +11,10 @@ applications:
 - name: polynotes-frontend-charley
   namespace: charley
   repoURL: https://github.com/charley04310/Polynotes.git
-  chart: frontend/.helm/polynotes-frontend
+  chart: frontend/.helm/deployment-frontend
   server: https://kubernetes.default.svc
 - name: polynotes-backend-charley
   namespace: charley
   repoURL: https://github.com/charley04310/Polynotes.git
-  chart: backend/.helm/polynotes-backend
+  chart: backend/.helm/deployment-backend
   server: https://kubernetes.default.svc
