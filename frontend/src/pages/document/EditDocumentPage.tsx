@@ -34,9 +34,10 @@ const EditDocumentPage = () => {
   // Avant de rendre la page on vérifie que l'id est bien présent dans l'url
   useEffect(() => {
     (async () => {
+      console.log("params.id :", params.id)
       if (!params.id) return;
       const pageContent = await getPageByid(params.id);
-
+      console.log("pageContent :", pageContent)
       const store = {
         isPublic: pageContent.isPublic,
         isEditable: pageContent.isEditable,
@@ -45,6 +46,7 @@ const EditDocumentPage = () => {
       };
       setPage(pageContent.content);
       dispatch(setStoreState(store));
+      console.log("DONE !")
 
     })();
   }, [params.id, navigate, dispatch, refs]);
