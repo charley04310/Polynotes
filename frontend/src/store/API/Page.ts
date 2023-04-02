@@ -6,7 +6,7 @@ import { BlockType } from "../interfaces/block";
 export const createNewPage = async (userId: string, title?: string) => {
   try {
     if (!title) title = "New Page";
-    const response = await api.post("/page/add", {
+    const response = await api.post("api/page/add", {
       title: title,
       userId: userId,
       parent: null,
@@ -41,7 +41,7 @@ export const updatePrivacyPage = async (
   isPublic: boolean,
   isEditablePage: boolean
 ): Promise<any> => {
-  const response = await api.patch(`/page/privacy/${pageId}`, {
+  const response = await api.patch(`api/page/privacy/${pageId}`, {
     isPublic: isPublic,
     isEditable: isEditablePage,
   });
@@ -51,7 +51,7 @@ export const updatePrivacyPage = async (
 
 export const getPages = async () => {
   try {
-    const response = await api.get("/page/all");
+    const response = await api.get("api/page/all");
     return setSuccessMessage(response.data, response.status);
   } catch (err: any) {
     return setErrorMessage(err.response.data.message, err.response.status);
@@ -60,7 +60,7 @@ export const getPages = async () => {
 
 export const getPageByid = async (id: string): Promise<IResponsePage | any> => {
   try {
-    const response = await api.get(`/page/${id}`);
+    const response = await api.get(`api/page/${id}`);
     // console.log("response:", response.data);
     return {
       title: response.data.title,
@@ -84,7 +84,7 @@ export const updatePageContent = async (
 ): Promise<IResponsePage | any> => {
   try {
     // console.log("content:", content);
-    const response = await api.patch(`/page/${id}`, {
+    const response = await api.patch(`api/page/${id}`, {
       content: content,
     });
     return {
@@ -107,7 +107,7 @@ export const updDateTitlePage = async (
   id: string,
   title: string
 ): Promise<any> => {
-  const response = await api.patch(`/page/title/${id}`, {
+  const response = await api.patch(`api/page/title/${id}`, {
     id: id,
     title: title,
   });
@@ -115,7 +115,7 @@ export const updDateTitlePage = async (
 };
 
 export const getPagesByUserId = async (userId: string) => {
-  const response = await api.get(`/page/user/${userId}`);
+  const response = await api.get(`api/page/user/${userId}`);
   return response.data;
 };
 

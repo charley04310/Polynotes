@@ -12,7 +12,7 @@ export const createOrUpdateTreeFileSystem = async (
   treeData: NodeFileNavigator
 ): Promise<IReponseSuccess | IReponseError> => {
   try {
-    const response = await api.post("/file-system/tree/create-or-update", {
+    const response = await api.post("api/file-system/tree/create-or-update", {
       userId: userId,
       title: treeData.title,
       key: treeData.key,
@@ -30,7 +30,7 @@ export const getTreeFileSystem = async (
   try {
     //  console.log("getTreeFileSystem", userId);
     if (!userId) return;
-    const response = await api.get(`/file-system/tree/${userId}`);
+    const response = await api.get(`api/file-system/tree/${userId}`);
     //  console.log("response.data", response);
     return {
       title: response.data.title,
