@@ -25,6 +25,7 @@ const EditDocumentPage = () => {
     (state: RootState) => state.blocks.content
   );
 
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -61,7 +62,7 @@ const EditDocumentPage = () => {
   return (
     <>
       <TitleDocumentPage />
-      {blocksPage.map((item, index) => (
+      {blocksPage !== undefined  ? blocksPage.map((item, index) => (
         <div
           key={item.id}
           className="block"
@@ -114,7 +115,9 @@ const EditDocumentPage = () => {
             <SubPageBlockComponent dataSource={item} index={index} />
           ) : null}
         </div>
-      ))}
+      )
+      ) : null}
+      
     </>
   );
 };
