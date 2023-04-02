@@ -4,8 +4,8 @@ namespace: charley
 ingress:
   enabled: true
   name: "polynotes"
-  serviceNameFront: "polynotes-frontend-charley"
-  serviceNameBack: "polynotes-backend-charley"
+  serviceNameFront: "polynotes-frontend"
+  serviceNameBack: "polynotes-backend"
   tls: true
   className: "nginx"
   host: "polynotes.cluster-2022-5.dopolytech.fr"
