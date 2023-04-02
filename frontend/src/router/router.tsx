@@ -25,7 +25,7 @@ const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   return userLogedIn;
 };
 
-// Path: frontend/src/router/PrivateRoutes.
+// Path: frontend/src/router/Priva
 const PolynoteRouter: React.FC = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
