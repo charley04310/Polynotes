@@ -25,7 +25,7 @@ const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   return userLogedIn;
 };
 
-// Path: frontend/src/router/PrivateRoutes.tsx
+// Path: frontend/src/router/PrivateRoutes.
 const PolynoteRouter: React.FC = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -34,7 +34,7 @@ const PolynoteRouter: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-/*   useEffect(() => {
+  useEffect(() => {
     (async () => {
       // si l'utilisateur est sur la page d'authentification, on ne fait rien
       if (location.pathname === "/authentification") return;
@@ -55,7 +55,7 @@ const PolynoteRouter: React.FC = () => {
       if (tree === undefined) return;
       dispatch(setStore(tree));
     })();
-  }); */
+  }, [dispatch, location.pathname]);
 
   return (
     <MainLayout>
