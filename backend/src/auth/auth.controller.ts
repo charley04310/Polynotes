@@ -36,7 +36,7 @@ export class AuthController {
       response
         .cookie('polynote', user.access_token, {
           httpOnly: true,
-          secure: false,
+          secure: true,
           sameSite: 'strict',
         })
         .send({
