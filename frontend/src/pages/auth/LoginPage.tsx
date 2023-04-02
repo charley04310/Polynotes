@@ -3,6 +3,7 @@ import { Button, Form, Input } from "antd";
 import { Col, Row } from "antd";
 import dologo from "./dologo.svg";
 import { ILoginUser, loginUser } from "../../store/API/Authentification";
+import { useNavigate } from "react-router-dom";
 
 interface LoginPageProps {
   onPageStateChange: (newState: string) => void;
@@ -14,6 +15,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
   setNotification,
 }) => {
   const [form] = Form.useForm();
+  const navigate = useNavigate()
 
   const onFinishFailed = (errorInfo: any) => {
     // console.log("Failed:", errorInfo);
@@ -32,6 +34,9 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
     const userLoginResponse = await loginUser(user);
     setNotification(userLoginResponse);
+    if(userLoginResponse !== undefined){
+      navigate('/accueil')
+    }
   };
 
   return (

@@ -60,20 +60,20 @@ const PolynoteRouter: React.FC = () => {
   return (
     <MainLayout>
       <Routes>
-        <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
-          <Route path="/document/:id" element={<EditDocumentPage />} />
+{/*         <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
+ */}          <Route path="/document/:id" element={<EditDocumentPage />} />
           <Route path="/accueil" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
+{/*         </Route>
+ */}        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="/collaborative/document/:id"
           element={<SharedDocumentPage />}
         />
-        <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
-          <Route element={<ManifestPage />} path="/authentification" />
-        </Route>
-      </Routes>
+{/*         <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
+ */}          <Route element={<ManifestPage />} path="/authentification" />
+{/*         </Route>
+ */}      </Routes>
     </MainLayout>
   );
 };
