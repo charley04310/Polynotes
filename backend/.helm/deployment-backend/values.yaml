@@ -1,0 +1,45 @@
+#
+name: polynotes-backend
+namespace: charley
+
+replicaCount: 1
+
+image:
+  repository: lamenace90/polynotes-backend
+  pullPolicy: Always
+  tag: e235a5c
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+- name: MAILER_HOST
+  value: 'smtp.etu.umontpellier.fr'
+- name: MAILER_PORT
+  value: '587'
+- name: MAILER_USER
+  value: 'charley.geoffroy@etu.umontpellier.fr'
+- name: EXPIRESIN
+  value: '5h'
+- name: BASE_URL_API
+  value: 'https://polynotes.cluster-2022-5.dopolytech.fr/api'
+- name: MONGODB_URL
+  valueFrom:
+    secretKeyRef:
+      name: polynotes-charley-pwd
+      key: mongodb-url
+- name: MAILER_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: polynotes-charley-pwd
+      key: mailer-password
+- name: SECRETKEY
+  valueFrom:
+    secretKeyRef:
+      name: polynotes-charley-pwd
+      key: jwt_secret

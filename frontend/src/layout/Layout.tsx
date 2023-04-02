@@ -63,7 +63,6 @@ export function buildMenuData(
   });
 }
 
-
 export const buildTreeMenuData = (treeData: NodeFileNavigator) => {
   const menuData = buildMenuData(treeData.children);
   return getItem("Workspace", "sub4", <InboxOutlined />, menuData);

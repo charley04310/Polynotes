@@ -7,10 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+  app.setGlobalPrefix('api');
   app.enableCors({
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    origin: 'http://localhost:3100',
+    origin: 'https://polynotes.cluster-2022-5.dopolytech.fr',
   });
   await app.listen(3000);
 }

@@ -2,7 +2,6 @@
 version: '3.8'
 
 services:
-
   mongo:
     image: mongo
     container_name: mongodb-polynote
@@ -24,7 +23,9 @@ services:
       - ./src:/app/src:ro
       - /app/node_modules
     ports:
-      - 3000:3000   
+      - 3000:3000
+    env_file:
+      - .env
     command: npm run start:dev
     depends_on:
       - mongo
@@ -35,6 +36,6 @@ services:
 networks:
   backend-network:
     driver: bridge
-    
+
 volumes:
   mongodb_data_container:

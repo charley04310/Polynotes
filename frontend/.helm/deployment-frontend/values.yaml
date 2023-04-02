@@ -1,0 +1,21 @@
+name: polynotes-frontend
+namespace: charley
+port: 80
+replicaCount: 1
+
+image:
+  repository: lamenace90/polynotes-frontend
+  pullPolicy: Always
+  tag: e235a5c
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  - name: REACT_APP_BASE_URL
+    value: "https://polynotes.cluster-2022-5.dopolytech.fr/api"

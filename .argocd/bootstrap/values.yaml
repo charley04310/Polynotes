@@ -1,0 +1,22 @@
+project:
+  # Name of the project: lowercase whithout spaces (kebab-case)
+  name: polynotes-charley
+  description: "[WOA] Polynotes - Projet fil rouge [CHARLEY]"
+
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+  - https://github.com/charley04310/Polynotes.git
+
+  # Only permit applications to deploy to specific namespace in the same cluster
+  destinations:
+  - server: https://kubernetes.default.svc
+    name: default
+    namespace: "*"
+
+bootstrap:
+  # Name of the bootstrap: app of apps
+  name: polynotes-bootstrap-charley
+  namespace: argocd
+  repoURL: https://github.com/charley04310/Polynotes.git
+  path: .argocd/apps
+  server: https://kubernetes.default.svc
