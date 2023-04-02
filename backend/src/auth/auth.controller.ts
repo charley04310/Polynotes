@@ -99,7 +99,10 @@ export class AuthController {
   }
 
   @Get('email-verification/:token')
-  @Redirect('http://localhost:3100/authentification', 301)
+  @Redirect(
+    'https://polynotes.cluster-2022-5.dopolytech.fr/authentification',
+    301,
+  )
   async verifyTokenAuthentification(@Param('token') token: string) {
     const decodedToken = await this.authService.decodeJwtToken(token);
     if (typeof decodedToken === 'string') {
