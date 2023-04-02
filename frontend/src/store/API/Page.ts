@@ -61,7 +61,7 @@ export const getPages = async () => {
 export const getPageByid = async (id: string): Promise<IResponsePage | any> => {
   try {
     const response = await api.get(`api/page/${id}`);
-    // console.log("response:", response.data);
+     console.log("response:", response.data);
     return {
       title: response.data.title,
       isPublic: response.data.isPublic,

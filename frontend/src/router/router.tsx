@@ -40,6 +40,7 @@ const PolynoteRouter: React.FC = () => {
       if (location.pathname === "/authentification") return;
       // sinon on verifie si l'utilisateur est connecté
       const isLoggedIn = await userAutoLogin();
+      console.log("isLoggedIn :", isLoggedIn)
       if (isLoggedIn.message === undefined) {
         dispatch(setIsAuthenticated(false));
         dispatch(setUser(undefined));
