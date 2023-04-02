@@ -38,7 +38,7 @@ env:
     secretKeyRef:
       name: polynotes-charley-pwd
       key: mailer-password
-- name: SECRETKEY
+- name: JWT_SECRET
   valueFrom:
     secretKeyRef:
       name: polynotes-charley-pwd
