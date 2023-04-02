@@ -25,6 +25,8 @@ const EditDocumentPage = () => {
     (state: RootState) => state.blocks.content
   );
 
+  const [page, setPage] = useState<IContentBlock[]>(blocksPage);
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +43,9 @@ const EditDocumentPage = () => {
         content: pageContent.content,
         title: pageContent.title,
       };
+      setPage(pageContent.content);
       dispatch(setStoreState(store));
+
     })();
   }, [params.id, navigate, dispatch, refs]);
 
@@ -61,8 +65,8 @@ const EditDocumentPage = () => {
 
   return (
     <>
-      <TitleDocumentPage />
-      {blocksPage !== undefined  ? blocksPage.map((item, index) => (
+    {/*   <TitleDocumentPage /> */}
+      {page.map((item, index) => (
         <div
           key={item.id}
           className="block"
@@ -116,7 +120,7 @@ const EditDocumentPage = () => {
           ) : null}
         </div>
       )
-      ) : null}
+      )}
       
     </>
   );
