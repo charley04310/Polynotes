@@ -91,7 +91,14 @@ const SharedDocumentPage = () => {
                 refs.current[index] = ref;
               }}
               handleKeyEventRefs={(event) => {
-                handleKeyEventRefs(event, index, refs, dispatch, getNewFocus);
+                handleKeyEventRefs(
+                  event,
+                  index,
+                  item,
+                  refs,
+                  dispatch,
+                  getNewFocus
+                );
               }}
             />
           ) : null}
