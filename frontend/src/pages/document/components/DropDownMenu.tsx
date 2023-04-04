@@ -70,12 +70,14 @@ const DropDownMenu: React.FC<DropDownProps> = ({
   };
   const setParagraphBlock = () => {
     dispatch(setNewBlock({ type: BlockType.TIPTAP, content: "", id: item.id }));
+    setUpdateData(true);
   };
 
   const setSubPageBlock = () => {
     dispatch(
       setNewBlock({ type: BlockType.SUBPAGE, content: "", id: item.id })
     );
+    setUpdateData(true);
   };
 
   const items: MenuProps["items"] = [

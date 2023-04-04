@@ -70,12 +70,12 @@ export const HandleKeyDown = (
 export const handleKeyEventRefs = (
   event: React.KeyboardEvent<HTMLDivElement>,
   index: any,
+  blockState: IContentBlock,
   refs: any,
   dispatch: Dispatch<any>,
   getNewFocus: any
 ) => {
   let newIndex = index;
-  const item = refs.current[index]?.state;
 
   if (event.key === "ArrowUp") newIndex--;
   if (event.key === "ArrowDown") newIndex++;
@@ -84,6 +84,6 @@ export const handleKeyEventRefs = (
   if (refs.current[index]?.isEmpty && event.key === "Backspace") {
     newIndex--;
     getNewFocus(newIndex);
-    dispatch(deleteBlock({ id: item.id }));
+    dispatch(deleteBlock({ id: blockState.id }));
   }
 };

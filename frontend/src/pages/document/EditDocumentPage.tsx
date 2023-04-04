@@ -10,7 +10,7 @@ import DropDownMenu from "./components/DropDownMenu";
 import TableDataBase from "./components/DataBaseTable";
 import { TrelloDataBase } from "./components/TrelloDataBase";
 import TitleDocumentPage from "./components/TitleDocumentPage";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getPageByid, updatePageContent } from "../../store/API/Page";
 import { setStoreState } from "../../store/slices/blockSlice";
 import { handleKeyEventRefs } from "./composables/handleEventKeyDown";
@@ -24,7 +24,6 @@ const EditDocumentPage = () => {
   const blocksPage: IContentBlock[] = useSelector(
     (state: RootState) => state.blocks.content
   );
-
 
   const dispatch = useDispatch();
 
@@ -59,7 +58,7 @@ const EditDocumentPage = () => {
 
   return (
     <>
-    <TitleDocumentPage /> 
+      <TitleDocumentPage />
       {blocksPage.map((item, index) => (
         <div
           key={item.id}
@@ -79,7 +78,14 @@ const EditDocumentPage = () => {
                 refs.current[index] = ref;
               }}
               handleKeyEventRefs={(event) => {
-                handleKeyEventRefs(event, index, refs, dispatch, getNewFocus);
+                handleKeyEventRefs(
+                  event,
+                  index,
+                  item,
+                  refs,
+                  dispatch,
+                  getNewFocus
+                );
               }}
             />
           ) : null}
@@ -113,9 +119,7 @@ const EditDocumentPage = () => {
             <SubPageBlockComponent dataSource={item} index={index} />
           ) : null}
         </div>
-      )
-      )}
-      
+      ))}
     </>
   );
 };

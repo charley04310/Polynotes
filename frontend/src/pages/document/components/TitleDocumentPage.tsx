@@ -102,13 +102,13 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
 
   const handleCopyToClipboard = () => {
     setUrlToShare({
-      value: `/document/${param.id}`,
+      value: `${process.env.REACT_APP_BASE_URL}/collaborative/document/${param.id}`,
       copied: true,
     });
 
     setTimeout(() => {
       setUrlToShare({
-        value: `/document/${param.id}`,
+        value: `${process.env.REACT_APP_BASE_URL}/collaborative/document/${param.id}`,
         copied: false,
       });
     }, 2000);

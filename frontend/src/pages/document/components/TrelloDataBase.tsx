@@ -95,7 +95,6 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
       });
 
       setrowsTrello(updatedState);
-
       setRowToColumn();
     },
     [rowsTrello, setrowsTrello, index, dispatch, isEditable]
@@ -107,6 +106,7 @@ export const TrelloDataBase: React.FC<EditableTrelloStateProps> = ({
       type: BlockType.DATABASE,
     };
     dispatch(setNewTypeBlock(values));
+    setUpdateData(true);
   };
 
   const setTrelloColumn = (title: string) => {
