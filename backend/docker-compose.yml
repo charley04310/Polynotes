@@ -2,12 +2,13 @@
 version: '3.8'
 
 services:
+
   mongo:
     image: mongo
     container_name: mongodb-polynote
     restart: always
     environment:
-      MONGO_INITDB_DATABASE: polynote
+      MONGO_INITDB_DATABASE: polynotes
     ports:
       - 27017:27017
     volumes:
@@ -25,7 +26,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - .env
+      - .env   
     command: npm run start:dev
     depends_on:
       - mongo
@@ -36,6 +37,6 @@ services:
 networks:
   backend-network:
     driver: bridge
-
+    
 volumes:
   mongodb_data_container:

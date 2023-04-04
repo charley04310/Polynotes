@@ -25,31 +25,23 @@ const EditDocumentPage = () => {
     (state: RootState) => state.blocks.content
   );
 
-  const [page, setPage] = useState<IContentBlock[]>(blocksPage);
-
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // Avant de rendre la page on vérifie que l'id est bien présent dans l'url
   useEffect(() => {
     (async () => {
-      console.log("params.id :", params.id)
       if (!params.id) return;
       const pageContent = await getPageByid(params.id);
-      console.log("pageContent :", pageContent)
       const store = {
         isPublic: pageContent.isPublic,
         isEditable: pageContent.isEditable,
         content: pageContent.content,
         title: pageContent.title,
       };
-      setPage(pageContent.content);
       dispatch(setStoreState(store));
-      console.log("DONE !")
-
     })();
-  }, [params.id, navigate, dispatch, refs]);
+  }, [params.id, dispatch]);
 
   useEffect(() => {
     (async () => {
@@ -67,8 +59,8 @@ const EditDocumentPage = () => {
 
   return (
     <>
-    {/*   <TitleDocumentPage /> */}
-      {page.map((item, index) => (
+    <TitleDocumentPage /> 
+      {blocksPage.map((item, index) => (
         <div
           key={item.id}
           className="block"

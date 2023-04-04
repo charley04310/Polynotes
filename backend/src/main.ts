@@ -11,7 +11,7 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    origin: 'https://polynotes.cluster-2022-5.dopolytech.fr',
+    origin: 'https://polynotes.cluster-2022-5.dopolytech.fr/',
   });
   await app.listen(3000);
 }

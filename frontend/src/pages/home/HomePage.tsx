@@ -21,6 +21,7 @@ const HomePage = () => {
     (state: RootState) => state.auth.user
   );
 
+  const treeData = useSelector((state: RootState) => state.Tree);
   const [files, setFiles] = useState<any>([]);
 
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const HomePage = () => {
       const pages = await getPagesByUserId(user.userId);
       setFiles(pages);
     })();
-  }, [user, dispatch]);
+  }, [user, treeData, dispatch]);
 
   return (
     <>
@@ -79,7 +80,7 @@ const HomePage = () => {
 
       <Title level={3}>Explorateur de fichiers</Title>
 
-      <FileExplorer />
+      <FileExplorer treeData={treeData} userId={user?.userId}/>
     </>
   );
 };

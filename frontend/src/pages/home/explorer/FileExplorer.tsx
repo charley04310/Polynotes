@@ -37,11 +37,12 @@ import { navigateToDocumentPage } from "../composables/Navigation";
 import EmptyData from "../../../global-components/EmptyData";
 import { createOrUpdateTreeFileSystem } from "../../../store/API/FileSystemTree";
 
-interface IPropsFileExplorer {}
+interface IPropsFileExplorer {
+    treeData: NodeFileNavigator;
+    userId?: string;
+}
 
-const FileExplorer: React.FC<IPropsFileExplorer> = () => {
-  const userId = useSelector((state: RootState) => state.auth.user?.userId);
-  const treeData = useSelector((state: RootState) => state.Tree);
+const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
 
   const [currentNode, setCurrentNode] = useState<NodeFileNavigator>(treeData);
   const [pageTitle, setPageTitle] = useState<string>("");

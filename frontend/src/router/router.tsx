@@ -25,7 +25,7 @@ const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   return userLogedIn;
 };
 
-// Path: frontend/src/router/Priva
+// Path: frontend/src/router/PrivateRoutes.tsx
 const PolynoteRouter: React.FC = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -40,7 +40,7 @@ const PolynoteRouter: React.FC = () => {
       if (location.pathname === "/authentification") return;
       // sinon on verifie si l'utilisateur est connecté
       const isLoggedIn = await userAutoLogin();
-      console.log("isLoggedIn :", isLoggedIn)
+      console.log("isLoggedIn :", isLoggedIn);
       if (isLoggedIn.message === undefined) {
         dispatch(setIsAuthenticated(false));
         dispatch(setUser(undefined));
@@ -60,20 +60,20 @@ const PolynoteRouter: React.FC = () => {
   return (
     <MainLayout>
       <Routes>
-{/*         <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
- */}          <Route path="/document/:id" element={<EditDocumentPage />} />
+        <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
+          <Route path="/document/:id" element={<EditDocumentPage />} />
           <Route path="/accueil" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-{/*         </Route>
- */}        <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="/collaborative/document/:id"
           element={<SharedDocumentPage />}
         />
-{/*         <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
- */}          <Route element={<ManifestPage />} path="/authentification" />
-{/*         </Route>
- */}      </Routes>
+
+        <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
+          <Route element={<ManifestPage />} path="/authentification" />
+        </Route>
+      </Routes>
     </MainLayout>
   );
 };

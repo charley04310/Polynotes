@@ -6,7 +6,7 @@ interface Props {
   isAuthenticated: boolean;
 }
 const PublicRoutes: React.FC<Props> = ({ isAuthenticated }) => {
-  return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/accueil" />;
 };
 
 export default PublicRoutes;
