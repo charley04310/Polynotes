@@ -49,7 +49,7 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
   const [openShare, setopenShare] = useState(false);
 
   const [urlToShare, setUrlToShare] = useState({
-    value: `/document/${param.id}`,
+    value: `${process.env.REACT_APP_BASE_URL}/collaborative/document/${param.id}`,
     copied: false,
   });
   const blocksPage: IContentBlock[] = useSelector(
@@ -221,7 +221,9 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
               type="text"
               size="large"
               style={{ marginRight: 8 }}
-              icon={<ShareAltOutlined style={{ fontSize: 25 }} />}
+              icon={
+                <ShareAltOutlined style={{ fontSize: 25, color: "#001529" }} />
+              }
             />
           </Tooltip>
         </Popover>

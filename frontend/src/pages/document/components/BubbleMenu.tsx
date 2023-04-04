@@ -6,7 +6,11 @@ interface IBubbleMenu {
 
 const BubbleMenuComponent: React.FC<IBubbleMenu> = ({ editor }) => {
   return (
-    <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+    <BubbleMenu
+      className="background-marks"
+      editor={editor}
+      tippyOptions={{ duration: 100 }}
+    >
       <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={
