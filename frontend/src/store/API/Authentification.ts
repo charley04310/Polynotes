@@ -24,7 +24,7 @@ export const registerUser = async (
       password: data.password,
       email: data.email,
     });
-    console.log("register TEST", response)
+    console.log("register TEST", response);
 
     return setSuccessMessage(response.data, response.status);
   } catch (err: any) {
