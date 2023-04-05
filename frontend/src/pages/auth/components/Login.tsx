@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import { Col, Row } from "antd";
 import dologo from "./dologo.svg";
-import { ILoginUser, loginUser } from "../../store/API/Authentification";
+import { ILoginUser, loginUser } from "../../../store/API/Authentification";
 import { useNavigate } from "react-router-dom";
 
 interface LoginPageProps {

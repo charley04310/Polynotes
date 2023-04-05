@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import { Col, Row } from "antd";
 import React from "react";
-import { IUser, registerUser } from "../../store/API/Authentification";
+import { IUser, registerUser } from "../../../store/API/Authentification";
 
 interface RegisterPageProps {
   onPageStateChange: (newState: string) => void;

@@ -1,8 +1,8 @@
 # BIENVENUE SUR L'APPLICATION POLYNOTES
 
-<p align="center">
-    <img src="frontend/public/img/PolyBunny.svg" alt="PolyBunny" height="400">
-</p>
+  <p align="center">
+      <img src="frontend/public/img/polynotes.gif" alt="PolyBunny" height="400">
+  </p>
 
 ## PRÉSENTATION DE L'APPLICATION
 
@@ -30,9 +30,9 @@ Dans cette première itération de Polynotes, les fonctionnalités principales s
 
 4. **Partage de documents :** Vous permet de gérer l'accès à vos documents, afin que votre entourage professionnel ou personnel puisse vous aider à les éditer.
 
-## PRÉSENTATION DE LA STACK TÉCHNIQUE
+# PRÉSENTATION DE LA STACK TÉCHNIQUE
 
-### FRONTEND DEVELOPPEMENT : REQUIREMENTS
+## FRONTEND DEVELOPPEMENT : REQUIREMENTS
 
 Main Library
 
@@ -53,28 +53,30 @@ Routing
 
 - [Ract Router 6](https://reactrouter.com/en/main)
 
-## Architecture & Features
+### ARCHITECTURE COMPONENTS
 
-- :page_facing_up: Page:[Page Accueil :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
+- :page_facing_up: [Page Authentification :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
 
-  - :jigsaw: Component:[File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
-  - :jigsaw: Component:[Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
-  - :jigsaw: Component:[Component: User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
+  - :jigsaw: [Login](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/components/Login.tsx)
+  - :jigsaw: [Register](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/components/Register.tsx)
 
-- Pages & Block de page :
+- :page_facing_up: [Page Accueil :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
 
-  - Sous page
-  - Headers, list (bullet & ordered), paragraph
-  - Image Block
+  - :jigsaw: [File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
+  - :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
+  - :jigsaw: [Component: User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
 
-- Database:
+- :page_facing_up: [Page Edit Document :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/EditDocumentPage.tsx)
 
-  - Properties: Rich/plain Text, Checkbox, Date & Time, Single Select, Number, Checkbox
-  - Views: Table, Kanban (~+/- Trello TodoList)
+  - :jigsaw: [Sous Page Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/SubPage.tsx)
+  - :jigsaw: [DataBase Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DataBaseTable.tsx)
+  - :jigsaw: [Trello Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/TrelloDataBase.tsx)
+  - :jigsaw: [Image Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/SubPage.tsx)
+  - :jigsaw: [Text Editor Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/EditorContent.tsx)
+  - :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)
+  - :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)
 
-  <p align="center">
-      <img src="frontend/public/img/polynotes.gif" alt="PolyBunny" height="400">
-  </p>
+### ARCHITECTURE COMPONENTS
 
 ### Deployment stack
 

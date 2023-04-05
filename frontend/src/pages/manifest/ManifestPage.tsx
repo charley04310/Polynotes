@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import RegisterPage from "../auth/RegisterPage";
-import LoginPage from "../auth/LoginPage";
+import RegisterPage from "../auth/components/Register";
+import LoginPage from "../auth/components/Login";
 import WelcomePage from "../auth/WelcomePage";
 import React from "react";
 import { notification } from "antd";
