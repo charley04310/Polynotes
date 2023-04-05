@@ -1,5 +1,5 @@
 import { Avatar, Card, Divider } from "antd";
-import FileExplorer from "./explorer/FileExplorer";
+import FileExplorer from "./components/FileExplorer";
 import { Typography } from "antd";
 import { getPagesByUserId } from "../../store/API/Page";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,9 @@ import { navigateToDocumentPage } from "./composables/Navigation";
 import { RootState } from "../../store/store";
 import { IUserState } from "../../store/slices/authSlice";
 import EmptyData from "../../global-components/EmptyData";
+import { IBlockState } from "../../store/interfaces/block";
+import RecentsFiles from "./components/RecentsFiles";
+import UserCard from "./components/UserCard";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -24,7 +27,7 @@ const HomePage = () => {
   const treeData = useSelector((state: RootState) => state.Tree);
   const [files, setFiles] = useState<any>([]);
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const HomePage = () => {
 
   return (
     <>
-      {user && (
+      {/*       {user && (
         <Card
           style={{ width: "100%", marginTop: 16, marginBottom: 32 }}
           loading={false}
@@ -52,9 +55,11 @@ const HomePage = () => {
             title={user.username.toUpperCase()}
           />
         </Card>
-      )}
+      )} */}
 
-      <Title level={3}>Documents récents</Title>
+      {user && <UserCard user={user} />}
+
+      {/*   <Title level={3}>Documents récents</Title>
       <div className="file-card">
         {files.map((file: any, index: number) => (
           <Card
@@ -71,7 +76,9 @@ const HomePage = () => {
             </span>
           </Card>
         ))}
-      </div>
+      </div> */}
+
+      <RecentsFiles files={files} />
 
       {files.length === 0 && (
         <EmptyData message={"Aucun document disponible"} />
@@ -80,7 +87,7 @@ const HomePage = () => {
 
       <Title level={3}>Explorateur de fichiers</Title>
 
-      <FileExplorer treeData={treeData} userId={user?.userId}/>
+      <FileExplorer treeData={treeData} userId={user?.userId} />
     </>
   );
 };

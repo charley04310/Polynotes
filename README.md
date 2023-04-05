@@ -53,10 +53,6 @@ Main Library
 
 - [ReactJS](https://fr.reactjs.org/)
 
-<p align="left">
-        <img src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" alt="reactjs" width="50" height="50"/>
-  
-</p>
 UI Libraries Components
 
 - [Ant Design](https://ant.design/docs/react/getting-started)
@@ -74,10 +70,11 @@ Routing
 
 ## Architecture & Features
 
-- :page_facing_up: Page Accueil :
+- :page_facing_up: [Page Accueil :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
 
-  - File explorer (Breadcrum navigation)
-  - Recents pages
+  - :jigsaw: [File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
+  - :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
+  - :jigsaw: [User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
 
 - Pages & Block de page :
 
