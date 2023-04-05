@@ -39,7 +39,6 @@ const Tiptap = forwardRef(
         StarterKit,
         Highlight,
         Typography,
-
         Placeholder.configure({
           // Use different placeholders depending on the node type:
           placeholder: ({ node }) => {
