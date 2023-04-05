@@ -53,7 +53,7 @@ Routing
 
 - [Ract Router 6](https://reactrouter.com/en/main)
 
-### ARCHITECTURE COMPONENTS
+## FRONTEND ARCHITECTURE
 
 - :page_facing_up: [Page Authentification :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
 
@@ -64,7 +64,7 @@ Routing
 
   - :jigsaw: [File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
   - :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
-  - :jigsaw: [Component: User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
+  - :jigsaw: [User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
 
 - :page_facing_up: [Page Edit Document :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/EditDocumentPage.tsx)
 
@@ -76,7 +76,24 @@ Routing
   - :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)
   - :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)
 
-### ARCHITECTURE COMPONENTS
+### FRONTEND ROUTING BASIC USAGE
+
+Ce code utilise la bibliothèque React Router pour gérer les routes dans une application React.
+
+Le composant <Routes> définit un groupe de routes. Dans cet exemple, il y a deux groupes de routes : un groupe privé et un groupe public. Les routes privées sont accessibles uniquement aux utilisateurs authentifiés, tandis que les routes publiques sont accessibles à tous les utilisateurs.
+
+```Typescript
+
+<Routes>
+    <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
+        <Route path="/any/page" element={<Page />} />
+    </Route>
+    <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
+        <Route element={<Page />} path="/any" />
+    </Route>
+</Routes>
+
+```
 
 ### Deployment stack
 
