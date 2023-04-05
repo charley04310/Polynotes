@@ -12,8 +12,6 @@ Je suis ravi de vous présenter aujourd'hui l'application Polynotes, qui a été
 
 Polynotes est une application web qui vise à faciliter la gestion de notes, de tâches et de bases de données, en offrant une flexibilité et une personnalisation accrues. Cette application se déroulera en deux itérations : la première itération est présentée ici, tandis que la seconde itération sera réalisée en équipe.
 
-Dans cette première itération de Polynotes, les fonctionnalités principales sont les suivantes :
-
 Nous espérons que cette première itération de Polynotes vous sera utile et vous invitons à découvrir de plus près les fonctionnalités de cette application.
 
 [![POLYNOTES TIMES DATA](https://wakatime.com/badge/user/8c51dfaf-cc71-4c33-bb4f-07b1a77dce06/project/6160a20e-1f13-4866-b07b-8adea0765e70.svg)](https://wakatime.com/badge/user/8c51dfaf-cc71-4c33-bb4f-07b1a77dce06/project/6160a20e-1f13-4866-b07b-8adea0765e70)
@@ -21,6 +19,8 @@ Nous espérons que cette première itération de Polynotes vous sera utile et vo
 ## Features
 
 ### Polynotes Itération V1
+
+Dans cette première itération de Polynotes, les fonctionnalités principales sont les suivantes :
 
 1. **Notes et Wikis :** Vous permet de créer et d'organiser des notes, de la documentation et des wikis dans un format flexible et personnalisable.
 
@@ -30,24 +30,9 @@ Nous espérons que cette première itération de Polynotes vous sera utile et vo
 
 4. **Partage de documents :** Vous permet de gérer l'accès à vos documents, afin que votre entourage professionnel ou personnel puisse vous aider à les éditer.
 
-### Polynotes Itération V2
-
-5. **Calendriers :** Vous permet de suivre les événements, les échéances et les plannings à l'aide d'une vue calendrier.
-
-6. **Intégrations :** Vous permet d'intégrer des contenus provenant d'autres sources, telles que Google Maps, YouTube ou Trello.
-
-7. **Collaboration :** Vous permet de collaborer en temps réel avec d'autres personnes sur des pages et des bases de données partagées.
-
-8. **Applications mobiles :** Propose des applications mobiles pour iOS et Android afin que vous puissiez accéder à votre espace de travail 5.
-   PolyNotes de n'importe où.
-
-9. **Intégrations :** S'intègre à d'autres outils, tels que Google Drive, Slack et Zapier, pour rendre votre travail encore plus efficace.
-
 ## PRÉSENTATION DE LA STACK TÉCHNIQUE
 
-### FRONTEND DEVELOPPEMENT
-
-## REQUIREMENTS
+### FRONTEND DEVELOPPEMENT : REQUIREMENTS
 
 Main Library
 
@@ -70,11 +55,11 @@ Routing
 
 ## Architecture & Features
 
-- :page_facing_up: [Page Accueil :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
+- :page_facing_up: Page:[Page Accueil :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
 
-  - :jigsaw: [File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
-  - :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
-  - :jigsaw: [User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
+  - :jigsaw: Component:[File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
+  - :jigsaw: Component:[Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
+  - :jigsaw: Component:[Component: User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
 
 - Pages & Block de page :
 

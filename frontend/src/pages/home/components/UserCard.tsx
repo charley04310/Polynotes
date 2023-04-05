@@ -1,6 +1,4 @@
-import { Avatar, Card, Divider } from "antd";
-import { Typography } from "antd";
-import "./index.css";
+import { Avatar, Card } from "antd";
 
 const { Meta } = Card;
 

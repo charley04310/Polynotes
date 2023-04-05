@@ -1,7 +1,6 @@
 import { Card } from "antd";
 import { Typography } from "antd";
 import { FileTextOutlined } from "@ant-design/icons";
-import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { navigateToDocumentPage } from "../composables/Navigation";
 import { truncateTitle } from "../composables/Formater";
