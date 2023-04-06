@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: lamenace90/polynotes-frontend
   pullPolicy: Always
-  tag: 46b2bf7
+  tag: 7e28096
 
 resources:
   limits:
