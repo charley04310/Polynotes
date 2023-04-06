@@ -12,3 +12,42 @@ services:
     environment:
       - REACT_APP_NAME=PolyNotes-dev
       - CHOKIDAR_USEPOLLING=true
+
+  mongo:
+    image: mongo
+    container_name: mongodb-polynote
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: polynotes
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - backend-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./src:/app/src:ro
+      - /app/node_modules
+    # ports:
+    #   - 3000:3000
+    env_file:
+      - ./backend/.env   
+    command: npm run start:dev
+    depends_on:
+      - mongo
+      - frontend
+    networks:
+      - backend-network
+    restart: always
+
+networks:
+  backend-network:
+    driver: bridge
+    
+volumes:
+  mongodb_data_container:

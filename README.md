@@ -281,16 +281,13 @@ interface NodeFileNavigator {
 
 ```typescript
 export class User {
-  @Prop({ required: true })
+  // required: true
   username: string;
-  @Prop({
-    required: true,
-    unique: true,
-  })
+  // required: true, unique : true
   email: string;
-  @Prop({ required: true, default: false })
+  // required: true, default : false
   email_verified: boolean;
-  @Prop({ required: true })
+  // required: true
   password: string;
 }
 ```
@@ -299,19 +296,15 @@ export class User {
 
 ```typescript
 export class Page {
-  @Prop({ required: true })
+  // required: true
   title: string;
-  @Prop({ required: true, type: SchemaTypes.ObjectId })
+  // required: true
   userId: ObjectId;
-  @Prop({ required: true, default: false })
+  // required: true, default : false
   isPublic: boolean;
-  @Prop({ required: true, default: false })
+  // required: true, default : false
   isEditable: boolean;
-  @Prop({
-    required: false,
-  })
-  parent: string | null;
-  @Prop({ required: true })
+  // required: true
   content: [];
 }
 ```
@@ -320,19 +313,40 @@ export class Page {
 
 ```typescript
 export class FileSystemTree {
-  @Prop({ required: true, unique: true })
+  // required: true, unique: true
   userId: string;
-  @Prop({ required: true })
+  // required: true
   title: string;
-  @Prop({
-    required: true,
-    unique: true,
-  })
+  // required: true, unique: true
   key: string;
-  @Prop({ required: true })
+  // required: true
   children: NodeFileNavigator[];
 }
 ```
+
+## Déploiement local
+
+### Variables d'environnements 
+
+1. Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
+
+```env
+MONGODB_URL=mongodb://mongo:27017/polynotes
+MONGODB_DATABASE=polynotes
+MAILER_PASSWORD= ## use your own mailer password
+MAILER_PORT= ## use your own mailer port
+MAILER_HOST= ## use your own host mailer
+MAILER_USER= ## use your own account mailer
+JWT_SECRET=  ## use your own jwt secret mailer
+BASE_URL_API=http://localhost:3000/api
+```
+
+1. Lancer le projet
+
+```sh
+docker compose up --build
+```
+
 
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">

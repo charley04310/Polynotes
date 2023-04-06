@@ -4,12 +4,9 @@ FROM node as dev
 WORKDIR /app
 
 # copy package.json first to leverage Docker cache
-COPY package.json ./
+COPY . .
 
 # install dependencies
 RUN npm install
 
-# copy app source
-COPY . .
-
-RUN npm run build
+EXPOSE 3000
