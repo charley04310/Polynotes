@@ -6,11 +6,11 @@ import {
   UseGuards,
   Param,
   Req,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { FileSystemService } from './file-system.service';
 import { CreateFileSystemDto } from './dto/create-file-system.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 
 @Controller('file-system')
@@ -34,7 +34,7 @@ export class FileSystemController {
   getTree(@Req() req: Request, @Param('id') id: string) {
     const token = req.user['userId'];
     if (token !== id) {
-      throw new Error('Unauthorized');
+      throw new UnauthorizedException('Unauthorized');
     } else {
       return this.fileSystemService.getTree(id);
     }

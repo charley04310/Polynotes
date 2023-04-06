@@ -11,8 +11,6 @@ export class CreatePageDto {
   @IsNotEmpty()
   readonly userId: string;
 
-  readonly parent: string | null;
-
   @IsNotEmpty()
   readonly content: [];
 }
