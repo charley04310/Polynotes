@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation } from "react-router-dom";
 import MainLayout from "../layout/Layout";
-import AboutPage from "../pages/about/AboutPage";
 import EditDocumentPage from "../pages/document/EditDocumentPage";
 import SharedDocumentPage from "../pages/document/SharedDocumentPage";
 import HomePage from "../pages/home/HomePage";

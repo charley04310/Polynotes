@@ -54,7 +54,7 @@ export const Column: FC<IColumn> = ({
     (async () => {
       if (updateDataBase) {
         if (!param.id) return;
-        const page = await updatePageContent(param.id, globalState);
+         await updatePageContent(param.id, globalState);
         setUpdateData(false);
         // console.log(`Delete Column`, page);
       }

@@ -35,39 +35,32 @@ Dans cette première itération de Polynotes, les fonctionnalités principales s
 ## FRONTEND DEVELOPPEMENT : REQUIREMENTS
 
 Main Library
-
 - [ReactJS](https://fr.reactjs.org/)
 
 UI Libraries Components
-
 - [Ant Design](https://ant.design/docs/react/getting-started)
 - [TipTap](https://tiptap.dev/api/editor)
 - [DND kit](https://dndkit.com/)
 
 State & HTTP REQUEST management
-
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [HTTP REQUEST : Axios](https://axios-http.com/fr/docs/intro)
 
 Routing
-
 - [Ract Router 6](https://reactrouter.com/en/main)
 
 ## FRONTEND ARCHITECTURE
 
 - :page_facing_up: [Page Authentification :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
-
   - :jigsaw: [Login](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/components/Login.tsx)
   - :jigsaw: [Register](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/components/Register.tsx)
 
 - :page_facing_up: [Page Accueil :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
-
   - :jigsaw: [File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
   - :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
   - :jigsaw: [User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
 
 - :page_facing_up: [Page Edit Document :](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/EditDocumentPage.tsx)
-
   - :jigsaw: [Sous Page Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/SubPage.tsx)
   - :jigsaw: [DataBase Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DataBaseTable.tsx)
   - :jigsaw: [Trello Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/TrelloDataBase.tsx)
@@ -76,7 +69,7 @@ Routing
   - :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)
   - :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)
 
-### FRONTEND ROUTING BASIC USAGE
+### FRONTEND ROUTING : BASIC USAGE
 
 Ce code utilise la bibliothèque React Router pour gérer les routes dans une application React.
 
@@ -84,6 +77,7 @@ Le composant <Routes> définit un groupe de routes. Dans cet exemple, il y a deu
 
 ```Typescript
 
+//  Pour créer une nouvelle route importer un composant dans les balises "Public" ou "Privé"
 <Routes>
     <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
         <Route path="/any/page" element={<Page />} />
@@ -94,6 +88,15 @@ Le composant <Routes> définit un groupe de routes. Dans cet exemple, il y a deu
 </Routes>
 
 ```
+## BACKEND DEVELOPPEMENT : REQUIREMENTS
+
+Framework
+- [NestJS](https://nestjs.com/)
+
+ORM & Database
+- [Mongoose](https://ant.design/docs/react/getting-started)
+- [MongoDB](https://tiptap.dev/api/editor)
+
 
 ### Deployment stack
 
