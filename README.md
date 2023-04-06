@@ -48,13 +48,13 @@ Dans cette première itération de Polynotes, les fonctionnalités principales s
         <img src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" alt="actions" width="50" height="50"/>
     </a>
     <a href="https://nestjs.com/" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/util/preview.html?image=/logos/nestjs/nestjs-icon.svg" alt="nest" width="50" height="50"/>
+        <img src="https://www.vectorlogo.zone/logos/nestjs/nestjs-icon.svg" alt="nest" width="50" height="50"/>
     </a>
     <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/util/preview.html?image=/logos/mongodb/mongodb-icon.svg" alt="nest" width="50" height="50"/>
+        <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="nest" width="50" height="50"/>
     </a>
-    <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/util/preview.html?image=/logos/reactjs/reactjs-icon.svg" alt="nest" width="50" height="50"/>
+    <a href="https://fr.reactjs.org/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" alt="nest" width="50" height="50"/>
     </a>
 </p>
 
