@@ -94,23 +94,6 @@ GET /document/{id}
 | :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)          | Bubble Menu       |
 | :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)      | DropDown Menu     |
 
-<!--
-- :page_facing_up: `/accueil` : [page accueil](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
-
-  - :jigsaw: [File Explorer](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/FileExplorer.tsx)
-  - :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx)
-  - :jigsaw: [User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)
- -->
-
-<!-- - :page_facing_up: `/document/{id}` : [page edit document](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/EditDocumentPage.tsx)
-  - :jigsaw: [Sous Page Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/SubPage.tsx)
-  - :jigsaw: [DataBase Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DataBaseTable.tsx)
-  - :jigsaw: [Trello Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/TrelloDataBase.tsx)
-  - :jigsaw: [Image Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/SubPage.tsx)
-  - :jigsaw: [Text Editor Block](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/EditorContent.tsx)
-  - :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)
-  - :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx) -->
-
 ### FRONTEND ROUTING : BASIC USAGE
 
 Ce code utilise la bibliothèque React Router pour gérer les routes dans une application React.
@@ -291,6 +274,65 @@ interface NodeFileNavigator {
 | :-------- | :------- | :--------------------------------- |
 | `token`   | `string` | **Required**. Token cookie         |
 | `id`      | `string` | **Required**. User ID as URI param |
+
+### Mongo DB SCHEMA
+
+#### [User SCHEMA](https://github.com/charley04310/Polynotes/blob/master/backend/src/users/schemas/user.schema.ts)
+
+```typescript
+export class User {
+  @Prop({ required: true })
+  username: string;
+  @Prop({
+    required: true,
+    unique: true,
+  })
+  email: string;
+  @Prop({ required: true, default: false })
+  email_verified: boolean;
+  @Prop({ required: true })
+  password: string;
+}
+```
+
+#### [Page SCHEMA](https://github.com/charley04310/Polynotes/blob/master/backend/src/page/schemas/page.schema.ts)
+
+```typescript
+export class Page {
+  @Prop({ required: true })
+  title: string;
+  @Prop({ required: true, type: SchemaTypes.ObjectId })
+  userId: ObjectId;
+  @Prop({ required: true, default: false })
+  isPublic: boolean;
+  @Prop({ required: true, default: false })
+  isEditable: boolean;
+  @Prop({
+    required: false,
+  })
+  parent: string | null;
+  @Prop({ required: true })
+  content: [];
+}
+```
+
+#### [File System TREE SCHEMA](https://github.com/charley04310/Polynotes/blob/master/backend/src/file-system/schemas/file-system.schema.ts)
+
+```typescript
+export class FileSystemTree {
+  @Prop({ required: true, unique: true })
+  userId: string;
+  @Prop({ required: true })
+  title: string;
+  @Prop({
+    required: true,
+    unique: true,
+  })
+  key: string;
+  @Prop({ required: true })
+  children: NodeFileNavigator[];
+}
+```
 
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">

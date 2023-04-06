@@ -30,16 +30,6 @@ export class AuthService {
     return token;
   }
   async login(user: any) {
-    const userExist = await this.usersService.findOneByEmail(user.email);
-    if (!userExist) {
-      throw new UnauthorizedException('Unauthorized');
-    }
-    const isValidepassword = await compare(user.password, userExist.password);
-    if (!isValidepassword) {
-      // MDP invalide
-      throw new UnauthorizedException('Unauthorized');
-    }
-
     const payload = {
       userId: user._id,
       email: user.email,
