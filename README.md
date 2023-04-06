@@ -31,6 +31,32 @@ Dans cette première itération de Polynotes, les fonctionnalités principales s
 4. **Partage de documents :** Vous permet de gérer l'accès à vos documents, afin que votre entourage professionnel ou personnel puisse vous aider à les éditer.
 
 # PRÉSENTATION DE LA STACK TÉCHNIQUE
+<p align="left">
+    <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="docker" width="50" height="50"/>
+    </a>
+    <a href="https://kubernetes.io" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="50" height="50"/>
+    </a>
+    <a href="https://helm.sh/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/helmsh/helmsh-icon.svg" alt="helm" width="50" height="50"/>
+    </a>
+    <a href="https://argoproj.github.io/cd/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/argoprojio/argoprojio-icon.svg" alt="argoprojio" width="50" height="50"/>
+    </a>
+    <a href="https://github.com/actions" target="_blank" rel="noreferrer">
+        <img src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" alt="actions" width="50" height="50"/>
+    </a>
+    <a href="https://nestjs.com/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/util/preview.html?image=/logos/nestjs/nestjs-icon.svg" alt="nest" width="50" height="50"/>
+    </a>
+    <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/util/preview.html?image=/logos/mongodb/mongodb-icon.svg" alt="nest" width="50" height="50"/>
+    </a>
+    <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/util/preview.html?image=/logos/reactjs/reactjs-icon.svg" alt="nest" width="50" height="50"/>
+    </a>
+</p>
 
 ## FRONTEND DEVELOPPEMENT : REQUIREMENTS
 
@@ -324,9 +350,45 @@ export class FileSystemTree {
 }
 ```
 
-## Déploiement local
+## LOCAL DEPLOYMENT : REQUIREMENTS
 
-### Variables d'environnements 
+Docker CLI & Docker compose
+
+- [Docker](https://docs.docker.com/engine/reference/commandline/cli/)
+- [Docker compose](https://docs.docker.com/compose/)
+
+
+
+### ENVIRONMENTAL VARIABLES
+
+Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
+
+```env
+MONGODB_URL=mongodb://mongo:27017/polynotes
+MONGODB_DATABASE=polynotes
+MAILER_PASSWORD= ## use your own mailer password
+MAILER_PORT= ## use your own mailer port
+MAILER_HOST= ## use your own host mailer
+MAILER_USER= ## use your own account mailer
+JWT_SECRET=  ## use your own jwt secret mailer
+BASE_URL_API=http://localhost:3000/api
+```
+
+### Run locally
+
+```sh
+docker compose up --build
+```
+## PRODUCTION DEPLOYMENT : REQUIREMENTS
+
+- [Kubernetes](https://docs.docker.com/engine/reference/commandline/cli/)
+- [Helm](https://docs.docker.com/engine/reference/commandline/cli/)
+- [ArgoCD](https://docs.docker.com/compose/)
+- [Terraform](https://docs.docker.com/compose/)
+
+
+
+### ENVIRONMENTAL VARIABLES : TERRAFORM TO ARGOCD
 
 1. Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
 
@@ -341,38 +403,8 @@ JWT_SECRET=  ## use your own jwt secret mailer
 BASE_URL_API=http://localhost:3000/api
 ```
 
-1. Lancer le projet
+### Run locally
 
 ```sh
 docker compose up --build
-```
-
-
-<p align="left">
-    <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="docker" width="50" height="50"/>
-    </a>
-    <a href="https://kubernetes.io" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="50" height="50"/>
-    </a>
-    <a href="https://helm.sh/" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/logos/helmsh/helmsh-icon.svg" alt="helm" width="50" height="50"/>
-    </a>
-</p>
-
-### CI/CD stack
-
-<p align="left">
-    <a href="https://argoproj.github.io/cd/" target="_blank" rel="noreferrer">
-        <img src="https://www.vectorlogo.zone/logos/argoprojio/argoprojio-icon.svg" alt="argoprojio" width="50" height="50"/>
-    </a>
-    <a href="https://github.com/actions" target="_blank" rel="noreferrer">
-        <img src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" alt="actions" width="50" height="50"/>
-    </a>
-</p>
-
-## Run locally
-
-```sh
-docker compose up
 ```
