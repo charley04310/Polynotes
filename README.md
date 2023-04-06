@@ -93,9 +93,10 @@ Le composant <Routes> définit un groupe de routes. Dans cet exemple, il y a deu
 Framework
 - [NestJS](https://nestjs.com/)
 
-ORM & Database
-- [Mongoose](https://ant.design/docs/react/getting-started)
-- [MongoDB](https://tiptap.dev/api/editor)
+Database et ORM
+- [MongoDB](https://www.mongodb.com/fr-fr)
+
+- [Mongoose](https://mongoosejs.com/docs/typescript.html)
 
 
 ### Deployment stack
