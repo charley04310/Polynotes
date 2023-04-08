@@ -1,36 +1,36 @@
-# BIENVENUE SUR L'APPLICATION POLYNOTES
-
+# WELCOME ON POLYNOTES WEB APPLICATION
   <p align="center">
       <img src="frontend/public/img/polynotes.gif" alt="PolyBunny" height="400">
   </p>
 
-## PRÉSENTATION DE L'APPLICATION
+## POLYNOTES WEB APPLICATION
 
-Bonjour et bienvenue à tous,
+Hello and welcome,
 
-Je suis ravi de vous présenter aujourd'hui l'application Polynotes, qui a été développée dans le cadre d'un projet scolaire WOA (Web Oriented Architecture).
+I am pleased to introduce to you today the Polynotes application, which was developed as part of a WOA (Web Oriented Architecture) school project.
 
-Polynotes est une application web qui vise à faciliter la gestion de notes, de tâches et de bases de données, en offrant une flexibilité et une personnalisation accrues. Cette application se déroulera en deux itérations : la première itération est présentée ici, tandis que la seconde itération sera réalisée en équipe.
+Polynotes is a web application aimed at facilitating the management of notes, tasks, and databases by providing increased flexibility and customization. This application will be implemented in two iterations: the first iteration is presented here, while the second iteration will be carried out in a team.
 
-Nous espérons que cette première itération de Polynotes vous sera utile et vous invitons à découvrir de plus près les fonctionnalités de cette application.
+We hope that this first iteration of Polynotes will be useful to you and we invite you to explore the features of this application.
 
 [![POLYNOTES TIMES DATA](https://wakatime.com/badge/user/8c51dfaf-cc71-4c33-bb4f-07b1a77dce06/project/6160a20e-1f13-4866-b07b-8adea0765e70.svg)](https://wakatime.com/badge/user/8c51dfaf-cc71-4c33-bb4f-07b1a77dce06/project/6160a20e-1f13-4866-b07b-8adea0765e70)
 
 ## Features
 
-### Polynotes Itération V1
+### Polynotes Iteration V0
 
-Dans cette première itération de Polynotes, les fonctionnalités principales sont les suivantes :
+In this first iteration of Polynotes, the main features are as follows:
 
-1. **Notes et Wikis :** Vous permet de créer et d'organiser des notes, de la documentation et des wikis dans un format flexible et personnalisable.
+1. **Notes and Wikis:** Allows you to create and organize notes, documentation, and wikis in a flexible and customizable format.
 
-2. **Gestion des tâches et des projets :** Vous permet de créer et de gérer des tâches, des listes de tâches et des projets de manière qui convient le mieux à vos besoins.
+2. **Task and Project Management:** Allows you to create and manage tasks, task lists, and projects in a way that best suits your needs.
 
-3. **Bases de données :** Vous permet de créer et de gérer des bases de données pour stocker et organiser des informations telles que les contacts, les produits ou les dépenses.
+3. **Databases:** Allows you to create and manage databases to store and organize information such as contacts, products, or expenses.
 
-4. **Partage de documents :** Vous permet de gérer l'accès à vos documents, afin que votre entourage professionnel ou personnel puisse vous aider à les éditer.
+3. **Document Sharing:** Allows you to manage access to your documents, so that your professional or personal network can help you edit them.
 
-# PRÉSENTATION DE LA STACK TECHNIQUE
+# Technology stack
+
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
         <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="docker" width="50" height="50"/>
@@ -58,7 +58,9 @@ Dans cette première itération de Polynotes, les fonctionnalités principales s
     </a>
 </p>
 
-## FRONTEND DEVELOPPEMENT : REQUIREMENTS
+## Frontend Developpement
+
+### REQUIREMENTS
 
 Main Library
 
@@ -79,7 +81,7 @@ Routing
 
 - [Ract Router 6](https://reactrouter.com/en/main)
 
-## FRONTEND ROUTES AND COMPONENTS
+### Routes and Components
 
 #### [Page Authentification](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
 
@@ -120,11 +122,11 @@ GET /document/{id}
 | :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)          | Bubble Menu       |
 | :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)      | DropDown Menu     |
 
-### FRONTEND ROUTING : BASIC USAGE
+### Routing: BASIC USAGE
 
-Ce code utilise la bibliothèque React Router pour gérer les routes dans une application React.
+This code uses the React Router library to manage routes in a React application.
 
-Le composant <Routes> définit un groupe de routes. Dans cet exemple, il y a deux groupes de routes : un groupe privé et un groupe public. Les routes privées sont accessibles uniquement aux utilisateurs authentifiés, tandis que les routes publiques sont accessibles à tous les utilisateurs.
+The <Routes> component defines a group of routes. In this example, there are two groups of routes: a private group and a public group. Private routes are only accessible to authenticated users, while public routes are accessible to all users.
 
 ```Typescript
 
@@ -140,7 +142,9 @@ Le composant <Routes> définit un groupe de routes. Dans cet exemple, il y a deu
 
 ```
 
-## BACKEND DEVELOPPEMENT : REQUIREMENTS
+## Backend Developpement
+ 
+### REQUIREMENTS
 
 Framework
 
@@ -153,7 +157,7 @@ Database et ORM
 
 ### API reference
 
-Retrouver une documentation swagger complète [DOCUMENTATION](https://polynotes.cluster-2022-5.dopolytech.fr/api/documentation#/default)
+Check out the full swagger [documentation here](https://polynotes.cluster-2022-5.dopolytech.fr/api/documentation#/default)
 
 #### Get User information By ID
 
@@ -350,7 +354,8 @@ export class FileSystemTree {
 }
 ```
 
-## LOCAL DEPLOYMENT : REQUIREMENTS
+## Running local deployment
+### REQUIREMENTS
 
 Docker CLI & Docker compose
 
@@ -359,7 +364,7 @@ Docker CLI & Docker compose
 
 
 
-### ENVIRONMENTAL VARIABLES
+### Global environnement variables
 
 Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
 
@@ -375,12 +380,12 @@ JWT_SECRET=  ## use your own jwt secret mailer
 BASE_URL_API=http://localhost:3000/api
 ```
 
-### Run locally
+### Run locally : docker compose
 
 ```sh
 docker compose up --build
 ```
-## CI / CD DEPLOYMENT
+## Running CI/CD production deployment
 
 ### REQUIREMENTS
 
@@ -391,13 +396,13 @@ docker compose up --build
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 - [Terraform](https://www.terraform.io/)
 
-### SCHEMA INFRASTRUCTURE
-<p align="left">
+### Infrastructure Schema 
+<p align="center">
 <img src="frontend/public/img/infra.png" alt="infrastructure"  height="400"/>
 
 </p>   
 
-###  TERRAFORM : SETTING UP ARGOCD ENVIRONNEMENT
+###  Terraform : Setting UP ArgoCD
 
 ### REQUIREMENTS
 
@@ -405,7 +410,8 @@ docker compose up --build
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 - [Terraform](https://www.terraform.io/)
 
-Before apply your Terraform configuration make sur to have you K8S installed and ArgoCD set on it. If not check the documentation above before starting it.
+>**Warning**
+>Before apply your Terraform configuration make sur to have you Kubernetes distribution installed and ArgoCD set on it. If not check the documentation above before starting it.
 
 1. From Terraform folder setup your Provider as bellow `provider.tf` :
 
@@ -448,9 +454,9 @@ variable "host" {
   type        = string
 }
 ```
-### INIT & APPLY TERRAFORM 
+### Init and Apply Terraform
 
-Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
+Before apply your terraform configuration make sur to init all changes in your `terraform.tfstate` by running
 
 ```sh
 terraform init
@@ -462,7 +468,7 @@ Then you can apply your configuration
 terraform apply
 ```
 
-###  TERRAFORM : SETTING UP SENSIBLE RESOURCES
+##  Terraform : Setting UP sensible resources
 
 1. From Terraform folder setup your Provider as bellow `provider.tf` :
 
@@ -497,7 +503,7 @@ resource "kubernetes_secret" "<your-argocd-app-name>" {
   type = "Opaque"
 }
 ```
-### INIT & APPLY TERRAFORM 
+### Init and Apply Terraform
 
 Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
 
