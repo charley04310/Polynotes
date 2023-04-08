@@ -59,7 +59,7 @@ We hope that this first iteration of Polynotes will be useful to you and we invi
 
 ## [Features](#features)
 
-### [Polynotes Iteration V0](#polynoteiteration)
+### [Polynotes Iteration V0](#Polynotes Iteration V0)
 
 In this first iteration of Polynotes, the main features are as follows:
 
