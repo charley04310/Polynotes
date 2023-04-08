@@ -30,7 +30,7 @@ Dans cette première itération de Polynotes, les fonctionnalités principales s
 
 4. **Partage de documents :** Vous permet de gérer l'accès à vos documents, afin que votre entourage professionnel ou personnel puisse vous aider à les éditer.
 
-# PRÉSENTATION DE LA STACK TÉCHNIQUE
+# PRÉSENTATION DE LA STACK TECHNIQUE
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
         <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="docker" width="50" height="50"/>
@@ -393,7 +393,7 @@ docker compose up --build
 
 ### SCHEMA INFRASTRUCTURE
 <p align="left">
-<img src="frontend/public/img/gitops.png" alt="infrastructure"  height="400"/>
+<img src="frontend/public/img/infra.png" alt="infrastructure"  height="400"/>
 
 </p>   
 
