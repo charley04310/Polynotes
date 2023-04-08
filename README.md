@@ -155,6 +155,7 @@ Database et ORM
 - [MongoDB](https://www.mongodb.com/fr-fr)
 - [Mongoose](https://mongoosejs.com/docs/typescript.html)
 
+### Technology advantages and disadvantages
 ### API reference
 
 Check out the full swagger [documentation here](https://polynotes.cluster-2022-5.dopolytech.fr/api/documentation#/default)
@@ -396,6 +397,15 @@ docker compose up --build
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 - [Terraform](https://www.terraform.io/)
 
+
+>***Note***
+>You can check out my github actions configuration file [HERE](https://github.com/charley04310/Polynotes/blob/master/.github/workflows/docker-image.yml). Feel free to customize it by adding new jobs. Don't forget to be register on Docker Hub and adding your own credentials as bellow 
+
+```yml
+username: ${{ secrets.DOCKER_USERNAME }}
+password: ${{ secrets.DOCKER_PASSWORD }}
+```
+
 ### Infrastructure Schema 
 <p align="center">
 <img src="frontend/public/img/infra.png" alt="infrastructure"  height="400"/>
@@ -456,7 +466,8 @@ variable "host" {
 ```
 ### Init and Apply Terraform
 
-Before apply your terraform configuration make sur to init all changes in your `terraform.tfstate` by running
+>***Note***
+>Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
 
 ```sh
 terraform init
@@ -505,7 +516,9 @@ resource "kubernetes_secret" "<your-argocd-app-name>" {
 ```
 ### Init and Apply Terraform
 
-Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
+>***Note***
+>Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
+
 
 ```sh
 terraform init
@@ -516,3 +529,92 @@ Then you can apply your configuration
 ```sh
 terraform apply
 ```
+
+## Technology stack : advantages and disadvantages
+
+### Frontend developpement report 
+#### REACT JS
+<p align="left">
+    <a href="https://fr.reactjs.org/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" alt="nest" width="50" height="50"/>
+    </a>
+</p>
+
+**Advantages:** React JS is really popual with :star:**205k** on github repository, so reactjs has a large community and large online documentation and many third-party libraries available. 
+
+ReactJS is easy to learn and more permissive than other frameworks like Angular, allowing for greater flexibility in how components are structured and allowing developers to choose their own preferred libraries for state management, routing, and other functionalities.
+
+I also found interesting the way to manage state when reactjs is using with Redux Toolkit.
+
+**Disadvantages:** In contrast to VueJS, ReactJS can be more challenging to learn and use effectively, particularly when managing reactivity. VueJS offers a more straightforward approach with two-way data binding and computed properties, while ReactJS requires managing state changes manually using lifecycle methods and component state.
+#### Redux Toolkit
+
+<p align="left">
+    <a href="https://redux-toolkit.js.org/" target="_blank" rel="noreferrer">
+  <img src="frontend/public/img/redux.png" alt="redux toolkit design"  height="50">
+  </a>
+</p>
+
+**Advantages:** Redux Toolkit is most popular state manager of react. Comprehensive state management library, easy to use and configure, with a wide variety of features available.
+
+**Disadvantages:**  The Redux data flow model can seem a bit verbose for some use cases. Specially when developper want to make async method (createAsyncThunk) inside reducer.
+#### Ant Design UI library
+
+<p align="left">
+    <a href="https://ant.design/" target="_blank" rel="noreferrer">
+  <img src="frontend/public/img/ant.svg" alt="ant design"  width="50" height="50">
+  </a>
+</p>
+
+**Advantages:** Ant design is really popular with :star:**85k** on github repository. The UI component library is well-documented and easy to use, with a wide variety of features available.
+
+**Disadvantages:** UI may seem uninspired, as it is very standardized.
+#### TipTap library
+
+<p align="left">
+    <a href="https://tiptap.dev/" target="_blank" rel="noreferrer">
+  <img src="frontend/public/img/tiptap.png" alt="tiptap library"  height="50">
+  </a>
+</p>
+
+**Advantages:** TipTap is popular with :star:**18.7k** on github repository.TipTap is Lightweight library for creating rich text editors, with a nice user interface and easy integration with React.
+
+**Disadvantages:** Despite the popularity of the library, the documentation for TipTap can be difficult to navigate and is not always comprehensive or up-to-date. 
+
+#### React Router V6.10.0
+
+<p align="left">
+    <a href="https://ant.design/" target="_blank" rel="noreferrer">
+  <img src="frontend/public/img/react-router.png" alt="ant design"  height="50">
+  </a>
+</p>
+
+**Advantages:** Routing library for React that is easy to use and configure, with a wide variety of features available.
+
+### Backend developpement report 
+
+
+#### Nest JS
+
+ <a href="https://nestjs.com/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/nestjs/nestjs-icon.svg" alt="nest" width="50" height="50"/>
+</a>
+
+**Advantages:** NestJS is a framework that offers a wide range of built-in modules, including Express or authentication management for JWT or Error management standardized. This makes it easy for developers to build complex server-side applications and to maintain it in team. 
+
+NestJS also has a well-documented API that is easy to understand and use, making it an ideal choice for novice developper. Additionally, NestJS has a large and active community, with many third-party modules and plugins available to extend its functionality even further.
+
+**Disadvantages:** Despite its many advantages, NestJS can be challenging to learn for developers who are new to the framework. While it offers a lot of functionality out of the box, this can make it overwhelming for beginners to get all of the concepts and best practices. 
+
+Additionally, unlike the more flexible approach of Express, NestJS is a strongly opinionated framework that enforces certain conventions and patterns. This can make it difficult for developers who prefer more flexibility and control over their code.
+
+
+#### MongoDB
+
+  <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer">
+      <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="nest" width="50" height="50"/>
+  </a>
+
+**Advantages:** MongoDB is a popular NoSQL document database that offers a high degree of flexibility and scalability, with support for features like sharding, replication. It has a simple and intuitive query language, and allows for dynamic schema design that can accommodate changing data requirements over time. 
+
+**Disadvantages:** While MongoDB's flexibility can be an advantage, it can also introduce potential complexity and require more careful management to ensure data consistency and integrity. Additionally, because MongoDB does not enforce a schema by default, developers may need to invest more time and effort into designing and managing their data models effectively.
