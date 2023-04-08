@@ -11,39 +11,39 @@
 - [Features](#features)
 - [Polynotes Iteration V0](#Polynotes-Iteration-V0)
 
-[TECHNOLOGY STACK](#technologystack)
+[TECHNOLOGY STACK](#technology-stack)
 
-- [Frontend STACK presentation](#fs)
+- [Frontend STACK presentation](#frontend-stack-presentation)
 
-  - [Requirements](#req)
-  - [Routes and Components](#rac)
-  - [Routing: BASIC USAGE](#rbu)
+  - [Requirements](#frontend-stack-presentation-requirements)
+  - [Routes and Components](#routes-and-components)
+  - [Routing: BASIC USAGE](#routing-basic-usage)
 
-- [Backend STACK presentation](#bs_01)
+- [Backend STACK presentation](#backend-stack-presentation)
 
-  - [Requirements](#req_02)
-  - [API reference](#ar)
-  - [Mongo DB SCHEMA](#mds)
+  - [Requirements](#backend-stack-presentation-requirements)
+  - [API reference](#api-reference)
+  - [MongoDB SCHEMA](#mongodb-schema)
 
 [DEPLOYMENT](#deployment)
 
-- [Local deployment](#ld)
+- [Local deployment](#local-deployment)
 
-  - [Requirements](#req_03)
-  - [Global environment variables](#gev)
-  - [Run locally: docker compose](#rldc)
+  - [Requirements](#local-deployment-requirements)
+  - [Global environment variables](#global-variables)
+  - [Run locally: docker compose](#run-locally-docker-compose)
 
-- [CI/CD Production deployment](#pd)
+- [CI/CD Production deployment](#production-deployment)
 
-  - [Requirements](#req_04)
-  - [Infrastructure Schema](#is)
-  - [Terraform : Setting UP ArgoCD](#tsua)
-  - [Terraform : Setting UP sensible secrets](#tsuss)
+  - [Requirements](#production-deployment-requirements)
+  - [Infrastructure Schema](#infrastucture-schema)
+  - [Terraform : Setting UP ArgoCD](#terraform-argocd)
+  - [Terraform : Setting UP sensible secrets](#terraform-secrets)
 
-[Advantages and Disadvantages of Technical stack](#tsaad)
+[Advantages and Disadvantages of Technical stack](#technology-stack-advantage-desavantages)
 
-- [Frontend stack](#fs_02)
-- [Bakcend stack](#bs_02)
+- [Frontend stack](#frontend-advantage-desavantages)
+- [Bakcend stack](#backend-advantage-desavantages)
 
 ## [POLYNOTES WEB APPLICATION](#web-app)
 
@@ -71,7 +71,7 @@ In this first iteration of Polynotes, the main features are as follows:
 
 4. **Document Sharing:** Allows you to manage access to your documents, so that your professional or personal network can help you edit them.
 
-## [Technology stack](#technologystack)
+## [Technology stack](#technology-stack)
 
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
@@ -100,9 +100,9 @@ In this first iteration of Polynotes, the main features are as follows:
     </a>
 </p>
 
-### [Frontend stack presentation](#fs_01)
+### [Frontend stack presentation](#frontend-stack-presentation)
 
-#### [REQUIREMENTS](#req_01)
+#### [REQUIREMENTS](frontend-stack-presentation-requirements)
 
 Main Library
 
@@ -123,7 +123,7 @@ Routing
 
 - [Ract Router 6](https://reactrouter.com/en/main)
 
-#### [Routes and Components](#rac)
+#### [Routes and Components](#routes-and-components)
 
 ##### [Page Authentification](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
 
@@ -164,7 +164,7 @@ GET /document/{id}
 | :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)          | Bubble Menu       |
 | :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)      | DropDown Menu     |
 
-#### [Routing: BASIC USAGE](#rbu)
+#### [Routing: BASIC USAGE](#routing-basic-usage)
 
 This code uses the React Router library to manage routes in a React application.
 
@@ -183,9 +183,9 @@ The <Routes> component defines a group of routes. In this example, there are two
 
 ```
 
-## [Backend STACK presentation](#bs_01)
+## [Backend STACK presentation](#backend-stack-presentation)
 
-#### [REQUIREMENTS](#req_02)
+#### [REQUIREMENTS](#backend-stack-presentation-requirements)
 
 Framework
 
@@ -196,7 +196,7 @@ Database et ORM
 - [MongoDB](https://www.mongodb.com/fr-fr)
 - [Mongoose](https://mongoosejs.com/docs/typescript.html)
 
-### [API reference](#ar)
+### [API reference](#api-reference)
 
 Check out the full swagger [documentation here](https://polynotes.cluster-2022-5.dopolytech.fr/api/documentation#/default)
 
@@ -346,7 +346,7 @@ interface NodeFileNavigator {
 | `token`   | `string` | **Required**. Token cookie         |
 | `id`      | `string` | **Required**. User ID as URI param |
 
-### [Mongo DB SCHEMA](#mds)
+### [MongoDB Schema](#mongodb-schema)
 
 #### [User SCHEMA](https://github.com/charley04310/Polynotes/blob/master/backend/src/users/schemas/user.schema.ts)
 
@@ -395,18 +395,18 @@ export class FileSystemTree {
 }
 ```
 
-## DEPLOYMENT[LOCAL DEPLOYMENT](#deployment)
+## [DEPLOYMENT](#deployment)
 
-### [LOCAL DEPLOYMENT](#ld)
+### [LOCAL DEPLOYMENT](#local-deployment)
 
-#### [REQUIREMENTS](#req_03)
+#### [REQUIREMENTS](#local-deployment-requirements)
 
 Docker CLI & Docker compose
 
 - [Docker](https://docs.docker.com/engine/reference/commandline/cli/)
 - [Docker compose](https://docs.docker.com/compose/)
 
-### [Global environnement variables](#gev)
+### [Global environnement variables](#global-variables)
 
 Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
 
@@ -422,15 +422,15 @@ JWT_SECRET=  ## use your own jwt secret mailer
 BASE_URL_API=http://localhost:3000/api
 ```
 
-### [Run locally : docker compose](#rldc)
+### [Run locally : docker compose](#run-locally-docker-compose)
 
 ```sh
 docker compose up --build
 ```
 
-## [CI/CD Production deployment](#pd)
+## [CI/CD Production deployment](#production-deployment)
 
-#### [REQUIREMENTS](#req_04)
+#### [REQUIREMENTS](#production-deployment-requirements)
 
 - [Github Actions](https://docs.github.com/fr/actions)
 - [K3S](https://k3s.io/)
@@ -447,14 +447,14 @@ username: ${{ secrets.DOCKER_USERNAME }}
 password: ${{ secrets.DOCKER_PASSWORD }}
 ```
 
-### [Infrastructure Schema](#is)
+### [Infrastructure Schema](#infrastructure-schema)
 
 <p align="center">
 <img src="frontend/public/img/infra.png" alt="infrastructure"  height="400"/>
 
 </p>
 
-### [Terraform : Setting UP ArgoCD](#tsua)
+### [Terraform : Setting UP ArgoCD](#terraform-argocd)
 
 #### REQUIREMENTS
 
@@ -523,7 +523,7 @@ Then you can apply your configuration
 terraform apply
 ```
 
-### [Terraform : Setting UP sensible resources](#tsuss)
+### [Terraform : Setting UP sensible resources](#terraform-secrets)
 
 1. From Terraform folder setup your Provider as bellow `provider.tf` :
 
@@ -574,9 +574,9 @@ Then you can apply your configuration
 terraform apply
 ```
 
-## [Technology STACK : advantages and disadvantages](#tsaad)
+## [Technology STACK : advantages and disadvantages](#technology-stack-advantage-desavantages)
 
-### [Frontend developpement](#fs_02)
+### [Frontend](#frontend-advantage-desavantages)
 
 #### REACT JS
 
@@ -640,7 +640,7 @@ I also found interesting the way to manage state when reactjs is using with Redu
 
 **Advantages:** Routing library for React that is easy to use and configure, with a wide variety of features available.
 
-### [Backend developpement](#bs_02)
+### [Backend developpement](#backend-advantage-desavantages)
 
 #### Nest JS
 
