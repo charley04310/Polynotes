@@ -9,7 +9,7 @@
 [POLYNOTES WEB APPLICATION](#webapp)
 
 - [Features](#features)
-- [Polynotes Iteration V0](#polynoteiteration)
+- [Polynotes Iteration V0](#Polynotes Iteration V0)
 
 [TECHNOLOGY STACK](#technologystack)
 
