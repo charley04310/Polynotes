@@ -9,13 +9,13 @@
 [POLYNOTES WEB APPLICATION](#webapp)
 
 - [Features](#features)
-- [Polynotes Iteration V0](#piv0)
+- [Polynotes Iteration V0](#polynoteiteration)
 
-[TECHNOLOGY STACK](#ts_01)
+[TECHNOLOGY STACK](#technologystack)
 
-- [Frontend STACK presentation](#fs_01)
+- [Frontend STACK presentation](#fs)
 
-  - [Requirements](#req_01)
+  - [Requirements](#req)
   - [Routes and Components](#rac)
   - [Routing: BASIC USAGE](#rbu)
 
@@ -40,7 +40,7 @@
   - [Terraform : Setting UP ArgoCD](#tsua)
   - [Terraform : Setting UP sensible secrets](#tsuss)
 
-[TECHNOLOGY STACK: advantages and disadvantages](#tsaad)
+[Advantages and Disadvantages of Technical stack](#tsaad)
 
 - [Frontend stack](#fs_02)
 - [Bakcend stack](#bs_02)
@@ -59,7 +59,7 @@ We hope that this first iteration of Polynotes will be useful to you and we invi
 
 ## [Features](#features)
 
-### [Polynotes Iteration V0](#piv0)
+### [Polynotes Iteration V0](#polynoteiteration)
 
 In this first iteration of Polynotes, the main features are as follows:
 
@@ -71,7 +71,7 @@ In this first iteration of Polynotes, the main features are as follows:
 
 4. **Document Sharing:** Allows you to manage access to your documents, so that your professional or personal network can help you edit them.
 
-## [Technology stack](#ts_01)
+## [Technology stack](#technologystack)
 
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
