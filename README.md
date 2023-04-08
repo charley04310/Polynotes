@@ -6,10 +6,10 @@
 
 ## Summary
 
-[POLYNOTES WEB APPLICATION](#webapp)
+[POLYNOTES WEB APPLICATION](#web-app)
 
 - [Features](#features)
-- [Polynotes Iteration V0](#Polynotes Iteration V0)
+- [Polynotes Iteration V0](#Polynotes-Iteration-V0)
 
 [TECHNOLOGY STACK](#technologystack)
 
@@ -45,7 +45,7 @@
 - [Frontend stack](#fs_02)
 - [Bakcend stack](#bs_02)
 
-## [POLYNOTES WEB APPLICATION](#webapp)
+## [POLYNOTES WEB APPLICATION](#web-app)
 
 Hello and welcome,
 
@@ -59,7 +59,7 @@ We hope that this first iteration of Polynotes will be useful to you and we invi
 
 ## [Features](#features)
 
-### [Polynotes Iteration V0](#Polynotes Iteration V0)
+### [Polynotes Iteration V0](#Polynotes-Iteration-V0)
 
 In this first iteration of Polynotes, the main features are as follows:
 
