@@ -364,6 +364,7 @@ Docker CLI & Docker compose
 Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
 
 ```env
+// make sur to have your .env init in your project
 MONGODB_URL=mongodb://mongo:27017/polynotes
 MONGODB_DATABASE=polynotes
 MAILER_PASSWORD= ## use your own mailer password
@@ -379,32 +380,133 @@ BASE_URL_API=http://localhost:3000/api
 ```sh
 docker compose up --build
 ```
-## PRODUCTION DEPLOYMENT : REQUIREMENTS
+## CI / CD DEPLOYMENT
 
-- [Kubernetes](https://docs.docker.com/engine/reference/commandline/cli/)
-- [Helm](https://docs.docker.com/engine/reference/commandline/cli/)
-- [ArgoCD](https://docs.docker.com/compose/)
-- [Terraform](https://docs.docker.com/compose/)
+### REQUIREMENTS
 
+- [Github Actions](https://docs.github.com/fr/actions)
+- [K3S](https://k3s.io/)
+- [Docker Hub](https://hub.docker.com/)
+- [Helm](https://helm.sh/)
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
+- [Terraform](https://www.terraform.io/)
 
+### SCHEMA INFRASTRUCTURE
+<p align="left">
+<img src="frontend/public/img/gitops.png" alt="infrastructure"  height="400"/>
 
-### ENVIRONMENTAL VARIABLES : TERRAFORM TO ARGOCD
+</p>   
 
-1. Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
+###  TERRAFORM : SETTING UP ARGOCD ENVIRONNEMENT
 
-```env
-MONGODB_URL=mongodb://mongo:27017/polynotes
-MONGODB_DATABASE=polynotes
-MAILER_PASSWORD= ## use your own mailer password
-MAILER_PORT= ## use your own mailer port
-MAILER_HOST= ## use your own host mailer
-MAILER_USER= ## use your own account mailer
-JWT_SECRET=  ## use your own jwt secret mailer
-BASE_URL_API=http://localhost:3000/api
+### REQUIREMENTS
+
+- [K8S](https://k3s.io/)
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
+- [Terraform](https://www.terraform.io/)
+
+Before apply your Terraform configuration make sur to have you K8S installed and ArgoCD set on it. If not check the documentation above before starting it.
+
+1. From Terraform folder setup your Provider as bellow `provider.tf` :
+
+```tf
+provider "argocd" {
+  server_addr = var.server_addr
+  username    = var.username
+  password    = var.password
+
+  kubernetes {
+    host                   = var.host
+    client_certificate     = var.client_certificate
+    client_key             = var.client_key
+    cluster_ca_certificate = var.cluster_ca_certificate
+  }
+}
+```
+2. Then connect your Github repository to ARGOCD as bellow `main.tf` :
+
+```tf
+resource "argocd_repository" "<your-argocd-app-name>" {
+  repo     = ## your own repository 
+  type     = "git"
+  username = ## your own username 
+  password =  ## your own password 
+}
 ```
 
-### Run locally
+3. Create all variables needed as bellow `variables.tf`, check Terraform documentation to get more informations about variables management :
+
+```tf
+## ArgoCD
+variable "server_addr" {
+  description = "ArgoCD server address with port."
+  type        = string
+}
+## K8s
+variable "host" {
+  description = "The hostname (in form of URI) of the Kubernetes API."
+  type        = string
+}
+```
+### INIT & APPLY TERRAFORM 
+
+Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
 
 ```sh
-docker compose up --build
+terraform init
+```
+
+Then you can apply your configuration
+
+```sh
+terraform apply
+```
+
+###  TERRAFORM : SETTING UP SENSIBLE RESOURCES
+
+1. From Terraform folder setup your Provider as bellow `provider.tf` :
+
+```tf
+provider "kubernetes" {
+  host                   = var.host
+  client_certificate     = base64decode(var.client_certificate)
+  client_key             = base64decode(var.client_key)
+  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+}
+```
+
+2. Then give all the secrets resources that kubernetes need in `main.tf` :
+
+```tf
+resource "kubernetes_secret" "<your-argocd-app-name>" {
+  metadata {
+    name      = "<your-secret-kube-object-name>"
+    namespace = "<your-namespace>"
+    labels = {
+      managed-by = "terraform"
+    }
+  }
+  data = {
+    "mongodb-root-password" = ## your own password
+    "mongodb-passwords"     =  ## your own password
+    "jwt_secret"               =  ## your own JWT secret
+    "mailer-password" =  ## your own mail password
+    "mongodb-url" = ## your own string connexion
+
+  }
+  type = "Opaque"
+}
+```
+### INIT & APPLY TERRAFORM 
+
+Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
+
+```sh
+terraform init
+```
+
+Then you can apply your configuration
+
+```sh
+terraform apply
 ```
