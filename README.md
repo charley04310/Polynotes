@@ -28,22 +28,9 @@
 [DEPLOYMENT](#deployment)
 
 - [Local deployment](#local-deployment)
+- [CI/CD Production deployment](#CI-CD-production-deployment)
 
-  - [Requirements](#local-deployment-requirements)
-  - [Global environment variables](#global-variables)
-  - [Run locally: docker compose](#run-locally-docker-compose)
-
-- [CI/CD Production deployment](#production-deployment)
-
-  - [Requirements](#production-deployment-requirements)
-  - [Infrastructure Schema](#infrastucture-schema)
-  - [Terraform : Setting UP ArgoCD](#terraform-argocd)
-  - [Terraform : Setting UP sensible secrets](#terraform-secrets)
-
-[Advantages and Disadvantages of Technical stack](#technology-stack-advantage-desavantages)
-
-- [Frontend stack](#frontend-advantage-desavantages)
-- [Bakcend stack](#backend-advantage-desavantages)
+[Advantages and Disadvantages of Technical stack](#Advantages-and-Disadvantages-of-Technical-stack)
 
 ## [POLYNOTES WEB APPLICATION](#web-app)
 
@@ -102,7 +89,7 @@ In this first iteration of Polynotes, the main features are as follows:
 
 ### [Frontend stack presentation](#frontend-stack-presentation)
 
-#### [REQUIREMENTS](frontend-stack-presentation-requirements)
+#### [REQUIREMENTS](#frontend-stack-presentation-requirements)
 
 Main Library
 
@@ -428,7 +415,7 @@ BASE_URL_API=http://localhost:3000/api
 docker compose up --build
 ```
 
-## [CI/CD Production deployment](#production-deployment)
+## [CI/CD Production deployment](#CI-CD-production-deployment)
 
 #### [REQUIREMENTS](#production-deployment-requirements)
 
@@ -574,7 +561,7 @@ Then you can apply your configuration
 terraform apply
 ```
 
-## [Technology STACK : advantages and disadvantages](#technology-stack-advantage-desavantages)
+## [Advantages and Disadvantages of Technical stack](#Advantages-and-Disadvantages-of-Technical-stack)
 
 ### [Frontend](#frontend-advantage-desavantages)
 
