@@ -1,9 +1,51 @@
 # WELCOME ON POLYNOTES WEB APPLICATION
+
   <p align="center">
       <img src="frontend/public/img/polynotes.gif" alt="PolyBunny" height="400">
   </p>
 
-## POLYNOTES WEB APPLICATION
+## Summary
+
+[POLYNOTES WEB APPLICATION](#webapp)
+
+- [Features](#features)
+- [Polynotes Iteration V0](#piv0)
+
+[TECHNOLOGY STACK](#ts_01)
+
+- [Frontend STACK](#fs_01)
+
+  - [Requirements](#req_01)
+  - [Routes and Components](#rac)
+  - [Routing: BASIC USAGE](#rbu)
+
+- [Backend STACK](#bs_01)
+
+  - [Requirements](#req_02)
+  - [API reference](#ar)
+  - [Mongo DB SCHEMA](#mds)
+
+[DEPLOYMENT](#deployment)
+
+- [Local deployment](#ld)
+
+  - [Requirements](#req_03)
+  - [Global environment variables](#gev)
+  - [Run locally: docker compose](#rldc)
+
+- [CI/CD Production deployment](#pd)
+
+  - [Requirements](#req_04)
+  - [Infrastructure Schema](#is)
+  - [Terraform : Setting UP ArgoCD](#tsua)
+  - [Terraform : Setting UP sensible secrets](#tsuss)
+
+[TECHNOLOGY STACK: advantages and disadvantages](#tsaad)
+
+- [Frontend stack](#fs_02)
+- [Bakcend stack](#bs_02)
+
+## [POLYNOTES WEB APPLICATION](#webapp)
 
 Hello and welcome,
 
@@ -15,9 +57,9 @@ We hope that this first iteration of Polynotes will be useful to you and we invi
 
 [![POLYNOTES TIMES DATA](https://wakatime.com/badge/user/8c51dfaf-cc71-4c33-bb4f-07b1a77dce06/project/6160a20e-1f13-4866-b07b-8adea0765e70.svg)](https://wakatime.com/badge/user/8c51dfaf-cc71-4c33-bb4f-07b1a77dce06/project/6160a20e-1f13-4866-b07b-8adea0765e70)
 
-## Features
+## [Features](#features)
 
-### Polynotes Iteration V0
+### [Polynotes Iteration V0](#piv0)
 
 In this first iteration of Polynotes, the main features are as follows:
 
@@ -27,9 +69,9 @@ In this first iteration of Polynotes, the main features are as follows:
 
 3. **Databases:** Allows you to create and manage databases to store and organize information such as contacts, products, or expenses.
 
-3. **Document Sharing:** Allows you to manage access to your documents, so that your professional or personal network can help you edit them.
+4. **Document Sharing:** Allows you to manage access to your documents, so that your professional or personal network can help you edit them.
 
-# Technology stack
+## Technology stack
 
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
@@ -58,7 +100,7 @@ In this first iteration of Polynotes, the main features are as follows:
     </a>
 </p>
 
-## Frontend Developpement
+## Frontend stack
 
 ### REQUIREMENTS
 
@@ -142,8 +184,8 @@ The <Routes> component defines a group of routes. In this example, there are two
 
 ```
 
-## Backend Developpement
- 
+## Backend stack
+
 ### REQUIREMENTS
 
 Framework
@@ -155,7 +197,6 @@ Database et ORM
 - [MongoDB](https://www.mongodb.com/fr-fr)
 - [Mongoose](https://mongoosejs.com/docs/typescript.html)
 
-### Technology advantages and disadvantages
 ### API reference
 
 Check out the full swagger [documentation here](https://polynotes.cluster-2022-5.dopolytech.fr/api/documentation#/default)
@@ -355,15 +396,14 @@ export class FileSystemTree {
 }
 ```
 
-## Running local deployment
+## LOCAL DEPLOYMENT
+
 ### REQUIREMENTS
 
 Docker CLI & Docker compose
 
 - [Docker](https://docs.docker.com/engine/reference/commandline/cli/)
 - [Docker compose](https://docs.docker.com/compose/)
-
-
 
 ### Global environnement variables
 
@@ -386,6 +426,7 @@ BASE_URL_API=http://localhost:3000/api
 ```sh
 docker compose up --build
 ```
+
 ## Running CI/CD production deployment
 
 ### REQUIREMENTS
@@ -397,22 +438,22 @@ docker compose up --build
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 - [Terraform](https://www.terraform.io/)
 
-
->***Note***
->You can check out my github actions configuration file [HERE](https://github.com/charley04310/Polynotes/blob/master/.github/workflows/docker-image.yml). Feel free to customize it by adding new jobs. Don't forget to be register on Docker Hub and adding your own credentials as bellow 
+> **_Note_**
+> You can check out my github actions configuration file [HERE](https://github.com/charley04310/Polynotes/blob/master/.github/workflows/docker-image.yml).You can clone it and feel free to customize it by adding new jobs. Don't forget to be register on Docker Hub and adding your own credentials as bellow
 
 ```yml
 username: ${{ secrets.DOCKER_USERNAME }}
 password: ${{ secrets.DOCKER_PASSWORD }}
 ```
 
-### Infrastructure Schema 
+### Infrastructure Schema
+
 <p align="center">
 <img src="frontend/public/img/infra.png" alt="infrastructure"  height="400"/>
 
-</p>   
+</p>
 
-###  Terraform : Setting UP ArgoCD
+### Terraform : Setting UP ArgoCD
 
 ### REQUIREMENTS
 
@@ -420,8 +461,8 @@ password: ${{ secrets.DOCKER_PASSWORD }}
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 - [Terraform](https://www.terraform.io/)
 
->**Warning**
->Before apply your Terraform configuration make sur to have you Kubernetes distribution installed and ArgoCD set on it. If not check the documentation above before starting it.
+> **Warning**
+> Before apply your Terraform configuration make sur to have you Kubernetes distribution installed and ArgoCD set on it. If not check the documentation above before starting it.
 
 1. From Terraform folder setup your Provider as bellow `provider.tf` :
 
@@ -439,14 +480,15 @@ provider "argocd" {
   }
 }
 ```
+
 2. Then connect your Github repository to ARGOCD as bellow `main.tf` :
 
 ```tf
 resource "argocd_repository" "<your-argocd-app-name>" {
-  repo     = ## your own repository 
+  repo     = ## your own repository
   type     = "git"
-  username = ## your own username 
-  password =  ## your own password 
+  username = ## your own username
+  password =  ## your own password
 }
 ```
 
@@ -464,10 +506,11 @@ variable "host" {
   type        = string
 }
 ```
+
 ### Init and Apply Terraform
 
->***Note***
->Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
+> **_Note_**
+> Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
 
 ```sh
 terraform init
@@ -479,7 +522,7 @@ Then you can apply your configuration
 terraform apply
 ```
 
-##  Terraform : Setting UP sensible resources
+## Terraform : Setting UP sensible resources
 
 1. From Terraform folder setup your Provider as bellow `provider.tf` :
 
@@ -514,11 +557,11 @@ resource "kubernetes_secret" "<your-argocd-app-name>" {
   type = "Opaque"
 }
 ```
+
 ### Init and Apply Terraform
 
->***Note***
->Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
-
+> **_Note_**
+> Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
 
 ```sh
 terraform init
@@ -532,21 +575,24 @@ terraform apply
 
 ## Technology stack : advantages and disadvantages
 
-### Frontend developpement report 
+### Frontend developpement report
+
 #### REACT JS
+
 <p align="left">
     <a href="https://fr.reactjs.org/" target="_blank" rel="noreferrer">
         <img src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" alt="nest" width="50" height="50"/>
     </a>
 </p>
 
-**Advantages:** React JS is really popual with :star:**205k** on github repository, so reactjs has a large community and large online documentation and many third-party libraries available. 
+**Advantages:** React JS is really popual with :star:**205k** on github repository, so reactjs has a large community and large online documentation and many third-party libraries available.
 
 ReactJS is easy to learn and more permissive than other frameworks like Angular, allowing for greater flexibility in how components are structured and allowing developers to choose their own preferred libraries for state management, routing, and other functionalities.
 
 I also found interesting the way to manage state when reactjs is using with Redux Toolkit.
 
 **Disadvantages:** In contrast to VueJS, ReactJS can be more challenging to learn and use effectively, particularly when managing reactivity. VueJS offers a more straightforward approach with two-way data binding and computed properties, while ReactJS requires managing state changes manually using lifecycle methods and component state.
+
 #### Redux Toolkit
 
 <p align="left">
@@ -557,7 +603,8 @@ I also found interesting the way to manage state when reactjs is using with Redu
 
 **Advantages:** Redux Toolkit is most popular state manager of react. Comprehensive state management library, easy to use and configure, with a wide variety of features available.
 
-**Disadvantages:**  The Redux data flow model can seem a bit verbose for some use cases. Specially when developper want to make async method (createAsyncThunk) inside reducer.
+**Disadvantages:** The Redux data flow model can seem a bit verbose for some use cases. Specially when developper want to make async method (createAsyncThunk) inside reducer.
+
 #### Ant Design UI library
 
 <p align="left">
@@ -569,6 +616,7 @@ I also found interesting the way to manage state when reactjs is using with Redu
 **Advantages:** Ant design is really popular with :star:**85k** on github repository. The UI component library is well-documented and easy to use, with a wide variety of features available.
 
 **Disadvantages:** UI may seem uninspired, as it is very standardized.
+
 #### TipTap library
 
 <p align="left">
@@ -579,7 +627,7 @@ I also found interesting the way to manage state when reactjs is using with Redu
 
 **Advantages:** TipTap is popular with :star:**18.7k** on github repository.TipTap is Lightweight library for creating rich text editors, with a nice user interface and easy integration with React.
 
-**Disadvantages:** Despite the popularity of the library, the documentation for TipTap can be difficult to navigate and is not always comprehensive or up-to-date. 
+**Disadvantages:** Despite the popularity of the library, the documentation for TipTap can be difficult to navigate and is not always comprehensive or up-to-date.
 
 #### React Router V6.10.0
 
@@ -591,8 +639,7 @@ I also found interesting the way to manage state when reactjs is using with Redu
 
 **Advantages:** Routing library for React that is easy to use and configure, with a wide variety of features available.
 
-### Backend developpement report 
-
+### Backend developpement report
 
 #### Nest JS
 
@@ -600,14 +647,13 @@ I also found interesting the way to manage state when reactjs is using with Redu
         <img src="https://www.vectorlogo.zone/logos/nestjs/nestjs-icon.svg" alt="nest" width="50" height="50"/>
 </a>
 
-**Advantages:** NestJS is a framework that offers a wide range of built-in modules, including Express or authentication management for JWT or Error management standardized. This makes it easy for developers to build complex server-side applications and to maintain it in team. 
+**Advantages:** NestJS is a framework that offers a wide range of built-in modules, including Express or authentication management for JWT or Error management standardized. This makes it easy for developers to build complex server-side applications and to maintain it in team.
 
 NestJS also has a well-documented API that is easy to understand and use, making it an ideal choice for novice developper. Additionally, NestJS has a large and active community, with many third-party modules and plugins available to extend its functionality even further.
 
-**Disadvantages:** Despite its many advantages, NestJS can be challenging to learn for developers who are new to the framework. While it offers a lot of functionality out of the box, this can make it overwhelming for beginners to get all of the concepts and best practices. 
+**Disadvantages:** Despite its many advantages, NestJS can be challenging to learn for developers who are new to the framework. While it offers a lot of functionality out of the box, this can make it overwhelming for beginners to get all of the concepts and best practices.
 
 Additionally, unlike the more flexible approach of Express, NestJS is a strongly opinionated framework that enforces certain conventions and patterns. This can make it difficult for developers who prefer more flexibility and control over their code.
-
 
 #### MongoDB
 
@@ -615,6 +661,6 @@ Additionally, unlike the more flexible approach of Express, NestJS is a strongly
       <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="nest" width="50" height="50"/>
   </a>
 
-**Advantages:** MongoDB is a popular NoSQL document database that offers a high degree of flexibility and scalability, with support for features like sharding, replication. It has a simple and intuitive query language, and allows for dynamic schema design that can accommodate changing data requirements over time. 
+**Advantages:** MongoDB is a popular NoSQL document database that offers a high degree of flexibility and scalability, with support for features like sharding, replication. It has a simple and intuitive query language, and allows for dynamic schema design that can accommodate changing data requirements over time.
 
 **Disadvantages:** While MongoDB's flexibility can be an advantage, it can also introduce potential complexity and require more careful management to ensure data consistency and integrity. Additionally, because MongoDB does not enforce a schema by default, developers may need to invest more time and effort into designing and managing their data models effectively.
