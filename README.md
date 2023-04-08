@@ -6,7 +6,8 @@
 
 ## Summary
 
-[POLYNOTES WEB APPLICATION](#web-app)
+<span style="background:blue">
+  [POLYNOTES WEB APPLICATION](#web-app)
 
 - [Features](#features)
 - [Polynotes Iteration V0](#Polynotes-Iteration-V0)
@@ -31,6 +32,7 @@
 - [CI/CD Production deployment](#CI-CD-production-deployment)
 
 [Advantages and Disadvantages of Technical stack](#Advantages-and-Disadvantages-of-Technical-stack)
+</span>
 
 ## [POLYNOTES WEB APPLICATION](#web-app)
 
