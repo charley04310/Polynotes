@@ -13,13 +13,13 @@
 
 [TECHNOLOGY STACK](#ts_01)
 
-- [Frontend STACK](#fs_01)
+- [Frontend STACK presentation](#fs_01)
 
   - [Requirements](#req_01)
   - [Routes and Components](#rac)
   - [Routing: BASIC USAGE](#rbu)
 
-- [Backend STACK](#bs_01)
+- [Backend STACK presentation](#bs_01)
 
   - [Requirements](#req_02)
   - [API reference](#ar)
@@ -71,7 +71,7 @@ In this first iteration of Polynotes, the main features are as follows:
 
 4. **Document Sharing:** Allows you to manage access to your documents, so that your professional or personal network can help you edit them.
 
-## Technology stack
+## [Technology stack](#ts_01)
 
 <p align="left">
     <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
@@ -100,9 +100,9 @@ In this first iteration of Polynotes, the main features are as follows:
     </a>
 </p>
 
-## Frontend stack
+### [Frontend stack presentation](#fs_01)
 
-### REQUIREMENTS
+#### [REQUIREMENTS](#req_01)
 
 Main Library
 
@@ -123,9 +123,9 @@ Routing
 
 - [Ract Router 6](https://reactrouter.com/en/main)
 
-### Routes and Components
+#### [Routes and Components](#rac)
 
-#### [Page Authentification](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
+##### [Page Authentification](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/WelcomePage.tsx)
 
 ```http
   GET /authentification
@@ -136,7 +136,7 @@ Routing
 | :jigsaw: [Login](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/components/Login.tsx)       | Login VIEW    |
 | :jigsaw: [Register](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/auth/components/Register.tsx) | Register VIEW |
 
-#### [Page Accueil](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
+##### [Page Accueil](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
 
 ```http
   GET /accueil
@@ -148,7 +148,7 @@ Routing
 | :jigsaw: [Recents Files](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/RecentsFiles.tsx) | Recents Files |
 | :jigsaw: [User Card](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/components/UserCard.tsx)         | User Card     |
 
-#### [Page Edit Document](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/EditDocumentPage.tsx)
+##### [Page Edit Document](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/EditDocumentPage.tsx)
 
 ```http
 GET /document/{id}
@@ -164,14 +164,13 @@ GET /document/{id}
 | :jigsaw: [Bubble Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/BubbleMenu.tsx)          | Bubble Menu       |
 | :jigsaw: [DropDown Menu](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/document/components/DropDownMenu.tsx)      | DropDown Menu     |
 
-### Routing: BASIC USAGE
+#### [Routing: BASIC USAGE](#rbu)
 
 This code uses the React Router library to manage routes in a React application.
 
 The <Routes> component defines a group of routes. In this example, there are two groups of routes: a private group and a public group. Private routes are only accessible to authenticated users, while public routes are accessible to all users.
 
 ```Typescript
-
 //  Pour créer une nouvelle route importer un composant dans les balises "Public" ou "Privé"
 <Routes>
     <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
@@ -184,9 +183,9 @@ The <Routes> component defines a group of routes. In this example, there are two
 
 ```
 
-## Backend stack
+## [Backend STACK presentation](#bs_01)
 
-### REQUIREMENTS
+#### [REQUIREMENTS](#req_02)
 
 Framework
 
@@ -197,7 +196,7 @@ Database et ORM
 - [MongoDB](https://www.mongodb.com/fr-fr)
 - [Mongoose](https://mongoosejs.com/docs/typescript.html)
 
-### API reference
+### [API reference](#ar)
 
 Check out the full swagger [documentation here](https://polynotes.cluster-2022-5.dopolytech.fr/api/documentation#/default)
 
@@ -347,7 +346,7 @@ interface NodeFileNavigator {
 | `token`   | `string` | **Required**. Token cookie         |
 | `id`      | `string` | **Required**. User ID as URI param |
 
-### Mongo DB SCHEMA
+### [Mongo DB SCHEMA](#mds)
 
 #### [User SCHEMA](https://github.com/charley04310/Polynotes/blob/master/backend/src/users/schemas/user.schema.ts)
 
@@ -396,16 +395,18 @@ export class FileSystemTree {
 }
 ```
 
-## LOCAL DEPLOYMENT
+## DEPLOYMENT[LOCAL DEPLOYMENT](#deployment)
 
-### REQUIREMENTS
+### [LOCAL DEPLOYMENT](#ld)
+
+#### [REQUIREMENTS](#req_03)
 
 Docker CLI & Docker compose
 
 - [Docker](https://docs.docker.com/engine/reference/commandline/cli/)
 - [Docker compose](https://docs.docker.com/compose/)
 
-### Global environnement variables
+### [Global environnement variables](#gev)
 
 Prenez soin de renseigner vos propres identifiants afin de bénéficier de la fonctionnalité
 
@@ -421,15 +422,15 @@ JWT_SECRET=  ## use your own jwt secret mailer
 BASE_URL_API=http://localhost:3000/api
 ```
 
-### Run locally : docker compose
+### [Run locally : docker compose](#rldc)
 
 ```sh
 docker compose up --build
 ```
 
-## Running CI/CD production deployment
+## [CI/CD Production deployment](#pd)
 
-### REQUIREMENTS
+#### [REQUIREMENTS](#req_04)
 
 - [Github Actions](https://docs.github.com/fr/actions)
 - [K3S](https://k3s.io/)
@@ -446,16 +447,16 @@ username: ${{ secrets.DOCKER_USERNAME }}
 password: ${{ secrets.DOCKER_PASSWORD }}
 ```
 
-### Infrastructure Schema
+### [Infrastructure Schema](#is)
 
 <p align="center">
 <img src="frontend/public/img/infra.png" alt="infrastructure"  height="400"/>
 
 </p>
 
-### Terraform : Setting UP ArgoCD
+### [Terraform : Setting UP ArgoCD](#tsua)
 
-### REQUIREMENTS
+#### REQUIREMENTS
 
 - [K8S](https://k3s.io/)
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
@@ -507,7 +508,7 @@ variable "host" {
 }
 ```
 
-### Init and Apply Terraform
+#### Init and Apply Terraform
 
 > **_Note_**
 > Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
@@ -522,7 +523,7 @@ Then you can apply your configuration
 terraform apply
 ```
 
-## Terraform : Setting UP sensible resources
+### [Terraform : Setting UP sensible resources](#tsuss)
 
 1. From Terraform folder setup your Provider as bellow `provider.tf` :
 
@@ -558,7 +559,7 @@ resource "kubernetes_secret" "<your-argocd-app-name>" {
 }
 ```
 
-### Init and Apply Terraform
+#### Init and Apply Terraform
 
 > **_Note_**
 > Before apply your terraform configuration make sur to init all changes your `terraform.tfstate` by running
@@ -573,9 +574,9 @@ Then you can apply your configuration
 terraform apply
 ```
 
-## Technology stack : advantages and disadvantages
+## [Technology STACK : advantages and disadvantages](#tsaad)
 
-### Frontend developpement report
+### [Frontend developpement](#fs_02)
 
 #### REACT JS
 
@@ -639,7 +640,7 @@ I also found interesting the way to manage state when reactjs is using with Redu
 
 **Advantages:** Routing library for React that is easy to use and configure, with a wide variety of features available.
 
-### Backend developpement report
+### [Backend developpement](#bs_02)
 
 #### Nest JS
 
