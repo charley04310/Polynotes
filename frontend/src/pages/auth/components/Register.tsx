@@ -68,7 +68,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   },
                 ]}
               >
-                <Input className="input-form" />
+                <Input className="input-form" placeholder="Your username" />
               </Form.Item>
               <Form.Item
                 name="email"
@@ -84,7 +84,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   },
                 ]}
               >
-                <Input className="input-form" />
+                <Input className="input-form" placeholder="Your email" />
               </Form.Item>
 
               <Form.Item
@@ -98,7 +98,10 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                 ]}
                 hasFeedback
               >
-                <Input.Password className="input-form" />
+                <Input.Password
+                  className="input-form"
+                  placeholder="Your password"
+                />
               </Form.Item>
 
               <Form.Item
@@ -125,7 +128,10 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   }),
                 ]}
               >
-                <Input.Password className="input-form" />
+                <Input.Password
+                  className="input-form"
+                  placeholder="Your confirm password"
+                />
               </Form.Item>
 
               <Form.Item

@@ -58,7 +58,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
               rules={[{ required: false }]}
               style={{ color: "#1e1e1e" }}
             >
-              <Input className="input-form" placeholder="input placeholder" />
+              <Input className="input-form" placeholder="Your email" />
             </Form.Item>
 
             <Form.Item
@@ -67,7 +67,10 @@ const LoginPage: React.FC<LoginPageProps> = ({
               rules={[{ required: false }]}
               style={{ color: "#1e1e1e" }}
             >
-              <Input.Password className="input-form" />
+              <Input.Password
+                className="input-form"
+                placeholder="Your password"
+              />
             </Form.Item>
 
             <Form.Item>
