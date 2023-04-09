@@ -82,22 +82,22 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  const MenuAuthAccess = useCallback((): MenuItem[] => {
+
+  const MenuAuthAccess = (): MenuItem[] => {
     return !isAuthenticated
       ? []
       : [
-          getItem(<Link to={"/home"}>Home</Link>, "1", <HomeOutlined />),
+          getItem(<Link to={"/home"}>Accueil</Link>, "1", <HomeOutlined />),
           buildTreeMenuData(treeData),
           getItem(
             <Link to={"/authentification"} onClick={() => logOutUser()}>
-              Log out
+              Deconnexion
             </Link>,
             "2",
             <LogoutOutlined />
           ),
         ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  };
 
   // const [menuData, setMenuData] = useState<MenuItem[]>(MenuAuthAccess);
 
