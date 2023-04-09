@@ -103,7 +103,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   useEffect(() => {
     setMenuData(MenuAuthAccess);
-  }, [isAuthenticated, MenuAuthAccess, treeData]);
+  }, [MenuAuthAccess, treeData]);
 
   const {
     token: { colorBgContainer },
@@ -136,7 +136,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             defaultOpenKeys={["sub1"]}
             theme="dark"
             mode="inline"
-            items={MenuAuthAccess()}
+            items={menuData}
           />
         </Sider>
       ) : (
