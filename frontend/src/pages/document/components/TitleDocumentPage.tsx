@@ -49,7 +49,7 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
   const [openShare, setopenShare] = useState(false);
 
   const [urlToShare, setUrlToShare] = useState({
-    value: `${process.env.REACT_APP_BASE_URL}/collaborative/document/${param.id}`,
+    value: `https://polynotes.cluster-2022-5.dopolytech.fr/collaborative/document/${param.id}`,
     copied: false,
   });
   const blocksPage: IContentBlock[] = useSelector(
@@ -102,13 +102,13 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
 
   const handleCopyToClipboard = () => {
     setUrlToShare({
-      value: `${process.env.REACT_APP_BASE_URL}/collaborative/document/${param.id}`,
+      value: `https://polynotes.cluster-2022-5.dopolytech.fr/collaborative/document/${param.id}`,
       copied: true,
     });
 
     setTimeout(() => {
       setUrlToShare({
-        value: `${process.env.REACT_APP_BASE_URL}/collaborative/document/${param.id}`,
+        value: `https://polynotes.cluster-2022-5.dopolytech.fr/collaborative/document/${param.id}`,
         copied: false,
       });
     }, 2000);
@@ -148,14 +148,17 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
           content={
             <>
               <Badge.Ribbon
-                text="Copié !"
+                text="Copied!"
                 color={urlToShare.copied ? "green" : "transparent"}
               >
-                <Card size="small" bordered={false}>
-                  <Meta
-                    avatar={<SecurityScanOutlined />}
-                    title="Confidentialité"
-                  />
+                <Card
+                  size="small"
+                  bordered={false}
+                  style={{
+                    backgroundColor: "white",
+                  }}
+                >
+                  <Meta avatar={<SecurityScanOutlined />} title="Privacy" />
                   <Divider style={{ padding: 0, margin: 12 }} />
                   <Checkbox
                     defaultChecked={isPublic}
@@ -166,17 +169,21 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
                       style={{ paddingRight: 24 }}
                       onClick={toggleEdit}
                     >
-                      Autoriser le partage du document
+                      Allow public access
                     </div>
                   </Checkbox>
                 </Card>
 
                 {isPublic && (
                   <Card
-                    title="Partager le document"
+                    title="Share"
                     size="small"
                     bordered={false}
-                    style={{ marginTop: 0, paddingTop: 0 }}
+                    style={{
+                      marginTop: 0,
+                      paddingTop: 0,
+                      backgroundColor: "white",
+                    }}
                   >
                     <Input
                       disabled={true}
@@ -194,16 +201,14 @@ const TitleDocumentPage: React.FC<TitleDocumentProps> = () => {
                         style={{ paddingRight: 24 }}
                         onClick={toggleEdit}
                       >
-                        Autoriser la modification
+                        Allow user to edit
                       </div>
                     </Checkbox>
                     <CopyToClipboard
                       text={urlToShare.value}
                       onCopy={() => handleCopyToClipboard()}
                     >
-                      <Button icon={<ShareAltOutlined />}>
-                        Copier le lien
-                      </Button>
+                      <Button icon={<ShareAltOutlined />}>Copy link</Button>
                     </CopyToClipboard>
                   </Card>
                 )}
