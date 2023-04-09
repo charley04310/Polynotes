@@ -4,7 +4,7 @@ interface Props {
 }
 
 const PrivateRoutes: React.FC<Props> = ({ isAuthenticated }) => {
-  return isAuthenticated ? <Outlet /> : <Navigate to="/authentification" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/getting-started" />;
 };
 
 export default PrivateRoutes;

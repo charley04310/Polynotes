@@ -141,7 +141,7 @@ const TableDataBase: React.FC<EditableTableState> = ({
             type="text"
             icon={<PlusOutlined />}
           >
-            Ajouter une ligne
+            Add new raw
           </Button>
         ) : null}
         {hasSelected && isEditable ? (

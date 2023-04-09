@@ -6,16 +6,16 @@ const formattedDate = date.toISOString().slice(0, 10);
 export const defaultContent = (index: string) => {
   switch (index) {
     case typeIndex.TEXT:
-      return "Votre texte ici";
+      return "Your text here";
     case typeIndex.NUMBER:
       return 0;
     case typeIndex.DATE:
       return formattedDate;
     case typeIndex.CHECKBOX:
-      return "Votre texte box ici";
+      return "Your text box here";
     case typeIndex.SELECT:
-      return "Votre selction ici";
+      return "Your selection here";
     default:
-      return "Votre texte ici";
+      return "Your text here";
   }
 };

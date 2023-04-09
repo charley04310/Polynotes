@@ -1,10 +1,9 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
-import { Col, Row } from "antd";
-import dologo from "./dologo.svg";
+import { Button, Card, Divider, Form, Input, Row } from "antd";
 import { ILoginUser, loginUser } from "../../../store/API/Authentification";
 import { useNavigate } from "react-router-dom";
-
+import "../index.css";
+import logo from "../../../assets/img/PolyBunny.png";
 interface LoginPageProps {
   onPageStateChange: (newState: string) => void;
   setNotification: (userSaved: any) => void;
@@ -15,7 +14,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
   setNotification,
 }) => {
   const [form] = Form.useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onFinishFailed = (errorInfo: any) => {
     // console.log("Failed:", errorInfo);
@@ -34,76 +33,80 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
     const userLoginResponse = await loginUser(user);
     setNotification(userLoginResponse);
-    if(userLoginResponse !== undefined){
-      navigate('/accueil')
+    if (userLoginResponse !== undefined) {
+      navigate("/home");
     }
   };
 
   return (
-    <Row justify="center" align="middle">
-      <Col span={12}>
-        <>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
+    <>
+      <Card>
+        <Card style={{ width: 600, margin: "auto" }}>
+          <Row justify="center">
+            <img src={logo} alt="PolyBunny" style={{ width: "200px" }} />
+          </Row>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
           >
-            {/* <img src={dologo} alt="OKOk" width={500} /> */}
-          </div>
-        </>
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Please input your username!" }]}
-            style={{ color: "#1e1e1e" }}
-          >
-            <Input placeholder="input placeholder" />
-          </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: false }]}
+              style={{ color: "#1e1e1e" }}
+            >
+              <Input className="input-form" placeholder="input placeholder" />
+            </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-            style={{ color: "#1e1e1e" }}
-          >
-            <Input.Password />
-          </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: false }]}
+              style={{ color: "#1e1e1e" }}
+            >
+              <Input.Password className="input-form" />
+            </Form.Item>
 
-          <Form.Item>
-            <Button htmlType="submit" style={{ background: "#49aa19" }}>
-              SE CONNECTER
+            <Form.Item>
+              <Button
+                className="start-button"
+                style={{ backgroundColor: "#57cd7c", color: "white" }}
+                htmlType="submit"
+              >
+                SIGN IN
+              </Button>
+            </Form.Item>
+          </Form>
+          <Divider style={{ backgroundColor: "#516d91" }} />
+          <Row justify="center">
+            <Button
+              className="start-button"
+              onClick={() => handleStateClick("register")}
+              style={{
+                minWidth: 150,
+                marginRight: 5,
+              }}
+            >
+              REGISTER
             </Button>
-          </Form.Item>
-        </Form>
-        <Row justify="center">
-          <Button
-            onClick={() => handleStateClick("register")}
-            style={{
-              minWidth: 150,
-            }}
-          >
-            Créer un compte
-          </Button>
 
-          <Button
-            onClick={() => handleStateClick("welcome")}
-            style={{
-              minWidth: 150,
-            }}
-          >
-            Acceuill
-          </Button>
-        </Row>
-      </Col>
-    </Row>
+            <Button
+              className="start-button"
+              onClick={() => handleStateClick("welcome")}
+              style={{
+                minWidth: 150,
+                marginLeft: 5,
+              }}
+            >
+              HOME
+            </Button>
+          </Row>
+        </Card>
+      </Card>
+    </>
   );
 };
 

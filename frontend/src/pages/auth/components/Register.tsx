@@ -1,7 +1,9 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Card, Checkbox, Divider, Form, Input } from "antd";
 import { Col, Row } from "antd";
 import React from "react";
 import { IUser, registerUser } from "../../../store/API/Authentification";
+import logo from "../../../assets/img/PolyBunny.png";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterPageProps {
   onPageStateChange: (newState: string) => void;
@@ -13,7 +15,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
   setNotification,
 }) => {
   const [form] = Form.useForm();
-
+  const navigate = useNavigate();
   const onFinish = async (values: IUser) => {
     const { username, email, password } = values;
     const user: IUser = {
@@ -35,18 +37,11 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
   return (
     <>
       <Row justify="center" align="middle">
-        <Col span={12}>
-          <>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {/*               <img src={dologo} alt="OKOk" width={500} />
-               */}
-            </div>
-          </>
+        <Card style={{ width: 600, margin: "auto" }}>
+          <Row justify="center">
+            <img src={logo} alt="PolyBunny" style={{ width: "200px" }} />
+          </Row>
+
           <Form
             form={form}
             layout="vertical"
@@ -63,7 +58,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
             >
               <Form.Item
                 name="username"
-                label="Nom d'utilisateur"
+                label="Username"
                 tooltip="What do you want others to call you?"
                 rules={[
                   {
@@ -73,7 +68,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   },
                 ]}
               >
-                <Input />
+                <Input className="input-form" />
               </Form.Item>
               <Form.Item
                 name="email"
@@ -89,7 +84,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   },
                 ]}
               >
-                <Input />
+                <Input className="input-form" />
               </Form.Item>
 
               <Form.Item
@@ -103,7 +98,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                 ]}
                 hasFeedback
               >
-                <Input.Password />
+                <Input.Password className="input-form" />
               </Form.Item>
 
               <Form.Item
@@ -130,7 +125,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   }),
                 ]}
               >
-                <Input.Password />
+                <Input.Password className="input-form" />
               </Form.Item>
 
               <Form.Item
@@ -145,35 +140,78 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                   },
                 ]}
               >
-                <Checkbox>J'ai lu et accept les</Checkbox>
+                <Checkbox>
+                  I have read and I accept {""}
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      navigate("/terms");
+                      <Button
+                        type="link"
+                        onClick={() => {
+                          navigate("/terms");
+                        }}
+                        style={{ padding: 0, height: 0 }}
+                      >
+                        all conditions
+                      </Button>;
+                    }}
+                    style={{ padding: 0 }}
+                  >
+                    all conditions
+                  </Button>
+                </Checkbox>
+              </Form.Item>
+              <Form.Item
+                name="older"
+                valuePropName="checked"
+                rules={[
+                  {
+                    validator: (_, value) =>
+                      value
+                        ? Promise.resolve()
+                        : Promise.reject(new Error("Should accept agreement")),
+                  },
+                ]}
+              >
+                <Checkbox>I'm older than 13 years old</Checkbox>
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Créer un compte
+                <Button
+                  className="start-button"
+                  style={{ backgroundColor: "#57cd7c", color: "white" }}
+                  htmlType="submit"
+                >
+                  SIGN UP
                 </Button>
               </Form.Item>
             </div>
           </Form>
+          <Divider style={{ backgroundColor: "#516d91" }} />
           <Row justify="center">
             <Button
+              className="start-button"
               onClick={() => handleStateClick("welcome")}
               style={{
                 minWidth: 150,
+                marginRight: 5,
               }}
             >
-              Accueil
+              HOME
             </Button>
 
             <Button
+              className="start-button"
               onClick={() => handleStateClick("login")}
               style={{
                 minWidth: 150,
+                marginLeft: 5,
               }}
             >
-              S'identifier
+              SIGN IN
             </Button>
           </Row>
-        </Col>
+        </Card>
       </Row>
     </>
   );

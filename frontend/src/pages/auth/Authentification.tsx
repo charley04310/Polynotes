@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
-import RegisterPage from "../auth/components/Register";
-import LoginPage from "../auth/components/Login";
-import WelcomePage from "../auth/WelcomePage";
+import RegisterPage from "./components/Register";
+import LoginPage from "./components/Login";
+import WelcomePage from "./components/WelcomePage";
 import React from "react";
 import { notification } from "antd";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated, setUser } from "../../store/slices/authSlice";
 
 const Context = React.createContext({ name: "Default" });
-const ManifestPage = () => {
+const Authentification = () => {
   const [pageState, setPageState] = useState("welcome");
   const dispatch = useDispatch();
   const contextValue = useMemo(() => ({ name: "Ant Design" }), []);
@@ -83,4 +83,4 @@ const ManifestPage = () => {
   );
 };
 
-export default ManifestPage;
+export default Authentification;

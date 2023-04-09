@@ -130,7 +130,7 @@ Routing
 ##### [Page Accueil](https://github.com/charley04310/Polynotes/blob/master/frontend/src/pages/home/HomePage.tsx)
 
 ```http
-  GET /accueil
+  GET /home
 ```
 
 | Components                                                                                                                          | Description   |
@@ -424,7 +424,7 @@ docker compose up --build
 #### [REQUIREMENTS](#production-deployment-requirements)
 
 - [Github Actions](https://docs.github.com/fr/actions)
-- [K3S](https://k3s.io/)
+- [Kubernetes](https://k3s.io/)
 - [Docker Hub](https://hub.docker.com/)
 - [Helm](https://helm.sh/)
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)

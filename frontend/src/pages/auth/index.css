@@ -1,0 +1,11 @@
+.input-form {
+  color: #7e97b8;
+  border: 1px solid #7e97b8;
+  border-radius: 10px;
+  padding: 5px 25px;
+  background: transparent;
+}
+
+.input-form :active {
+  box-shadow: 1px 1px 15px #516d91 inset;
+}

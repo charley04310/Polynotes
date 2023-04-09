@@ -5,7 +5,7 @@ import MainLayout from "../layout/Layout";
 import EditDocumentPage from "../pages/document/EditDocumentPage";
 import SharedDocumentPage from "../pages/document/SharedDocumentPage";
 import HomePage from "../pages/home/HomePage";
-import ManifestPage from "../pages/manifest/ManifestPage";
+import Authentification from "../pages/auth/Authentification";
 import NotFoundPage from "../pages/notfound/NotFound";
 import PrivateRoutes from "../routes/PrivateRoutes";
 import PublicRoutes from "../routes/PublicRoutes";
@@ -18,6 +18,8 @@ import {
 import { setIsAuthenticated, setUser } from "../store/slices/authSlice";
 import { setStore } from "../store/slices/TreeFileExplorerSlice";
 import { RootState } from "../store/store";
+import ManifestPage from "../pages/manifest/Manifest";
+import TermsPage from "../pages/Terms/TermsPage";
 
 const userAutoLogin = async (): Promise<IReponseSuccess | IReponseError> => {
   const userLogedIn = await autoLogin();
@@ -61,7 +63,7 @@ const PolynoteRouter: React.FC = () => {
       <Routes>
         <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
           <Route path="/document/:id" element={<EditDocumentPage />} />
-          <Route path="/accueil" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route
@@ -70,7 +72,9 @@ const PolynoteRouter: React.FC = () => {
         />
 
         <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
-          <Route element={<ManifestPage />} path="/authentification" />
+          <Route element={<Authentification />} path="/authentification" />
+          <Route element={<ManifestPage />} path="/getting-started" />
+          <Route element={<TermsPage />} path="/terms" />
         </Route>
       </Routes>
     </MainLayout>
