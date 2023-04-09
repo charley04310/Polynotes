@@ -78,12 +78,11 @@ export const buildTreeMenuData = (treeData: NodeFileNavigator) => {
 const MainLayout = ({ children }: MainLayoutProps) => {
   const treeData = useSelector((state: RootState) => state.Tree);
   const [collapsed, setCollapsed] = useState(false);
-  const [menuData, setMenuData] = useState<MenuItem[]>([]);
   const dispatch = useDispatch();
-  const MenuAuthAccess = (): MenuItem[] => {
-    const isAuthenticated = useSelector(
-      (state: RootState) => state.auth.isAuthenticated
-    );
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const MenuAuthAccess = useCallback((): MenuItem[] => {
     return !isAuthenticated
       ? []
       : [
@@ -97,13 +96,14 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <LogoutOutlined />
           ),
         ];
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
-  const menu = useCallback(MenuAuthAccess, [treeData, MenuAuthAccess]);
+  const [menuData, setMenuData] = useState<MenuItem[]>(MenuAuthAccess);
+
   useEffect(() => {
-    const data = menu;
-    setMenuData(data);
-  }, [menu]);
+    setMenuData(MenuAuthAccess);
+  }, [isAuthenticated, MenuAuthAccess]);
 
   const {
     token: { colorBgContainer },

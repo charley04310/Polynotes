@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import MainLayout from "../layout/Layout";
 import EditDocumentPage from "../pages/document/EditDocumentPage";
 import SharedDocumentPage from "../pages/document/SharedDocumentPage";
@@ -38,7 +38,11 @@ const PolynoteRouter: React.FC = () => {
   useEffect(() => {
     (async () => {
       // si l'utilisateur est sur la page d'authentification, on ne fait rien
-      if (location.pathname === "/authentification") return;
+      if (
+        location.pathname === "/authentification" ||
+        location.pathname === "/getting-started"
+      )
+        return;
       // sinon on verifie si l'utilisateur est connecté
       const isLoggedIn = await userAutoLogin();
       console.log("isLoggedIn :", isLoggedIn);
@@ -61,21 +65,20 @@ const PolynoteRouter: React.FC = () => {
   return (
     <MainLayout>
       <Routes>
-        <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
-          <Route path="/document/:id" element={<EditDocumentPage />} />
-          <Route path="/home" element={<HomePage />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-        <Route
-          path="/collaborative/document/:id"
-          element={<SharedDocumentPage />}
-        />
-
         <Route element={<PublicRoutes isAuthenticated={isAuthenticated} />}>
           <Route element={<Authentification />} path="/authentification" />
           <Route element={<ManifestPage />} path="/getting-started" />
           <Route element={<TermsPage />} path="/terms" />
         </Route>
+        <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
+          <Route path="/document/:id" element={<EditDocumentPage />} />
+          <Route path="/home" element={<HomePage />} />
+        </Route>
+        {/* <Route path="*" element={<NotFoundPage />} /> */}
+        <Route
+          path="/collaborative/document/:id"
+          element={<SharedDocumentPage />}
+        />
       </Routes>
     </MainLayout>
   );
