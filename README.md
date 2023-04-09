@@ -71,6 +71,9 @@ In this first iteration of Polynotes, the main features are as follows:
     <a href="https://kubernetes.io" target="_blank" rel="noreferrer">
         <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="50" height="50"/>
     </a>
+      <a href="https://www.terraform.io/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/terraformio/terraformio-icon.svg" alt="kubernetes" width="50" height="50"/>
+    </a>
     <a href="https://helm.sh/" target="_blank" rel="noreferrer">
         <img src="https://www.vectorlogo.zone/logos/helmsh/helmsh-icon.svg" alt="helm" width="50" height="50"/>
     </a>
@@ -88,6 +91,9 @@ In this first iteration of Polynotes, the main features are as follows:
     </a>
     <a href="https://fr.reactjs.org/" target="_blank" rel="noreferrer">
         <img src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" alt="nest" width="50" height="50"/>
+    </a>
+        <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" alt="nest" width="50" height="50"/>
     </a>
 </p>
 
