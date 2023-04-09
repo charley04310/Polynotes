@@ -153,7 +153,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             className="App"
             style={{
               padding: 24,
-              minHeight: "90vh",
+              minHeight: "80vh",
               background: colorBgContainer,
             }}
           >

@@ -18,7 +18,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onPageStateChange }) => {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          height: "85vh",
+          height: "75vh",
         }}
       >
         <Card>
