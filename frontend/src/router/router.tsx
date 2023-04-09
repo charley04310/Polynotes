@@ -74,7 +74,7 @@ const PolynoteRouter: React.FC = () => {
           <Route path="/document/:id" element={<EditDocumentPage />} />
           <Route path="/home" element={<HomePage />} />
         </Route>
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="/collaborative/document/:id"
           element={<SharedDocumentPage />}

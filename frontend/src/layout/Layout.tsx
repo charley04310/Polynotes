@@ -17,7 +17,6 @@ import logo from "../assets/img/PolyBunny.png";
 
 import { NodeFileNavigator } from "../pages/home/utils/DataPayload";
 import { Header } from "antd/es/layout/layout";
-import Title from "antd/es/typography/Title";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -65,7 +64,7 @@ export function buildMenuData(
 }
 const headerStyle: React.CSSProperties = {
   textAlign: "left",
-  position: "fixed",
+  position: "relative",
   zIndex: 1,
   height: 80,
   backgroundColor: "transparent",
@@ -78,6 +77,7 @@ export const buildTreeMenuData = (treeData: NodeFileNavigator) => {
 const MainLayout = ({ children }: MainLayoutProps) => {
   const treeData = useSelector((state: RootState) => state.Tree);
   const [collapsed, setCollapsed] = useState(false);
+
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -153,7 +153,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             className="App"
             style={{
               padding: 24,
-              minHeight: "93vh",
+              minHeight: "90vh",
               background: colorBgContainer,
             }}
           >
