@@ -99,11 +99,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
-  const [menuData, setMenuData] = useState<MenuItem[]>(MenuAuthAccess);
+  // const [menuData, setMenuData] = useState<MenuItem[]>(MenuAuthAccess);
 
-  useEffect(() => {
-    setMenuData(MenuAuthAccess);
-  }, [MenuAuthAccess, treeData]);
+  // useEffect(() => {
+  //   setMenuData(MenuAuthAccess);
+  // }, [MenuAuthAccess, treeData]);
 
   const {
     token: { colorBgContainer },
@@ -118,7 +118,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      {menuData.length > 0 ? (
+      {isAuthenticated ? (
         <Sider
           collapsible
           collapsed={collapsed}
@@ -136,7 +136,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             defaultOpenKeys={["sub1"]}
             theme="dark"
             mode="inline"
-            items={menuData}
+            items={MenuAuthAccess()}
           />
         </Sider>
       ) : (
