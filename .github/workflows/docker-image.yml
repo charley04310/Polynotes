@@ -28,12 +28,12 @@ jobs:
           push: true
           tags: lamenace90/polynotes-frontend:${{ steps.commit.outputs.short }}
           labels: test
-        
+
       - name: Update tag version frontend
         run: |
           git_hash=${{ steps.commit.outputs.short }}
           version=$(cat frontend/.helm/deployment-frontend/values.yaml | grep tag: | awk '{print $2}')
-          sed -i "s|$version|${git_hash}|" frontend/.helm/deployment-frontend/values.yaml 
+          sed -i "s|$version|'${git_hash}'|" frontend/.helm/deployment-frontend/values.yaml
 
       ## BACKEND
       - name: Build Polynote backend Image
@@ -47,11 +47,11 @@ jobs:
         run: |
           git_hash=${{ steps.commit.outputs.short }}
           version=$(cat backend/.helm/deployment-backend/values.yaml | grep tag: | awk '{print $2}')
-          sed -i "s|$version|${git_hash}|" backend/.helm/deployment-backend/values.yaml 
+          sed -i "s|$version|'${git_hash}'|" backend/.helm/deployment-backend/values.yaml
 
       ## COMMIT CHANGE
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Update values charts -> tag 
+          commit_message: Update values charts -> tag
