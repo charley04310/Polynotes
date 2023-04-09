@@ -103,7 +103,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   useEffect(() => {
     setMenuData(MenuAuthAccess);
-  }, [isAuthenticated, MenuAuthAccess]);
+  }, [isAuthenticated, MenuAuthAccess, treeData]);
 
   const {
     token: { colorBgContainer },
