@@ -1,5 +1,5 @@
 import { Button, Card, Checkbox, Divider, Form, Input } from "antd";
-import { Col, Row } from "antd";
+import { Row } from "antd";
 import React from "react";
 import { IUser, registerUser } from "../../../store/API/Authentification";
 import logo from "../../../assets/img/PolyBunny.png";

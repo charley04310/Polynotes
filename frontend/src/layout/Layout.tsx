@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   FileOutlined,
   FolderOutlined,
@@ -78,12 +78,8 @@ export const buildTreeMenuData = (treeData: NodeFileNavigator) => {
 const MainLayout = ({ children }: MainLayoutProps) => {
   const treeData = useSelector((state: RootState) => state.Tree);
   const [collapsed, setCollapsed] = useState(false);
+  const [menuData, setMenuData] = useState<MenuItem[]>([]);
   const dispatch = useDispatch();
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
   const MenuAuthAccess = (): MenuItem[] => {
     const isAuthenticated = useSelector(
       (state: RootState) => state.auth.isAuthenticated
@@ -103,6 +99,16 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         ];
   };
 
+  const menu = useCallback(MenuAuthAccess, [treeData, MenuAuthAccess]);
+  useEffect(() => {
+    const data = menu;
+    setMenuData(data);
+  }, [menu]);
+
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   const logOutUser = async () => {
     const userLogout = await logoutUser();
     if (userLogout.message !== undefined) {
@@ -112,7 +118,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      {MenuAuthAccess.length > 0 ? (
+      {menuData.length > 0 ? (
         <Sider
           collapsible
           collapsed={collapsed}
