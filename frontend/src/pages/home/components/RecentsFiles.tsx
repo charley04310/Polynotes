@@ -18,7 +18,7 @@ const RecentsFiles: React.FC<IRecentsFilesProps> = ({ files }) => {
 
   return (
     <>
-      <Title level={3}>Documents récents</Title>
+      <Title level={3}>Recents Files</Title>
       <div className="file-card">
         {files.map((file: any, index: number) => (
           <Card

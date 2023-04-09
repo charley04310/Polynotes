@@ -43,9 +43,9 @@ const Tiptap = forwardRef(
           // Use different placeholders depending on the node type:
           placeholder: ({ node }) => {
             if (node.type.name === "heading") {
-              return `Titre de niveau ${node.attrs.level}`;
+              return `Title level ${node.attrs.level}`;
             }
-            return "Ajouter du contenu...";
+            return "Add new content...";
           },
         }),
         Focus.configure({

@@ -38,12 +38,11 @@ import EmptyData from "../../../global-components/EmptyData";
 import { createOrUpdateTreeFileSystem } from "../../../store/API/FileSystemTree";
 
 interface IPropsFileExplorer {
-    treeData: NodeFileNavigator;
-    userId?: string;
+  treeData: NodeFileNavigator;
+  userId?: string;
 }
 
-const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
-
+const FileExplorer: React.FC<IPropsFileExplorer> = ({ treeData, userId }) => {
   const [currentNode, setCurrentNode] = useState<NodeFileNavigator>(treeData);
   const [pageTitle, setPageTitle] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -176,7 +175,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
             content={
               <>
                 <Input
-                  placeholder="nom de votre dossier"
+                  placeholder="Folder name"
                   value={pageTitle}
                   ref={inputRef}
                   onChange={(e) => setPageTitle(e.target.value)}
@@ -200,7 +199,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
                 </Button>
               </>
             }
-            title="Nouveau un dossier"
+            title="Folder name"
             trigger="click"
             open={open}
             onOpenChange={handleOpenChange}
@@ -214,7 +213,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
             content={
               <>
                 <Input
-                  placeholder="nom de votre fichier"
+                  placeholder="File name"
                   value={pageTitle}
                   ref={inputRef}
                   onChange={(e) => setPageTitle(e.target.value)}
@@ -226,7 +225,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
                   onClick={handleTitleChange}
                   style={{ marginRight: 6 }}
                 >
-                  Annuler
+                  Canceled
                 </Button>
                 <Button
                   onClick={() => {
@@ -234,16 +233,16 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
                     handleTitleChange();
                   }}
                 >
-                  Ajouter
+                  Add
                 </Button>
               </>
             }
-            title="Nouveau un fichier"
+            title="New folder"
             trigger="click"
             open={openFileEditor}
             onOpenChange={handleTitleChange}
           >
-            <Tooltip placement="top" title={"Nouveau fichier"}>
+            <Tooltip placement="top" title={"New File"}>
               <Button
                 style={{ marginLeft: 8 }}
                 shape="circle"
@@ -279,8 +278,8 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
                             fontSize: 25,
                           }
                         : {
-                            backgroundColor: "white",
-                            color: "#1890ff",
+                            backgroundColor: "transparent",
+                            color: "#295b9d",
                             fontSize: 25,
                           }
                     }
@@ -295,7 +294,7 @@ const FileExplorer: React.FC<IPropsFileExplorer> = ({treeData, userId}) => {
           )}
         />
       ) : (
-        <EmptyData message={"Aucun document disponible"} />
+        <EmptyData message={"No Data available"} />
       )}
     </>
   );

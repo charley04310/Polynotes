@@ -82,19 +82,19 @@ const DropDownMenu: React.FC<DropDownProps> = ({
 
   const items: MenuProps["items"] = [
     {
-      label: "Titre 1",
+      label: "Title 1",
       icon: <FontSizeOutlined />,
       key: "0",
       onClick: () => toggleHeading(Level.H1),
     },
     {
-      label: "Titre 2",
+      label: "Title 2",
       icon: <FontSizeOutlined />,
       key: "1",
       onClick: () => toggleHeading(Level.H2),
     },
     {
-      label: "Titre 3",
+      label: "Title 3",
       icon: <FontSizeOutlined />,
       key: "2",
       onClick: () => toggleHeading(Level.H3),
@@ -124,7 +124,7 @@ const DropDownMenu: React.FC<DropDownProps> = ({
       type: "divider",
     },
     {
-      label: "Importer une page",
+      label: "Import page",
       icon: <FileTextOutlined />,
       key: "6",
       onClick: () => setSubPageBlock(),
@@ -134,7 +134,7 @@ const DropDownMenu: React.FC<DropDownProps> = ({
     },
 
     {
-      label: "Supprimer le block",
+      label: "Delete block",
       icon: <DeleteOutlined />,
       key: "7",
       danger: true,

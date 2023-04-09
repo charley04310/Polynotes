@@ -86,11 +86,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     return !isAuthenticated
       ? []
       : [
-          getItem(<Link to={"/home"}>Accueil</Link>, "1", <HomeOutlined />),
+          getItem(<Link to={"/home"}>Home</Link>, "1", <HomeOutlined />),
           buildTreeMenuData(treeData),
           getItem(
             <Link to={"/authentification"} onClick={() => logOutUser()}>
-              Deconnexion
+              Log out
             </Link>,
             "2",
             <LogoutOutlined />

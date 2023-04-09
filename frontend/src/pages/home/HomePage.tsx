@@ -38,12 +38,10 @@ const HomePage = () => {
 
       <RecentsFiles files={files} />
 
-      {files.length === 0 && (
-        <EmptyData message={"Aucun document disponible"} />
-      )}
+      {files.length === 0 && <EmptyData message={"No data available"} />}
       <Divider />
 
-      <Title level={3}>Explorateur de fichiers</Title>
+      <Title level={3}>Files Explorer</Title>
 
       <FileExplorer treeData={treeData} userId={user?.userId} />
     </>
