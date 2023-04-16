@@ -38,7 +38,7 @@
 
 ## [POLYNOTES WEB APPLICATION](#web-app)
 
-Hello and welcome,
+Hello and welcome Everyone,
 
 I am pleased to introduce to you today the Polynotes application, which was developed as part of a WOA (Web Oriented Architecture) school project.
 
